@@ -520,13 +520,10 @@
             border-radius: 22px;
             background: #000;
             overflow: hidden;
-            /* Left + right glowing border via box-shadow inset stripes */
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow:
-                inset  4px 0 0 0 rgba(255,255,255,0.18),   /* left border  */
-                inset -4px 0 0 0 rgba(255,255,255,0.18),   /* right border */
-                inset  4px 0 18px 0 rgba(255,255,255,0.06),
-                inset -4px 0 18px 0 rgba(255,255,255,0.06);
+            border-top: 1px solid rgba(255,255,255,0.10);
+            border-bottom: 1px solid rgba(255,255,255,0.10);
+            border-left: 3px solid rgba(255,255,255,0.55);
+            border-right: 3px solid rgba(255,255,255,0.55);
         }
 
         /* Full bleed photo layer */
@@ -541,27 +538,6 @@
             display: block;
             z-index: 0;
         }
-
-        /* Glass panel — sits over the photo between the top badge and bottom strip */
-        .id-glass-panel {
-            position: absolute;
-            left: 10px; right: 10px;
-            top: 68px;        /* just below company row */
-            bottom: 66px;     /* just above bottom strip */
-            border-radius: 14px;
-            z-index: 2;
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(2px) saturate(1.2);
-            -webkit-backdrop-filter: blur(2px) saturate(1.2);
-            border: 1px solid rgba(255,255,255,0.14);
-            /* subtle inner glow */
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.22),
-                inset 0 -1px 0 rgba(255,255,255,0.06),
-                0 4px 24px rgba(0,0,0,0.18);
-            pointer-events: none;
-        }
-
         /* Gradient scrim — subtle top darkening + strong bottom for readability */
         .id-photo-scrim {
             position: absolute;
@@ -570,10 +546,10 @@
             z-index: 1;
             background: linear-gradient(
                 180deg,
-                rgba(0,0,0,0.50) 0%,
-                rgba(0,0,0,0.05) 30%,
-                rgba(0,0,0,0.05) 58%,
-                rgba(0,0,0,0.80) 100%
+                rgba(0,0,0,0.45) 0%,
+                rgba(0,0,0,0.0) 35%,
+                rgba(0,0,0,0.0) 55%,
+                rgba(0,0,0,0.75) 100%
             );
         }
         .id-shimmer {
@@ -1900,9 +1876,6 @@
                             <!-- Full bleed photo -->
                             <img class="id-photo-bg" src="assets/profile.jpg" alt="Akhand" />
                             <div class="id-photo-scrim"></div>
-
-                            <!-- Glass panel over photo -->
-                            <div class="id-glass-panel"></div>
 
                             <!-- Shimmer layers -->
                             <div class="id-shimmer" id="idShimmer"></div>
