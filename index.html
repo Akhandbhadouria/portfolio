@@ -439,57 +439,41 @@
             align-items: center;
             justify-content: center;
             gap: 0;
-            padding: 10px 0;
+            padding: 32px 0 10px;
         }
 
-        /* Wrapper that positions floating badges relative to card */
+        /* Wrapper that positions hook relative to card */
         .id-card-wrap {
             position: relative;
             display: flex;
             align-items: flex-start;
             justify-content: center;
+            padding-top: 20px;
         }
 
-        /* ── Lanyard Strap ── */
-        .lanyard-wrap {
+        /* ── Card Hook ── */
+        .id-hook-wrap {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
+            pointer-events: none;
+            transform-origin: top center;
+            animation: hookSway 6s ease-in-out infinite;
         }
-        .lanyard-clip {
-            width: 22px; height: 14px;
-            background: linear-gradient(180deg, #c0c0c0, #888);
-            border-radius: 3px 3px 0 0;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.6);
-            z-index: 3;
+        .id-hook-svg {
+            display: block;
+            filter:
+                drop-shadow(0 3px 6px rgba(0,0,0,0.7))
+                drop-shadow(0 1px 2px rgba(0,0,0,0.5));
         }
-        .lanyard-ring {
-            width: 14px; height: 8px;
-            background: linear-gradient(180deg, #d4d4d4, #999);
-            border-radius: 0 0 7px 7px;
-            margin-top: -1px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            z-index: 3;
-        }
-        .lanyard-strap {
-            width: 28px; height: 90px;
-            background: repeating-linear-gradient(
-                180deg,
-                var(--accent2) 0px, var(--accent2) 6px,
-                #9b8fff 6px, #9b8fff 12px
-            );
-            border-radius: 4px;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.4), inset -2px 0 0 rgba(255,255,255,0.06);
-            position: relative;
-            z-index: 2;
-        }
-        .lanyard-strap::after {
-            content: '';
-            position: absolute;
-            left: 50%; top: 0; bottom: 0;
-            width: 2px;
-            background: rgba(255,255,255,0.1);
-            transform: translateX(-50%);
+        @keyframes hookSway {
+            0%, 100% { transform: translateX(-50%) rotate(-1deg); }
+            50%       { transform: translateX(-50%) rotate(1deg);  }
         }
 
         /* ── ID Card Perspective ── */
@@ -510,6 +494,22 @@
                         box-shadow 0.6s cubic-bezier(0.23,1,0.32,1);
             box-shadow: 0 24px 60px rgba(0,0,0,0.85), 0 0 40px rgba(255,255,255,0.04);
             cursor: pointer;
+        }
+        /* Small eyelet hole at top-center so hook looks clipped through */
+        .id-card::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #0a0a0f;
+            border: 2px solid rgba(255,255,255,0.35);
+            box-shadow: 0 0 6px rgba(0,0,0,0.8), inset 0 1px 3px rgba(0,0,0,0.9);
+            z-index: 20;
+            pointer-events: none;
         }
         .id-card.hovered {
             transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
@@ -844,6 +844,43 @@
             transform: translateX(3px);
         }
 
+        /* Project section heading rows */
+        .project-section-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: var(--clay-shadow);
+        }
+
+        .project-section-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            font-family: 'Syne', sans-serif;
+            letter-spacing: 0.02em;
+        }
+
+        .project-viewall {
+            font-size: 12px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            opacity: 0.8;
+            transition: opacity 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .project-viewall:hover {
+            opacity: 1;
+            transform: translateX(2px);
+        }
+
         /* Availability card */
         .avail-card {
             padding: 18px;
@@ -1084,13 +1121,14 @@
         .skills-full {
             position: relative;
             z-index: 1;
-            padding: 80px 28px;
+            padding: 80px 28px 60px;
             border-top: 1px solid var(--border);
+            overflow: hidden;
         }
 
         .skills-full-header {
             text-align: center;
-            margin-bottom: 56px;
+            margin-bottom: 16px;
         }
 
         .skills-full-header h2 {
@@ -1102,9 +1140,7 @@
             margin-bottom: 12px;
         }
 
-        .skills-full-header h2 .highlight {
-            color: var(--accent);
-        }
+        .skills-full-header h2 .highlight { color: var(--accent); }
 
         .skills-full-header p {
             font-size: 16px;
@@ -1114,133 +1150,222 @@
             line-height: 1.6;
         }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+        /* ── Category tabs ── */
+        .skill-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 32px 0 40px;
         }
 
-        .skill-category {
+        .skill-tab {
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 22px;
-            padding: 24px;
-            /* scroll reveal - start hidden & zoomed out */
-            opacity: 0;
-            transform: scale(0.7) translateY(30px);
-            filter: blur(4px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-                filter 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.3s, box-shadow 0.3s;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
         }
 
-        .skill-category.revealed {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            filter: blur(0);
-            box-shadow: var(--clay-shadow);
-        }
-
-        .skill-category:hover {
-            border-color: rgba(200, 245, 63, 0.15);
-            transform: scale(1.03) translateY(-4px);
-            box-shadow: var(--clay-shadow-hover);
-        }
-
-        .skill-category.revealed:hover {
-            transform: scale(1.03) translateY(-4px);
-            box-shadow: var(--clay-shadow-hover);
-        }
-
-        .skill-cat-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .skill-cat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            border: 1px solid var(--border);
-            flex-shrink: 0;
-            box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.06), inset -1px -1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        .skill-cat-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
+        .skill-tab:hover {
+            border-color: rgba(200,245,63,0.3);
             color: var(--text);
         }
 
-        .skill-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .skill-pill {
-            padding: 7px 16px;
-            border-radius: 24px;
-            font-size: 13px;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            color: var(--muted);
-            letter-spacing: 0.01em;
-            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), -2px -2px 6px rgba(255, 255, 255, 0.02), inset 1px 1px 3px rgba(255, 255, 255, 0.06), inset -1px -1px 3px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-        }
-
-        .skill-pill:hover {
-            border-color: var(--accent);
+        .skill-tab.active {
+            background: rgba(200,245,63,0.12);
+            border-color: rgba(200,245,63,0.4);
             color: var(--accent);
-            background: rgba(200, 245, 63, 0.06);
-            transform: translateY(-2px);
-            box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.4), -3px -3px 8px rgba(255, 255, 255, 0.03), inset 1px 1px 4px rgba(200, 245, 63, 0.08), inset -1px -1px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 16px rgba(200,245,63,0.1);
         }
 
-        /* Stagger delays for scroll reveal */
-        .skill-category:nth-child(1) {
-            transition-delay: 0s;
+        /* ── Bubble cloud container ── */
+        .bubble-cloud {
+            position: relative;
+            width: 100%;
+            min-height: 560px;
+            /* hidden panels use display:none */
         }
 
-        .skill-category:nth-child(2) {
-            transition-delay: 0.08s;
+        .bubble-cloud.hidden { display: none; }
+
+        /* ── Individual bubble — Gradient Dark to Light Style ── */
+        .skb {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: default;
+            user-select: none;
+            /* Dark to light gradient like the reference image */
+            background: 
+                /* Top highlight for 3D effect */
+                radial-gradient(ellipse 60% 40% at 30% 15%, 
+                    rgba(255,255,255,0.15) 0%, 
+                    transparent 50%),
+                /* Main vertical gradient - dark top to bright bottom */
+                linear-gradient(180deg, 
+                    #dfdcdc 0%,
+                    #939191 15%,
+                    #646262 25%,
+                    #4a4a4a 40%,
+                    #6a6a6a 50%,
+                    #8a8a8a 60%,
+                    #aaaaaa 70%,
+                    #cccccc 80%,
+                    #e8e8e8 90%,
+                    #ffffff 100%);
+            box-shadow:
+                /* Main drop shadow */
+                0 25px 50px rgba(0,0,0,0.6),
+                0 10px 30px rgba(0,0,0,0.4),
+                /* Bottom glow from the bright area */
+                0 15px 40px rgba(255,255,255,0.1),
+                /* Rim light effect */
+                inset 0 -4px 20px rgba(255,255,255,0.3),
+                /* Top inner shadow for depth */
+                inset 0 4px 15px rgba(0,0,0,0.4),
+                /* Edge definition */
+                0 0 0 1px rgba(255,255,255,0.08);
+            transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1),
+                        box-shadow 0.4s ease,
+                        filter 0.4s ease;
+            will-change: transform;
+            /* Slight organic distortion */
+            border-radius: 47% 53% 52% 48% / 48% 52% 48% 52%;
         }
 
-        .skill-category:nth-child(3) {
-            transition-delay: 0.16s;
+        /* Reflective shine layer */
+        .skb::before {
+            content: '';
+            position: absolute;
+            inset: 5%;
+            border-radius: inherit;
+            background: 
+                /* Subtle curved highlight */
+                radial-gradient(ellipse 80% 50% at 50% 85%,
+                    rgba(255,255,255,0.25) 0%,
+                    transparent 60%);
+            pointer-events: none;
+            opacity: 0.8;
         }
 
-        .skill-category:nth-child(4) {
-            transition-delay: 0.24s;
+        /* Subtle noise/grain texture overlay */
+        .skb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            /* Top edge subtle highlight */
+            background: 
+                radial-gradient(ellipse 40% 20% at 50% 5%,
+                    rgba(60,60,60,0.5) 0%,
+                    transparent 70%);
+            pointer-events: none;
         }
 
-        .skill-category:nth-child(5) {
-            transition-delay: 0.32s;
+        .skb:hover {
+            transform: scale(1.15) translateY(-8px) rotate(2deg) !important;
+            box-shadow:
+                0 35px 70px rgba(0,0,0,0.6),
+                0 20px 40px rgba(0,0,0,0.4),
+                0 20px 50px rgba(255,255,255,0.15),
+                inset 0 -5px 25px rgba(255,255,255,0.35),
+                inset 0 5px 20px rgba(0,0,0,0.3),
+                0 0 60px rgba(255,255,255,0.12);
+            filter: brightness(1.1) contrast(1.05);
+            z-index: 20 !important;
         }
 
-        .skill-category:nth-child(6) {
-            transition-delay: 0.40s;
+        /* Morphing animation for organic blob shapes */
+        @keyframes skbMorph0 {
+            0%, 100% { border-radius: 47% 53% 52% 48% / 48% 52% 48% 52%; }
+            25% { border-radius: 52% 48% 48% 52% / 52% 48% 52% 48%; }
+            50% { border-radius: 48% 52% 53% 47% / 47% 53% 48% 52%; }
+            75% { border-radius: 53% 47% 47% 53% / 53% 47% 53% 47%; }
+        }
+        @keyframes skbMorph1 {
+            0%, 100% { border-radius: 52% 48% 47% 53% / 53% 47% 52% 48%; }
+            33% { border-radius: 47% 53% 52% 48% / 48% 52% 47% 53%; }
+            66% { border-radius: 53% 47% 48% 52% / 52% 48% 53% 47%; }
+        }
+        @keyframes skbMorph2 {
+            0%, 100% { border-radius: 45% 55% 50% 50% / 50% 50% 55% 45%; }
+            50% { border-radius: 55% 45% 50% 50% / 50% 50% 45% 55%; }
+        }
+        @keyframes skbMorph3 {
+            0%, 100% { border-radius: 55% 45% 48% 52% / 52% 48% 45% 55%; }
+            50% { border-radius: 45% 55% 52% 48% / 48% 52% 55% 45%; }
         }
 
-        .skill-category:nth-child(7) {
-            transition-delay: 0.48s;
+        .skb-label {
+            position: relative;
+            z-index: 2;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 800;
+            line-height: 1.15;
+            /* Dark text with white outline for visibility on gradient */
+            color: #1a1a1a;
+            text-shadow: 
+                /* White outline effect */
+                -1px -1px 0 rgba(255,255,255,0.8),
+                1px -1px 0 rgba(255,255,255,0.8),
+                -1px 1px 0 rgba(255,255,255,0.8),
+                1px 1px 0 rgba(255,255,255,0.8),
+                0 0 10px rgba(255,255,255,0.5),
+                0 0 20px rgba(255,255,255,0.3);
+            padding: 0 10%;
+            word-break: break-word;
+            letter-spacing: 0.01em;
         }
 
-        .skill-category:nth-child(8) {
-            transition-delay: 0.56s;
+        /* Float keyframes — organic liquid motion */
+        @keyframes skbFloat0 { 
+            0%,100%{transform:translate(0,0) scale(1) rotate(0deg)} 
+            25%{transform:translate(2px,-6px) scale(1.02) rotate(1deg)} 
+            50%{transform:translate(4px,-10px) scale(1) rotate(-1deg)} 
+            75%{transform:translate(1px,-5px) scale(0.98) rotate(0.5deg)} 
         }
-
-        .skill-category:nth-child(9) {
-            transition-delay: 0.64s;
+        @keyframes skbFloat1 { 
+            0%,100%{transform:translate(0,0) scale(1)} 
+            33%{transform:translate(-4px,-8px) scale(1.01)} 
+            66%{transform:translate(-2px,-5px) scale(0.99)} 
+        }
+        @keyframes skbFloat2 { 
+            0%,100%{transform:translate(0,0) rotate(0deg)} 
+            50%{transform:translate(5px,-12px) rotate(-2deg)} 
+        }
+        @keyframes skbFloat3 { 
+            0%,100%{transform:translate(0,0) scale(1)} 
+            40%{transform:translate(-3px,-9px) scale(1.02)} 
+            80%{transform:translate(1px,-4px) scale(0.98)} 
+        }
+        @keyframes skbFloat4 { 
+            0%,100%{transform:translate(0,0)} 
+            30%{transform:translate(6px,-4px)} 
+            70%{transform:translate(3px,-8px)} 
+        }
+        @keyframes skbFloat5 { 
+            0%,100%{transform:translate(0,0) rotate(0deg)} 
+            50%{transform:translate(-5px,-11px) rotate(1.5deg)} 
+        }
+        @keyframes skbFloat6 { 
+            0%,100%{transform:translate(0,0) scale(1)} 
+            25%{transform:translate(3px,-7px) scale(0.98)} 
+            75%{transform:translate(-2px,-13px) scale(1.02)} 
+        }
+        @keyframes skbFloat7 { 
+            0%,100%{transform:translate(0,0)} 
+            35%{transform:translate(-6px,-5px)} 
+            65%{transform:translate(-3px,-9px)} 
         }
 
         /* Also reveal the header */
@@ -1259,26 +1384,25 @@
             filter: blur(0);
         }
 
+        /* keep old .skill-category class in DOM but hidden — observer still uses it */
+        .skill-category { display: none; }
+
         @media (max-width: 768px) {
-            .skills-full {
-                padding: 48px 16px;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .skills-full-header h2 {
-                font-size: 28px;
-            }
+            .skills-full { padding: 48px 16px; }
+            .bubble-cloud { min-height: 420px; }
+            .skills-full-header h2 { font-size: 28px; }
+        }
+        @media (max-width: 480px) {
+            .bubble-cloud { min-height: 340px; }
         }
 
-        /* ========== BENTO PROJECTS SECTION ========== */
+        /* ========== BENTO PROJECTS SECTION — Horizontal Scroll ========== */
         .bento-projects {
             position: relative;
             z-index: 1;
-            padding: 80px 28px;
+            padding: 80px 0;
             border-top: 1px solid var(--border);
+            overflow: hidden;
         }
 
         .bento-header {
@@ -1286,6 +1410,7 @@
             align-items: baseline;
             justify-content: space-between;
             margin-bottom: 40px;
+            padding: 0 28px;
         }
 
         .bento-header h2 {
@@ -1310,65 +1435,153 @@
             font-weight: 600;
         }
 
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 220px;
-            gap: 14px;
+        /* Horizontal scroll container */
+        .projects-scroll-wrapper {
+            position: relative;
+            width: 100%;
         }
 
-        .bento-item {
-            position: relative;
-            border-radius: 18px;
-            overflow: hidden;
+        .projects-scroll {
+            display: flex;
+            gap: 24px;
+            padding: 20px 28px 40px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            cursor: grab;
+        }
+
+        .projects-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .projects-scroll:active {
+            cursor: grabbing;
+        }
+
+        /* Scroll indicators */
+        .scroll-indicator {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--surface);
             border: 1px solid var(--border);
             box-shadow: var(--clay-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            color: var(--muted);
+        }
+
+        .scroll-indicator:hover {
+            background: var(--surface2);
+            border-color: rgba(200,245,63,0.3);
+            color: var(--accent);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .scroll-indicator.left {
+            left: 12px;
+        }
+
+        .scroll-indicator.right {
+            right: 12px;
+        }
+
+        .scroll-indicator svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Gradient fade edges */
+        .projects-scroll-wrapper::before,
+        .projects-scroll-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .projects-scroll-wrapper::before {
+            left: 0;
+            background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
+        }
+
+        .projects-scroll-wrapper::after {
+            right: 0;
+            background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%);
+        }
+
+        /* Project cards */
+        .project-card-h {
+            flex-shrink: 0;
+            width: 380px;
+            height: 480px;
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: var(--clay-shadow);
+            position: relative;
             cursor: none;
             /* scroll reveal */
             opacity: 0;
-            transform: scale(0.8);
-            filter: blur(3px);
+            transform: translateX(60px) scale(0.9);
             transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.3s, border-color 0.3s;
         }
 
-        .bento-item.revealed {
+        .project-card-h.revealed {
             opacity: 1;
-            transform: scale(1);
-            filter: blur(0);
+            transform: translateX(0) scale(1);
         }
 
-        .bento-item:hover {
+        .project-card-h:hover {
             box-shadow: var(--clay-shadow-hover);
-            border-color: rgba(200, 245, 63, 0.12);
-            z-index: 2;
+            border-color: rgba(200, 245, 63, 0.2);
         }
 
-        .bento-item:hover .bento-img {
+        .project-card-h:hover .project-card-img {
             transform: scale(1.08);
         }
 
-        .bento-item:hover .bento-overlay {
+        .project-card-h:hover .project-card-overlay {
             opacity: 1;
         }
 
-        /* Sizes */
-        .bento-wide {
-            grid-column: span 2;
+        /* Stagger animations */
+        .project-card-h:nth-child(1) { transition-delay: 0s; }
+        .project-card-h:nth-child(2) { transition-delay: 0.08s; }
+        .project-card-h:nth-child(3) { transition-delay: 0.16s; }
+        .project-card-h:nth-child(4) { transition-delay: 0.24s; }
+        .project-card-h:nth-child(5) { transition-delay: 0.32s; }
+        .project-card-h:nth-child(6) { transition-delay: 0.40s; }
+        .project-card-h:nth-child(7) { transition-delay: 0.48s; }
+        .project-card-h:nth-child(8) { transition-delay: 0.56s; }
+        .project-card-h:nth-child(9) { transition-delay: 0.64s; }
+        .project-card-h:nth-child(10) { transition-delay: 0.72s; }
+
+        .project-card-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
         }
 
-        .bento-tall {
-            grid-row: span 2;
-        }
-
-        .bento-big {
-            grid-column: span 2;
-            grid-row: span 2;
-        }
-
-        .bento-img {
+        .project-card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -1376,124 +1589,168 @@
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .bento-overlay {
+        .project-card-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.85) 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 20px;
+            background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
-        }
-
-        .bento-overlay-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 6px;
-        }
-
-        .bento-overlay-desc {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.5;
-        }
-
-        .bento-overlay-tags {
             display: flex;
-            gap: 6px;
-            margin-top: 10px;
-            flex-wrap: wrap;
+            align-items: flex-end;
+            padding: 20px;
         }
 
-        .bento-otag {
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 10px;
-            background: rgba(255, 255, 255, 0.1);
+        .project-card-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .project-card-category {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             color: var(--accent);
-            border: 1px solid rgba(200, 245, 63, 0.15);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-card-category::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .project-card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .project-card-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .project-card-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .project-card-tag {
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            background: var(--surface2);
+            color: var(--muted);
+            border: 1px solid var(--border);
             letter-spacing: 0.02em;
         }
 
-        /* Name label always visible */
-        .bento-name {
-            position: absolute;
-            bottom: 14px;
-            left: 16px;
-            font-family: 'Syne', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
-            z-index: 1;
-            pointer-events: none;
-            transition: opacity 0.3s;
+        .project-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            margin-top: auto;
+            border-top: 1px solid var(--border);
         }
 
-        .bento-item:hover .bento-name {
-            opacity: 0;
+        .project-card-year {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 600;
+            letter-spacing: 0.08em;
         }
 
-        /* Stagger delays */
-        .bento-item:nth-child(1) {
-            transition-delay: 0s;
+        .project-card-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            transition: transform 0.2s, gap 0.2s;
         }
 
-        .bento-item:nth-child(2) {
-            transition-delay: 0.08s;
+        .project-card-link:hover {
+            transform: translateX(3px);
+            gap: 10px;
         }
 
-        .bento-item:nth-child(3) {
-            transition-delay: 0.16s;
+        /* Scroll progress bar */
+        .scroll-progress {
+            width: 200px;
+            height: 3px;
+            background: var(--surface2);
+            border-radius: 2px;
+            margin: 0 auto;
+            overflow: hidden;
         }
 
-        .bento-item:nth-child(4) {
-            transition-delay: 0.24s;
-        }
-
-        .bento-item:nth-child(5) {
-            transition-delay: 0.32s;
-        }
-
-        .bento-item:nth-child(6) {
-            transition-delay: 0.40s;
+        .scroll-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent2), var(--accent));
+            border-radius: 2px;
+            width: 20%;
+            transition: transform 0.1s ease;
         }
 
         @media (max-width: 900px) {
-            .bento-grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 200px;
+            .project-card-h {
+                width: 320px;
+                height: 440px;
+            }
+
+            .project-card-img-wrap {
+                height: 200px;
             }
 
             .bento-header {
                 flex-direction: column;
                 gap: 8px;
             }
+
+            .scroll-indicator {
+                display: none;
+            }
         }
 
         @media (max-width: 550px) {
             .bento-projects {
-                padding: 48px 16px;
+                padding: 48px 0;
             }
 
-            .bento-grid {
-                grid-template-columns: 1fr;
-                grid-auto-rows: 220px;
-            }
-
-            .bento-wide,
-            .bento-tall,
-            .bento-big {
-                grid-column: span 1;
-                grid-row: span 1;
+            .project-card-h {
+                width: 300px;
+                height: 420px;
             }
 
             .bento-header h2 {
                 font-size: 28px;
+            }
+
+            .projects-scroll {
+                padding: 10px 16px 30px;
+                gap: 16px;
             }
         }
 
@@ -1822,17 +2079,17 @@
                 </p>
 
                 <div class="stats">
-                    <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Years exp.</span></div>
-                    <div class="stat"><span class="stat-num">80+</span><span class="stat-label">Projects</span></div>
-                    <div class="stat"><span class="stat-num">32k</span><span class="stat-label">Followers</span></div>
+                    <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Years exp.</span></div>
+                    <div class="stat"><span class="stat-num">15+</span><span class="stat-label">Projects</span></div>
+                    <div class="stat"><span class="stat-num">B.Tech</span><span class="stat-label">CS Student</span></div>
                 </div>
 
                 <div class="tags">
-                    <span class="tag">UX</span>
-                    <span class="tag">Branding</span>
-                    <span class="tag">Product</span>
-                    <span class="tag">Motion</span>
-                    <span class="tag">Figma</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Django</span>
+                    <span class="tag">Data Science</span>
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">C++</span>
                 </div>
 
                 <div class="location">
@@ -1841,7 +2098,7 @@
                             d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 6 3.5a1.5 1.5 0 0 1 0 3z"
                             fill="currentColor" />
                     </svg>
-                    Amsterdam, NL — UTC+2
+                    India — UTC+5:30
                 </div>
 
                 <div class="cta-row">
@@ -1850,25 +2107,57 @@
                 </div>
 
                 <div class="socials">
-                    <a href="#" class="social-btn" title="Twitter">𝕏</a>
+                    <a href="#" class="social-btn" title="GitHub">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+                    </a>
                     <a href="#" class="social-btn" title="LinkedIn">in</a>
-                    <a href="#" class="social-btn" title="Dribbble">🏀</a>
-                    <a href="#" class="social-btn" title="Behance">Be</a>
+                    <a href="#" class="social-btn" title="Twitter">𝕏</a>
                 </div>
             </div>
 
-            <!-- CENTER — ID Card with Lanyard Strap -->
+            <!-- CENTER — ID Card with Hook -->
             <div class="panel-center">
 
-                <!-- Lanyard strap -->
-                <div class="lanyard-wrap">
-                    <div class="lanyard-clip"></div>
-                    <div class="lanyard-ring"></div>
-                    <div class="lanyard-strap"></div>
-                </div>
-
-                <!-- ID Card + floating badges wrapped together -->
+                <!-- ID Card + hook wrapped together -->
                 <div class="id-card-wrap">
+
+                    <!-- Metal hook sitting on top of card -->
+                    <div class="id-hook-wrap">
+                        <svg class="id-hook-svg" width="48" height="30" viewBox="0 0 48 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="hookGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%"   stop-color="#f0f0f0"/>
+                                    <stop offset="35%"  stop-color="#d8d8d8"/>
+                                    <stop offset="65%"  stop-color="#aaaaaa"/>
+                                    <stop offset="100%" stop-color="#888888"/>
+                                </linearGradient>
+                                <linearGradient id="hookInner" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%"   stop-color="#1a1a1a"/>
+                                    <stop offset="100%" stop-color="#0a0a0a"/>
+                                </linearGradient>
+                                <linearGradient id="hookShine" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%"   stop-color="rgba(255,255,255,0.0)"/>
+                                    <stop offset="40%"  stop-color="rgba(255,255,255,0.25)"/>
+                                    <stop offset="60%"  stop-color="rgba(255,255,255,0.08)"/>
+                                    <stop offset="100%" stop-color="rgba(255,255,255,0.0)"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- Outer U-shape body -->
+                            <path d="M10 2 C10 2 6 2 6 8 L6 24 C6 27 9 29 12 29 L36 29 C39 29 42 27 42 24 L42 8 C42 2 38 2 38 2 Z"
+                                  fill="url(#hookGrad)" stroke="rgba(0,0,0,0.25)" stroke-width="0.5"/>
+                            <!-- Inner cutout (the hole the card ring fits through) -->
+                            <path d="M16 8 C16 8 13 8 13 13 L13 22 C13 24.5 15 26 17 26 L31 26 C33 26 35 24.5 35 22 L35 13 C35 8 32 8 32 8 Z"
+                                  fill="url(#hookInner)"/>
+                            <!-- Shine highlight across top -->
+                            <rect x="6" y="2" width="36" height="7" rx="3" fill="url(#hookShine)"/>
+                            <!-- Top flat bar (the part that clips to card) -->
+                            <rect x="8" y="0" width="32" height="6" rx="3"
+                                  fill="url(#hookGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
+                            <!-- Top bar shine -->
+                            <rect x="10" y="1" width="28" height="2" rx="1" fill="rgba(255,255,255,0.35)"/>
+                        </svg>
+                    </div>
+
                 <div class="id-card-perspective">
                     <div class="id-card" id="idCard">
                         <div class="id-card-inner">
@@ -1910,46 +2199,25 @@
                 
                 </div><!-- /id-card-wrap -->
 
-                <div class="card-label">Digital Pass</div>
             </div>
 
             <!-- RIGHT -->
             <div class="panel-right">
-                <p class="section-label">Latest projects</p>
+                <p class="section-label">Projects</p>
 
                 <div class="projects-list">
-                    <a href="#" class="project-card">
-                        <div class="project-thumb" style="background:linear-gradient(135deg,#2a1f5e,#1a1240);">🎓</div>
-                        <div class="project-info">
-                            <div class="project-title">Spl-her Design Course</div>
-                            <div class="project-meta">Course platform · UI/UX</div>
-                        </div>
-                        <span class="project-arrow">→</span>
-                    </a>
-                    <a href="#" class="project-card">
-                        <div class="project-thumb" style="background:linear-gradient(135deg,#0d3b2e,#061f18);">🌐</div>
-                        <div class="project-info">
-                            <div class="project-title">Spl-mobiledesig.com</div>
-                            <div class="project-meta">Web design · Branding</div>
-                        </div>
-                        <span class="project-arrow">→</span>
-                    </a>
-                    <a href="#" class="project-card">
-                        <div class="project-thumb" style="background:linear-gradient(135deg,#3b1f0d,#1f0e00);">🤖</div>
-                        <div class="project-info">
-                            <div class="project-title">Plush 3d characters</div>
-                            <div class="project-meta">3D design · Motion</div>
-                        </div>
-                        <span class="project-arrow">→</span>
-                    </a>
-                    <a href="#" class="project-card">
-                        <div class="project-thumb" style="background:linear-gradient(135deg,#3b0d1f,#1f0010);">💘</div>
-                        <div class="project-info">
-                            <div class="project-title">Nustart Dating app</div>
-                            <div class="project-meta">Mobile app · Product</div>
-                        </div>
-                        <span class="project-arrow">→</span>
-                    </a>
+                    <div class="project-section-row">
+                        <span class="project-section-label">Full Stack</span>
+                        <a href="fullstack.html" class="project-viewall">View all →</a>
+                    </div>
+                    <div class="project-section-row">
+                        <span class="project-section-label">Data Science</span>
+                        <a href="datascience.html" class="project-viewall">View all →</a>
+                    </div>
+                    <div class="project-section-row">
+                        <span class="project-section-label">Certificates</span>
+                        <a href="certificates.html" class="project-viewall">View all →</a>
+                    </div>
                 </div>
 
                 <!-- Availability -->
@@ -1969,24 +2237,24 @@
                     <p class="section-label">Core Skills</p>
                     <div class="skills-section">
                         <div class="skill-bar">
-                            <div class="skill-row"><span class="skill-name">Product Design</span><span
-                                    class="skill-pct">95%</span></div>
+                            <div class="skill-row"><span class="skill-name">Python / Django</span><span
+                                    class="skill-pct">92%</span></div>
                             <div class="bar-track">
-                                <div class="bar-fill" style="width:95%; animation-delay:0.8s"></div>
+                                <div class="bar-fill" style="width:92%; animation-delay:0.8s"></div>
                             </div>
                         </div>
                         <div class="skill-bar">
-                            <div class="skill-row"><span class="skill-name">Interaction Design</span><span
-                                    class="skill-pct">88%</span></div>
+                            <div class="skill-row"><span class="skill-name">Data Science / ML</span><span
+                                    class="skill-pct">85%</span></div>
                             <div class="bar-track">
-                                <div class="bar-fill" style="width:88%; animation-delay:1s"></div>
+                                <div class="bar-fill" style="width:85%; animation-delay:1s"></div>
                             </div>
                         </div>
                         <div class="skill-bar">
-                            <div class="skill-row"><span class="skill-name">Branding & Identity</span><span
-                                    class="skill-pct">80%</span></div>
+                            <div class="skill-row"><span class="skill-name">C++ / Algorithms</span><span
+                                    class="skill-pct">78%</span></div>
                             <div class="bar-track">
-                                <div class="bar-fill" style="width:80%; animation-delay:1.2s"></div>
+                                <div class="bar-fill" style="width:78%; animation-delay:1.2s"></div>
                             </div>
                         </div>
                     </div>
@@ -2002,145 +2270,34 @@
                 <p>Technologies, frameworks, and tools I work with to build impactful solutions.</p>
             </div>
 
-            <div class="skills-grid">
-                <!-- Programming Languages -->
-                <div class="skill-category">
-                    <div class="skill-cat-header">
-                        <div class="skill-cat-icon" style="background: linear-gradient(135deg, #2a1f5e, #1a1240);">💻
-                        </div>
-                        <div class="skill-cat-title">Programming Languages</div>
-                    </div>
-                    <div class="skill-pills">
-                        <span class="skill-pill">Python</span>
-                        <span class="skill-pill">C++</span>
-                        <span class="skill-pill">JavaScript</span>
-                        <span class="skill-pill">C</span>
-                        <span class="skill-pill">Java</span>
-                        <span class="skill-pill">SQL</span>
-                    </div>
-                </div>
+            <!-- Category tabs -->
+            <div class="skill-tabs" id="skillTabs">
+                <button class="skill-tab active" data-cloud="cloud-all">All</button>
+                <button class="skill-tab" data-cloud="cloud-lang">Languages</button>
+                <button class="skill-tab" data-cloud="cloud-ds">Data Science & ML</button>
+                <button class="skill-tab" data-cloud="cloud-backend">Backend</button>
+                <button class="skill-tab" data-cloud="cloud-db">Databases</button>
+                <button class="skill-tab" data-cloud="cloud-bigdata">Big Data</button>
+                <button class="skill-tab" data-cloud="cloud-viz">Visualization</button>
+                <button class="skill-tab" data-cloud="cloud-web">Web / Frontend</button>
+                <button class="skill-tab" data-cloud="cloud-ai">AI / CV</button>
+            </div>
 
-                <!-- Backend Development -->
-                <div class="skill-category">
-                    <div class="skill-cat-header">
-                        <div class="skill-cat-icon" style="background: linear-gradient(135deg, #0d3b2e, #061f18);">⚙️
-                        </div>
-                        <div class="skill-cat-title">Backend Development</div>
-                    </div>
-                    <div class="skill-pills">
-                        <span class="skill-pill">Django</span>
-                        <span class="skill-pill">REST APIs</span>
-                        <span class="skill-pill">Backend System Design</span>
-                    </div>
-                </div>
+            <!-- ALL cloud (default) -->
+            <div class="bubble-cloud" id="cloud-all"></div>
+            <!-- Per-category clouds (hidden, populated by JS) -->
+            <div class="bubble-cloud hidden" id="cloud-lang"></div>
+            <div class="bubble-cloud hidden" id="cloud-ds"></div>
+            <div class="bubble-cloud hidden" id="cloud-backend"></div>
+            <div class="bubble-cloud hidden" id="cloud-db"></div>
+            <div class="bubble-cloud hidden" id="cloud-bigdata"></div>
+            <div class="bubble-cloud hidden" id="cloud-viz"></div>
+            <div class="bubble-cloud hidden" id="cloud-web"></div>
+            <div class="bubble-cloud hidden" id="cloud-ai"></div>
 
-                <!-- Frontend Development -->
-                <div class="skill-category">
-                    <div class="skill-cat-header">
-                        <div class="skill-cat-icon" style="background: linear-gradient(135deg, #3b1f0d, #1f0e00);">🎨
-                        </div>
-                        <div class="skill-cat-title">Frontend Development</div>
-                    </div>
-                    <div class="skill-pills">
-                        <span class="skill-pill">React</span>
-                        <span class="skill-pill">Tailwind CSS</span>
-                        <span class="skill-pill">Bootstrap</span>
-                        <span class="skill-pill">HTML</span>
-                        <span class="skill-pill">CSS</span>
-                    </div>
-                </div>
-
-                <!-- Data Science & ML -->
-                <div class="skill-category">
-                    <div class="skill-cat-header">
-                        <div class="skill-cat-icon" style="background: linear-gradient(135deg, #1f2a5e, #0d1240);">🧠
-                        </div>
-                        <div class="skill-cat-title">Data Science & Machine Learning</div>
-                    </div>
-                    <div class="skill-pills">
-                        <span class="skill-pill">Data Analysis</span>
-                        <span class="skill-pill">Data Visualization</span>
-                        <span class="skill-pill">Machine Learning</span>
-                        <span class="skill-pill">Model Tuning</span>
-                        <span class="skill-pill">K-Means Clustering</span>
-                        <span class="skill-pill">Cross-Validation</span>
-                        <span class="skill-pill">GridSearchCV</span>
-                        <span class="skill-pill">RandomizedSearchCV</span>
-                    </div>
-                </div>
-
-                <!-- Big Data & Data Engineering -->
-                <div class="skill-category">
-                    <div class="skill-cat-header">
-                        <div class="skill-cat-icon" style="background: linear-gradient(135deg, #3b0d1f, #1f0010);">📊
-                        </div>
-                        <div class="skill-cat-title">Big Data & Data Engineering</div>
-                    </div>
-                    <div class="skill-pills">
-                        <span class="skill-pill">Apache Spark</span>
-                        <span class="skill-pill">Apache Kafka</span>
-                        <span class="skill-pill">Apache Airflow</span>
-                    </div>
-                </div>
-
-                <!-- Databases -->
-                <div class="skill-category">
-                    <div class="skill-cat-header">
-                        <div class="skill-cat-icon" style="background: linear-gradient(135deg, #2e3b0d, #181f00);">🗃️
-                        </div>
-                        <div class="skill-cat-title">Databases</div>
-                    </div>
-                    <div class="skill-pills">
-                        <span class="skill-pill">MySQL</span>
-                        <span class="skill-pill">PostgreSQL</span>
-                    </div>
-                </div>
-
-                <!-- Tools & Platforms -->
-                <div class="skill-category">
-                    <div class="skill-cat-header">
-                        <div class="skill-cat-icon" style="background: linear-gradient(135deg, #1a3b5e, #0d1f40);">🛠️
-                        </div>
-                        <div class="skill-cat-title">Tools & Platforms</div>
-                    </div>
-                    <div class="skill-pills">
-                        <span class="skill-pill">Git</span>
-                        <span class="skill-pill">GitHub</span>
-                        <span class="skill-pill">AWS</span>
-                        <span class="skill-pill">Jupyter Notebook</span>
-                        <span class="skill-pill">Power BI</span>
-                        <span class="skill-pill">Docker</span>
-                    </div>
-                </div>
-
-                <!-- CS Fundamentals -->
-                <div class="skill-category">
-                    <div class="skill-cat-header">
-                        <div class="skill-cat-icon" style="background: linear-gradient(135deg, #3b2e0d, #1f1800);">📐
-                        </div>
-                        <div class="skill-cat-title">CS Fundamentals</div>
-                    </div>
-                    <div class="skill-pills">
-                        <span class="skill-pill">Data Structures & Algorithms</span>
-                        <span class="skill-pill">Problem Solving</span>
-                        <span class="skill-pill">Algorithm Design</span>
-                    </div>
-                </div>
-
-                <!-- Soft Skills -->
-                <div class="skill-category">
-                    <div class="skill-cat-header">
-                        <div class="skill-cat-icon" style="background: linear-gradient(135deg, #0d3b3b, #001f1f);">🤝
-                        </div>
-                        <div class="skill-cat-title">Soft Skills</div>
-                    </div>
-                    <div class="skill-pills">
-                        <span class="skill-pill">Problem Solving</span>
-                        <span class="skill-pill">Teamwork</span>
-                        <span class="skill-pill">Adaptability</span>
-                        <span class="skill-pill">Project Management</span>
-                    </div>
-                </div>
+            <!-- keep old markup for observer compatibility -->
+            <div style="display:none" aria-hidden="true">
+                <div class="skill-category"></div>
             </div>
         </section>
 
@@ -2151,97 +2308,246 @@
                 <span class="bento-sub">2024 — 2026</span>
             </div>
 
-            <div class="bento-grid">
-                <!-- 1: AI Model — Big (2x2) -->
-                <div class="bento-item bento-big">
-                    <img class="bento-img" src="assets/proj_ai.png" alt="AI Model Evolution" />
-                    <span class="bento-name">AI Model Evolution</span>
-                    <div class="bento-overlay">
-                        <div class="bento-overlay-title">Autonomous AI Model Evolution</div>
-                        <div class="bento-overlay-desc">AI system that evolves ML models through genetic algorithms,
-                            optimizing architecture and hyperparameters autonomously.</div>
-                        <div class="bento-overlay-tags">
-                            <span class="bento-otag">Python</span>
-                            <span class="bento-otag">ML</span>
-                            <span class="bento-otag">Genetic Algorithms</span>
+            <div class="projects-scroll-wrapper">
+                <!-- Left scroll button -->
+                <button class="scroll-indicator left" onclick="scrollProjects(-1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+
+                <!-- Right scroll button -->
+                <button class="scroll-indicator right" onclick="scrollProjects(1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+
+                <div class="projects-scroll" id="projectsScroll">
+                    <!-- 1: E-Commerce Website -->
+                    <div class="project-card-h">
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-img" src="django_project_image/ecormerce_website.png" alt="E-Commerce Website" />
+                            <div class="project-card-overlay"></div>
+                        </div>
+                        <div class="project-card-body">
+                            <span class="project-card-category">Full Stack</span>
+                            <h3 class="project-card-title">E-Commerce Platform</h3>
+                            <p class="project-card-desc">Complete e-commerce solution with product catalog, cart system, user authentication, and payment integration using Django.</p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Django</span>
+                                <span class="project-card-tag">PostgreSQL</span>
+                                <span class="project-card-tag">REST API</span>
+                            </div>
+                            <div class="project-card-footer">
+                                <span class="project-card-year">2025</span>
+                                <a href="fullstack.html" class="project-card-link">View Details →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2: Class Audit AI -->
+                    <div class="project-card-h">
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-img" src="django_project_image/class_audit ai.png" alt="Class Audit AI" />
+                            <div class="project-card-overlay"></div>
+                        </div>
+                        <div class="project-card-body">
+                            <span class="project-card-category">AI / ML</span>
+                            <h3 class="project-card-title">Class Audit AI</h3>
+                            <p class="project-card-desc">AI-powered classroom attendance and engagement tracking system using computer vision and facial recognition.</p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Python</span>
+                                <span class="project-card-tag">OpenCV</span>
+                                <span class="project-card-tag">TensorFlow</span>
+                            </div>
+                            <div class="project-card-footer">
+                                <span class="project-card-year">2025</span>
+                                <a href="fullstack.html" class="project-card-link">View Details →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3: Movie Streaming Platform -->
+                    <div class="project-card-h">
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-img" src="django_project_image/movie_streaming_plateform.png" alt="Movie Streaming Platform" />
+                            <div class="project-card-overlay"></div>
+                        </div>
+                        <div class="project-card-body">
+                            <span class="project-card-category">Full Stack</span>
+                            <h3 class="project-card-title">Movie Streaming Platform</h3>
+                            <p class="project-card-desc">Netflix-like streaming service with video playback, user subscriptions, recommendations, and admin dashboard.</p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Django</span>
+                                <span class="project-card-tag">JavaScript</span>
+                                <span class="project-card-tag">AWS S3</span>
+                            </div>
+                            <div class="project-card-footer">
+                                <span class="project-card-year">2025</span>
+                                <a href="fullstack.html" class="project-card-link">View Details →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4: Customer Segmentation -->
+                    <div class="project-card-h">
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-img" src="data_science_project/customer_segmentation for target marketing.png" alt="Customer Segmentation" />
+                            <div class="project-card-overlay"></div>
+                        </div>
+                        <div class="project-card-body">
+                            <span class="project-card-category">Data Science</span>
+                            <h3 class="project-card-title">Customer Segmentation</h3>
+                            <p class="project-card-desc">K-Means clustering analysis to segment customers for targeted marketing campaigns based on purchasing behavior.</p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Python</span>
+                                <span class="project-card-tag">Scikit-learn</span>
+                                <span class="project-card-tag">Pandas</span>
+                            </div>
+                            <div class="project-card-footer">
+                                <span class="project-card-year">2024</span>
+                                <a href="datascience.html" class="project-card-link">View Details →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5: Bank Churn Analysis -->
+                    <div class="project-card-h">
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-img" src="data_science_project/power_bi_bank churn analysis.jpeg" alt="Bank Churn Analysis" />
+                            <div class="project-card-overlay"></div>
+                        </div>
+                        <div class="project-card-body">
+                            <span class="project-card-category">Data Science</span>
+                            <h3 class="project-card-title">Bank Churn Analysis</h3>
+                            <p class="project-card-desc">Power BI dashboard analyzing customer churn patterns with predictive insights for retention strategies.</p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Power BI</span>
+                                <span class="project-card-tag">SQL</span>
+                                <span class="project-card-tag">DAX</span>
+                            </div>
+                            <div class="project-card-footer">
+                                <span class="project-card-year">2024</span>
+                                <a href="datascience.html" class="project-card-link">View Details →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6: Credit Card Dashboard -->
+                    <div class="project-card-h">
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-img" src="data_science_project/credit_card_dashboard.png" alt="Credit Card Dashboard" />
+                            <div class="project-card-overlay"></div>
+                        </div>
+                        <div class="project-card-body">
+                            <span class="project-card-category">Data Science</span>
+                            <h3 class="project-card-title">Credit Card Dashboard</h3>
+                            <p class="project-card-desc">Interactive analytics dashboard for credit card transaction monitoring and fraud detection visualization.</p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Python</span>
+                                <span class="project-card-tag">Plotly</span>
+                                <span class="project-card-tag">Streamlit</span>
+                            </div>
+                            <div class="project-card-footer">
+                                <span class="project-card-year">2024</span>
+                                <a href="datascience.html" class="project-card-link">View Details →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7: Exam Portal -->
+                    <div class="project-card-h">
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-img" src="django_project_image/exam_portal.png" alt="Exam Portal" />
+                            <div class="project-card-overlay"></div>
+                        </div>
+                        <div class="project-card-body">
+                            <span class="project-card-category">Full Stack</span>
+                            <h3 class="project-card-title">Online Exam Portal</h3>
+                            <p class="project-card-desc">Secure online examination system with proctoring, auto-grading, timer, and detailed analytics for educators.</p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Django</span>
+                                <span class="project-card-tag">JavaScript</span>
+                                <span class="project-card-tag">PostgreSQL</span>
+                            </div>
+                            <div class="project-card-footer">
+                                <span class="project-card-year">2025</span>
+                                <a href="fullstack.html" class="project-card-link">View Details →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8: Social Media Platform -->
+                    <div class="project-card-h">
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-img" src="django_project_image/social_media.png" alt="Social Media Platform" />
+                            <div class="project-card-overlay"></div>
+                        </div>
+                        <div class="project-card-body">
+                            <span class="project-card-category">Full Stack</span>
+                            <h3 class="project-card-title">Social Media Platform</h3>
+                            <p class="project-card-desc">Full-featured social network with posts, comments, likes, real-time chat, and user profiles.</p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Django</span>
+                                <span class="project-card-tag">WebSockets</span>
+                                <span class="project-card-tag">Redis</span>
+                            </div>
+                            <div class="project-card-footer">
+                                <span class="project-card-year">2025</span>
+                                <a href="fullstack.html" class="project-card-link">View Details →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 9: Taxi Fare Estimator -->
+                    <div class="project-card-h">
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-img" src="django_project_image/tax_fare_estimator.png" alt="Taxi Fare Estimator" />
+                            <div class="project-card-overlay"></div>
+                        </div>
+                        <div class="project-card-body">
+                            <span class="project-card-category">ML / Full Stack</span>
+                            <h3 class="project-card-title">Taxi Fare Estimator</h3>
+                            <p class="project-card-desc">ML-powered fare prediction system with real-time distance calculation and route optimization.</p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Python</span>
+                                <span class="project-card-tag">XGBoost</span>
+                                <span class="project-card-tag">Maps API</span>
+                            </div>
+                            <div class="project-card-footer">
+                                <span class="project-card-year">2024</span>
+                                <a href="datascience.html" class="project-card-link">View Details →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 10: ML Churn Analysis Model -->
+                    <div class="project-card-h">
+                        <div class="project-card-img-wrap">
+                            <img class="project-card-img" src="data_science_project/ml_model for churn analysis.png" alt="ML Churn Model" />
+                            <div class="project-card-overlay"></div>
+                        </div>
+                        <div class="project-card-body">
+                            <span class="project-card-category">Machine Learning</span>
+                            <h3 class="project-card-title">Churn Prediction Model</h3>
+                            <p class="project-card-desc">Advanced ML model predicting customer churn with 92% accuracy using ensemble techniques and feature engineering.</p>
+                            <div class="project-card-tags">
+                                <span class="project-card-tag">Python</span>
+                                <span class="project-card-tag">Random Forest</span>
+                                <span class="project-card-tag">SHAP</span>
+                            </div>
+                            <div class="project-card-footer">
+                                <span class="project-card-year">2024</span>
+                                <a href="datascience.html" class="project-card-link">View Details →</a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2: Customer Segmentation — Normal -->
-                <div class="bento-item">
-                    <img class="bento-img" src="assets/proj_data.png" alt="Customer Segmentation" />
-                    <span class="bento-name">Customer Segmentation</span>
-                    <div class="bento-overlay">
-                        <div class="bento-overlay-title">Customer Segmentation</div>
-                        <div class="bento-overlay-desc">K-Means clustering with GridSearchCV to segment customers by
-                            purchasing behavior.</div>
-                        <div class="bento-overlay-tags">
-                            <span class="bento-otag">Python</span>
-                            <span class="bento-otag">Scikit-learn</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3: Sentiment Analysis — Tall -->
-                <div class="bento-item bento-tall">
-                    <img class="bento-img" src="assets/proj_nlp.png" alt="Sentiment Analysis" />
-                    <span class="bento-name">Sentiment Analysis</span>
-                    <div class="bento-overlay">
-                        <div class="bento-overlay-title">Social Media Sentiment Analysis</div>
-                        <div class="bento-overlay-desc">NLP pipeline processing social media data in real-time,
-                            classifying text sentiment.</div>
-                        <div class="bento-overlay-tags">
-                            <span class="bento-otag">NLP</span>
-                            <span class="bento-otag">Kafka</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4: E-Commerce Backend — Normal -->
-                <div class="bento-item">
-                    <img class="bento-img" src="assets/proj_backend.png" alt="E-Commerce Backend" />
-                    <span class="bento-name">E-Commerce Backend</span>
-                    <div class="bento-overlay">
-                        <div class="bento-overlay-title">E-Commerce Backend System</div>
-                        <div class="bento-overlay-desc">Scalable Django REST backend with auth, product management, and
-                            payment integration.</div>
-                        <div class="bento-overlay-tags">
-                            <span class="bento-otag">Django</span>
-                            <span class="bento-otag">REST API</span>
-                            <span class="bento-otag">PostgreSQL</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5: Dashboard — Wide -->
-                <div class="bento-item bento-wide">
-                    <img class="bento-img" src="assets/proj_dashboard.png" alt="Data Dashboard" />
-                    <span class="bento-name">Data Visualization Dashboard</span>
-                    <div class="bento-overlay">
-                        <div class="bento-overlay-title">Data Visualization Dashboard</div>
-                        <div class="bento-overlay-desc">Interactive Power BI and Python dashboard for complex datasets
-                            with actionable business insights.</div>
-                        <div class="bento-overlay-tags">
-                            <span class="bento-otag">Power BI</span>
-                            <span class="bento-otag">Python</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 6: Algorithms — Normal -->
-                <div class="bento-item">
-                    <img class="bento-img" src="assets/proj_algo.png" alt="Algorithm Toolkit" />
-                    <span class="bento-name">Algorithm Toolkit</span>
-                    <div class="bento-overlay">
-                        <div class="bento-overlay-title">Algorithm Design Toolkit</div>
-                        <div class="bento-overlay-desc">Optimized DSA implementations in C++ and Python — graph theory,
-                            DP, and computational geometry.</div>
-                        <div class="bento-overlay-tags">
-                            <span class="bento-otag">C++</span>
-                            <span class="bento-otag">DSA</span>
-                        </div>
-                    </div>
+                <!-- Scroll progress bar -->
+                <div class="scroll-progress">
+                    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
                 </div>
             </div>
         </section>
@@ -2370,9 +2676,63 @@
         });
 
         // Observe all reveal elements
-        document.querySelectorAll('.skill-category, .scroll-reveal, .bento-item, .milestone-card').forEach(el => {
+        document.querySelectorAll('.skill-category, .scroll-reveal, .bento-item, .milestone-card, .project-card-h').forEach(el => {
             revealObserver.observe(el);
         });
+
+        // ── Horizontal Scroll for Projects ──
+        const projectsScroll = document.getElementById('projectsScroll');
+        const scrollProgressBar = document.getElementById('scrollProgressBar');
+        
+        // Scroll button function
+        function scrollProjects(direction) {
+            const scrollAmount = 420;
+            projectsScroll.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        // Update scroll progress bar
+        if (projectsScroll && scrollProgressBar) {
+            projectsScroll.addEventListener('scroll', () => {
+                const scrollLeft = projectsScroll.scrollLeft;
+                const maxScroll = projectsScroll.scrollWidth - projectsScroll.clientWidth;
+                const progress = (scrollLeft / maxScroll) * 100;
+                scrollProgressBar.style.transform = `translateX(${progress * 4}%)`;
+            });
+
+            // Drag to scroll
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            projectsScroll.addEventListener('mousedown', (e) => {
+                isDown = true;
+                projectsScroll.style.cursor = 'grabbing';
+                startX = e.pageX - projectsScroll.offsetLeft;
+                scrollLeft = projectsScroll.scrollLeft;
+            });
+
+            projectsScroll.addEventListener('mouseleave', () => {
+                isDown = false;
+                projectsScroll.style.cursor = 'grab';
+            });
+
+            projectsScroll.addEventListener('mouseup', () => {
+                isDown = false;
+                projectsScroll.style.cursor = 'grab';
+            });
+
+            projectsScroll.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - projectsScroll.offsetLeft;
+                const walk = (x - startX) * 1.5;
+                projectsScroll.scrollLeft = scrollLeft - walk;
+            });
+        }
+
         // ── Build ID Card Barcode ──
         const barcodeEl = document.getElementById('idBarcode');
         if (barcodeEl) {
@@ -2446,6 +2806,262 @@
                     'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 65%)';
             });
         }
+
+        // ── Skill Bubble Cloud Engine ──
+        (function() {
+            // All skills with size weight (1=small, 2=medium, 3=large)
+            // bg = base sphere color, fill = crescent fill color
+            const CATEGORIES = {
+                'cloud-lang': [
+                    { name:'Python',      sz:3, bg:'#1b2540', fill:'rgba(200,245,63,0.28)' },
+                    { name:'C++',         sz:3, bg:'#1e1b40', fill:'rgba(200,245,63,0.22)' },
+                    { name:'JavaScript',  sz:2, bg:'#1f1b10', fill:'rgba(251,210,50,0.22)' },
+                    { name:'Java',        sz:2, bg:'#1e1020', fill:'rgba(255,100,100,0.18)' },
+                    { name:'C',           sz:2, bg:'#0f2030', fill:'rgba(100,180,255,0.18)' },
+                    { name:'SQL',         sz:2, bg:'#102020', fill:'rgba(80,220,180,0.18)' },
+                ],
+                'cloud-ds': [
+                    { name:'Machine\nLearning',    sz:3, bg:'#1a1a40', fill:'rgba(124,111,255,0.28)' },
+                    { name:'Data\nAnalysis',       sz:3, bg:'#0f2030', fill:'rgba(100,180,255,0.26)' },
+                    { name:'K-Means',              sz:2, bg:'#1e1b40', fill:'rgba(200,245,63,0.20)' },
+                    { name:'Decision\nTrees',      sz:2, bg:'#1a2510', fill:'rgba(200,245,63,0.20)' },
+                    { name:'XGBoost',              sz:2, bg:'#1b2a20', fill:'rgba(80,220,150,0.20)' },
+                    { name:'AdaBoost',             sz:1, bg:'#1b2a20', fill:'rgba(80,220,150,0.18)' },
+                    { name:'Gradient\nBoosting',   sz:2, bg:'#251830', fill:'rgba(180,100,255,0.20)' },
+                    { name:'KNN',                  sz:1, bg:'#1e1b40', fill:'rgba(124,111,255,0.18)' },
+                    { name:'Model\nTuning',        sz:2, bg:'#152030', fill:'rgba(100,180,255,0.20)' },
+                    { name:'Feature\nEngineering', sz:2, bg:'#102020', fill:'rgba(80,220,180,0.18)' },
+                    { name:'Cross-\nValidation',   sz:1, bg:'#1a2510', fill:'rgba(200,245,63,0.16)' },
+                    { name:'GridSearchCV',         sz:1, bg:'#1e1040', fill:'rgba(124,111,255,0.16)' },
+                    { name:'Scikit-learn',         sz:2, bg:'#0f2030', fill:'rgba(100,180,255,0.18)' },
+                ],
+                'cloud-backend': [
+                    { name:'Django',               sz:3, bg:'#0d2a1a', fill:'rgba(80,220,150,0.28)' },
+                    { name:'FastAPI',              sz:2, bg:'#0d1a2a', fill:'rgba(100,200,255,0.22)' },
+                    { name:'REST APIs',            sz:3, bg:'#1e2a10', fill:'rgba(200,245,63,0.24)' },
+                    { name:'Auth\nSystems',        sz:2, bg:'#2a1020', fill:'rgba(255,100,100,0.18)' },
+                    { name:'Celery',               sz:2, bg:'#0d1a2a', fill:'rgba(80,180,255,0.18)' },
+                    { name:'Redis',                sz:2, bg:'#2a0d10', fill:'rgba(255,80,80,0.18)' },
+                    { name:'System\nDesign',       sz:2, bg:'#1a1a30', fill:'rgba(124,111,255,0.18)' },
+                ],
+                'cloud-db': [
+                    { name:'PostgreSQL',           sz:3, bg:'#0d1a30', fill:'rgba(100,150,255,0.28)' },
+                    { name:'MySQL',                sz:3, bg:'#1a0d20', fill:'rgba(200,100,255,0.24)' },
+                    { name:'SQL\nQueries',         sz:2, bg:'#102030', fill:'rgba(80,180,255,0.20)' },
+                    { name:'PL/SQL',               sz:2, bg:'#201020', fill:'rgba(200,100,255,0.18)' },
+                    { name:'DB Design',            sz:2, bg:'#0d2020', fill:'rgba(80,220,180,0.18)' },
+                    { name:'Joins',                sz:1, bg:'#1a1a30', fill:'rgba(124,111,255,0.16)' },
+                    { name:'Stored\nProcs',        sz:1, bg:'#1a0d20', fill:'rgba(200,100,255,0.16)' },
+                ],
+                'cloud-bigdata': [
+                    { name:'Apache\nSpark',        sz:3, bg:'#2a1010', fill:'rgba(255,100,60,0.28)' },
+                    { name:'Apache\nKafka',        sz:3, bg:'#1a1020', fill:'rgba(200,80,255,0.24)' },
+                    { name:'Apache\nAirflow',      sz:3, bg:'#102020', fill:'rgba(80,220,180,0.24)' },
+                    { name:'Data\nPipelines',      sz:2, bg:'#1a2010', fill:'rgba(180,220,80,0.18)' },
+                ],
+                'cloud-viz': [
+                    { name:'Power BI',             sz:3, bg:'#1a1010', fill:'rgba(255,160,60,0.28)' },
+                    { name:'Matplotlib',           sz:3, bg:'#10101a', fill:'rgba(124,111,255,0.24)' },
+                    { name:'Seaborn',              sz:2, bg:'#0d1a20', fill:'rgba(80,200,255,0.22)' },
+                    { name:'Jupyter',              sz:2, bg:'#1a1a0d', fill:'rgba(240,200,60,0.22)' },
+                    { name:'Dashboards',           sz:2, bg:'#1a1010', fill:'rgba(255,160,60,0.18)' },
+                    { name:'Data\nStorytelling',   sz:2, bg:'#101a20', fill:'rgba(80,200,255,0.18)' },
+                ],
+                'cloud-web': [
+                    { name:'React',                sz:3, bg:'#0d1a2a', fill:'rgba(80,200,255,0.28)' },
+                    { name:'Tailwind\nCSS',        sz:2, bg:'#0d2020', fill:'rgba(80,220,200,0.22)' },
+                    { name:'Bootstrap',            sz:2, bg:'#1a0d2a', fill:'rgba(160,100,255,0.22)' },
+                    { name:'HTML',                 sz:2, bg:'#2a1010', fill:'rgba(255,100,60,0.20)' },
+                    { name:'CSS',                  sz:2, bg:'#0d102a', fill:'rgba(80,120,255,0.20)' },
+                    { name:'Django\nFrontend',     sz:2, bg:'#0d2010', fill:'rgba(80,200,120,0.18)' },
+                ],
+                'cloud-ai': [
+                    { name:'Facial\nRecognition',  sz:3, bg:'#1a1030', fill:'rgba(160,100,255,0.28)' },
+                    { name:'AI Attendance',        sz:3, bg:'#102010', fill:'rgba(80,220,120,0.24)' },
+                    { name:'Classroom\nMonitor',   sz:2, bg:'#201010', fill:'rgba(255,100,80,0.22)' },
+                    { name:'Computer\nVision',     sz:3, bg:'#0d1030', fill:'rgba(100,130,255,0.26)' },
+                    { name:'ML Models',            sz:2, bg:'#1a1030', fill:'rgba(160,100,255,0.18)' },
+                    { name:'Prediction',           sz:2, bg:'#102020', fill:'rgba(80,220,180,0.18)' },
+                ],
+            };
+
+            // "All" = union of key categories for a manageable cloud
+            CATEGORIES['cloud-all'] = [
+                { name:'Python',        sz:3, bg:'#1b2540', fill:'rgba(200,245,63,0.28)' },
+                { name:'Django',        sz:3, bg:'#0d2a1a', fill:'rgba(80,220,150,0.28)' },
+                { name:'Machine\nLearning', sz:3, bg:'#1a1a40', fill:'rgba(124,111,255,0.28)' },
+                { name:'React',         sz:3, bg:'#0d1a2a', fill:'rgba(80,200,255,0.26)' },
+                { name:'Data\nAnalysis',sz:3, bg:'#0f2030', fill:'rgba(100,180,255,0.26)' },
+                { name:'C++',           sz:3, bg:'#1e1b40', fill:'rgba(200,245,63,0.22)' },
+                { name:'REST APIs',     sz:2, bg:'#1e2a10', fill:'rgba(200,245,63,0.22)' },
+                { name:'PostgreSQL',    sz:2, bg:'#0d1a30', fill:'rgba(100,150,255,0.22)' },
+                { name:'Power BI',      sz:2, bg:'#1a1010', fill:'rgba(255,160,60,0.22)' },
+                { name:'Apache\nSpark', sz:2, bg:'#2a1010', fill:'rgba(255,100,60,0.22)' },
+                { name:'Computer\nVision',sz:2, bg:'#0d1030', fill:'rgba(160,100,255,0.22)' },
+                { name:'FastAPI',       sz:2, bg:'#0d1a2a', fill:'rgba(100,200,255,0.20)' },
+                { name:'JavaScript',    sz:2, bg:'#1f1b10', fill:'rgba(251,210,50,0.20)' },
+                { name:'MySQL',         sz:2, bg:'#1a0d20', fill:'rgba(200,100,255,0.20)' },
+                { name:'Seaborn',       sz:2, bg:'#0d1a20', fill:'rgba(80,200,255,0.18)' },
+                { name:'Apache\nKafka', sz:2, bg:'#1a1020', fill:'rgba(200,80,255,0.18)' },
+                { name:'K-Means',       sz:2, bg:'#1e1b40', fill:'rgba(200,245,63,0.18)' },
+                { name:'XGBoost',       sz:1, bg:'#1b2a20', fill:'rgba(80,220,150,0.18)' },
+                { name:'Tailwind',      sz:1, bg:'#0d2020', fill:'rgba(80,220,200,0.16)' },
+                { name:'Redis',         sz:1, bg:'#2a0d10', fill:'rgba(255,80,80,0.16)' },
+                { name:'Java',          sz:1, bg:'#1e1020', fill:'rgba(255,100,100,0.16)' },
+                { name:'SQL',           sz:1, bg:'#102020', fill:'rgba(80,220,180,0.16)' },
+                { name:'Jupyter',       sz:1, bg:'#1a1a0d', fill:'rgba(240,200,60,0.16)' },
+                { name:'Docker',        sz:1, bg:'#0d1a30', fill:'rgba(80,160,255,0.16)' },
+                { name:'Git',           sz:1, bg:'#2a1010', fill:'rgba(255,100,60,0.16)' },
+                { name:'AWS',           sz:1, bg:'#1a1a10', fill:'rgba(255,180,60,0.16)' },
+            ];
+
+            // Size → diameter (px) — base sizes, scaled down on mobile
+            const SIZES = { 1: 88, 2: 116, 3: 148 };
+
+            function isMobile() { return window.innerWidth < 600; }
+            function getD(sz) {
+                const base = SIZES[sz];
+                return isMobile() ? Math.round(base * 0.72) : base;
+            }
+
+            // Physics-based packing: place each bubble without overlap
+            function packBubbles(items, containerW, containerH) {
+                const placed = [];
+                const PAD = 8; // gap between bubbles
+
+                for (const item of items) {
+                    const r = getD(item.sz) / 2;
+                    let best = null, minDist = Infinity;
+
+                    // Try random candidates and pick the one closest to center
+                    const cx = containerW / 2, cy = containerH / 2;
+                    const attempts = 300;
+
+                    for (let t = 0; t < attempts; t++) {
+                        const x = r + Math.random() * (containerW - 2 * r);
+                        const y = r + Math.random() * (containerH - 2 * r);
+
+                        // Check no overlap
+                        let ok = true;
+                        for (const p of placed) {
+                            const pr = getD(p.sz) / 2;
+                            const dx = x - p.x, dy = y - p.y;
+                            if (Math.sqrt(dx*dx + dy*dy) < r + pr + PAD) { ok = false; break; }
+                        }
+                        if (!ok) continue;
+
+                        const dist = Math.sqrt((x-cx)**2 + (y-cy)**2);
+                        if (dist < minDist) { minDist = dist; best = {x, y}; }
+                    }
+
+                    // Fallback: place anywhere that fits
+                    if (!best) {
+                        for (let t = 0; t < 500; t++) {
+                            const x = r + Math.random() * (containerW - 2 * r);
+                            const y = r + Math.random() * (containerH - 2 * r);
+                            let ok = true;
+                            for (const p of placed) {
+                                const pr = getD(p.sz) / 2;
+                                const dx = x - p.x, dy = y - p.y;
+                                if (Math.sqrt(dx*dx + dy*dy) < r + pr + PAD) { ok = false; break; }
+                            }
+                            if (ok) { best = {x,y}; break; }
+                        }
+                    }
+
+                    if (best) placed.push({ ...item, x: best.x, y: best.y });
+                }
+                return placed;
+            }
+
+            function buildCloud(cloudEl, items) {
+                cloudEl.innerHTML = '';
+                const W = cloudEl.offsetWidth || 900;
+                const H = parseInt(getComputedStyle(cloudEl).minHeight) || 560;
+                cloudEl.style.height = H + 'px';
+
+                const placed = packBubbles(items, W, H);
+
+                placed.forEach((item, i) => {
+                    const d = getD(item.sz);
+                    const fontSize = d < 90 ? 10 : d < 110 ? 11 : d < 130 ? 12 : 13;
+                    const animIdx = i % 8;
+                    const dur = 5 + (i % 5) * 1.3;
+                    const delay = -(i * 0.7);
+                    const morphDur = 8 + (i % 4) * 2;
+
+                    // Organic blob shapes - different border-radius for each bubble
+                    const shapes = [
+                        '47% 53% 52% 48% / 48% 52% 48% 52%',
+                        '52% 48% 47% 53% / 53% 47% 52% 48%',
+                        '45% 55% 50% 50% / 50% 50% 55% 45%',
+                        '55% 45% 48% 52% / 52% 48% 45% 55%',
+                        '48% 52% 55% 45% / 45% 55% 52% 48%',
+                        '50% 50% 45% 55% / 55% 45% 50% 50%',
+                        '53% 47% 50% 50% / 47% 53% 50% 50%',
+                        '46% 54% 52% 48% / 54% 46% 48% 52%'
+                    ];
+                    const shapeIdx = i % shapes.length;
+                    const morphIdx = i % 4;
+
+                    const el = document.createElement('div');
+                    el.className = 'skb';
+                    el.style.cssText = `
+                        width:${d}px; height:${d}px;
+                        left:${item.x - d/2}px; top:${item.y - d/2}px;
+                        border-radius: ${shapes[shapeIdx]};
+                        animation: skbFloat${animIdx} ${dur}s ${delay}s ease-in-out infinite,
+                                   skbMorph${morphIdx} ${morphDur}s ${delay * 0.5}s ease-in-out infinite;
+                        z-index:${item.sz};
+                    `;
+
+                    const label = document.createElement('span');
+                    label.className = 'skb-label';
+                    label.style.fontSize = fontSize + 'px';
+                    // render \n as <br>
+                    label.innerHTML = item.name.replace(/\n/g, '<br>');
+                    el.appendChild(label);
+                    cloudEl.appendChild(el);
+                });
+            }
+
+            // Init: build all clouds on load
+            function initAllClouds() {
+                Object.keys(CATEGORIES).forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) buildCloud(el, CATEGORIES[id]);
+                });
+            }
+
+            // Tab switching
+            document.getElementById('skillTabs').addEventListener('click', e => {
+                const tab = e.target.closest('.skill-tab');
+                if (!tab) return;
+                const targetId = tab.dataset.cloud;
+
+                // update active tab
+                document.querySelectorAll('.skill-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // show target cloud
+                document.querySelectorAll('.bubble-cloud').forEach(c => {
+                    c.classList.toggle('hidden', c.id !== targetId);
+                });
+            });
+
+            // Build once DOM is ready, rebuild on resize (debounced)
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initAllClouds);
+            } else {
+                initAllClouds();
+            }
+
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(initAllClouds, 220);
+            });
+        })();
     </script>
 </body>
 
