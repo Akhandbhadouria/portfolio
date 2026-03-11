@@ -518,9 +518,36 @@
             position: absolute;
             inset: 0;
             border-radius: 22px;
-            background: linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 50%, #000000 100%);
+            background: #000;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        /* Full bleed photo layer */
+        .id-photo-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 22px;
+            display: block;
+            z-index: 0;
+        }
+        /* Gradient scrim — subtle top darkening + strong bottom for readability */
+        .id-photo-scrim {
+            position: absolute;
+            inset: 0;
+            border-radius: 22px;
+            z-index: 1;
+            background: linear-gradient(
+                180deg,
+                rgba(0,0,0,0.45) 0%,
+                rgba(0,0,0,0.0) 35%,
+                rgba(0,0,0,0.0) 55%,
+                rgba(0,0,0,0.75) 100%
+            );
         }
         .id-shimmer {
             position: absolute; inset: 0;
@@ -540,8 +567,9 @@
             position: absolute; top: 0; left: 0; right: 0; height: 5px;
             background: linear-gradient(90deg, #fff, #aaa, #fff);
             border-radius: 22px 22px 0 0;
+            z-index: 3;
         }
-        .id-content { padding: 24px 22px 0; }
+        .id-content { padding: 16px 18px 0; position: relative; z-index: 3; }
         .id-company-row {
             display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
         }
@@ -611,10 +639,13 @@
         .id-bottom-strip {
             position: absolute; bottom: 0; left: 0; right: 0; height: 58px;
             border-radius: 0 0 22px 22px;
-            background: #111;
-            border-top: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255,255,255,0.12);
             display: flex; align-items: center; padding: 0 20px;
             justify-content: space-between;
+            z-index: 3;
         }
         .id-barcode { display: flex; gap: 2px; align-items: center; }
         .id-bar { border-radius: 1px; }
@@ -1839,6 +1870,10 @@
                     <div class="id-card" id="idCard">
                         <div class="id-card-inner">
 
+                            <!-- Full bleed photo -->
+                            <img class="id-photo-bg" src="assets/profile.jpg" alt="Akhand" />
+                            <div class="id-photo-scrim"></div>
+
                             <!-- Shimmer layers -->
                             <div class="id-shimmer" id="idShimmer"></div>
                             <div class="id-rainbow" id="idRainbow"></div>
@@ -1846,10 +1881,8 @@
                             <!-- Top accent bar -->
                             <div class="id-top-bar"></div>
 
-                            <!-- Content -->
+                            <!-- Company badge row — floats over photo at top -->
                             <div class="id-content">
-
-                                <!-- Company row -->
                                 <div class="id-company-row">
                                     <div class="id-logo-mark">A</div>
                                     <div>
@@ -1857,38 +1890,7 @@
                                         <div class="id-company-sub">Portfolio 2026</div>
                                     </div>
                                 </div>
-
-                                <div class="id-divider"></div>
-
-                                <!-- Avatar -->
-                                <div class="id-avatar-ring">
-                                    <div class="id-avatar-inner">
-                                        <img src="assets/profile.png" alt="Akhand Pratapsingh"
-                                            onerror="this.style.display='none';this.parentElement.innerHTML='<svg viewBox=\'0 0 80 80\' width=\'70\' height=\'70\'><circle cx=\'40\' cy=\'30\' r=\'16\' fill=\'rgba(165,180,252,0.5)\'/><ellipse cx=\'40\' cy=\'72\' rx=\'26\' ry=\'20\' fill=\'rgba(165,180,252,0.4)\'/></svg>'" />
-                                    </div>
-                                </div>
-
-                                <!-- Name -->
-                                <div class="id-name">Akhand Pratapsingh</div>
-                                <div class="id-role">Developer &amp; Data Scientist</div>
-
-                                <div class="id-divider-sm"></div>
-
-                                <!-- Info rows -->
-                                <div class="id-info-row">
-                                    <span class="id-label">ID</span>
-                                    <span class="id-value">AKH-2026-0001</span>
-                                </div>
-                                <div class="id-info-row">
-                                    <span class="id-label">Dept</span>
-                                    <span class="id-value">CS &amp; Data Science</span>
-                                </div>
-                                <div class="id-info-row">
-                                    <span class="id-label">Access</span>
-                                    <span class="id-value">Open to Opportunities</span>
-                                </div>
-
-                            </div><!-- /id-content -->
+                            </div>
 
                             <!-- Bottom strip with barcode + QR -->
                             <div class="id-bottom-strip">
