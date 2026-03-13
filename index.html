@@ -465,15 +465,23 @@
             transform-origin: top center;
             animation: hookSway 6s ease-in-out infinite;
         }
+
         .id-hook-svg {
             display: block;
             filter:
-                drop-shadow(0 3px 6px rgba(0,0,0,0.7))
-                drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+                drop-shadow(0 3px 6px rgba(0, 0, 0, 0.7)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
         }
+
         @keyframes hookSway {
-            0%, 100% { transform: translateX(-50%) rotate(-1deg); }
-            50%       { transform: translateX(-50%) rotate(1deg);  }
+
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(-1deg);
+            }
+
+            50% {
+                transform: translateX(-50%) rotate(1deg);
+            }
         }
 
         /* ── ID Card Perspective ── */
@@ -490,11 +498,12 @@
             position: relative;
             transform-style: preserve-3d;
             transform: rotateX(0deg) rotateY(0deg) scale(1);
-            transition: transform 0.6s cubic-bezier(0.23,1,0.32,1),
-                        box-shadow 0.6s cubic-bezier(0.23,1,0.32,1);
-            box-shadow: 0 24px 60px rgba(0,0,0,0.85), 0 0 40px rgba(255,255,255,0.04);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(255, 255, 255, 0.04);
             cursor: pointer;
         }
+
         /* Small eyelet hole at top-center so hook looks clipped through */
         .id-card::before {
             content: '';
@@ -506,24 +515,26 @@
             height: 14px;
             border-radius: 50%;
             background: #0a0a0f;
-            border: 2px solid rgba(255,255,255,0.35);
-            box-shadow: 0 0 6px rgba(0,0,0,0.8), inset 0 1px 3px rgba(0,0,0,0.9);
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.8), inset 0 1px 3px rgba(0, 0, 0, 0.9);
             z-index: 20;
             pointer-events: none;
         }
+
         .id-card.hovered {
             transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
         }
+
         .id-card-inner {
             position: absolute;
             inset: 0;
             border-radius: 22px;
             background: #000;
             overflow: hidden;
-            border-top: 1px solid rgba(255,255,255,0.10);
-            border-bottom: 1px solid rgba(255,255,255,0.10);
-            border-left: 3px solid rgba(255,255,255,0.55);
-            border-right: 3px solid rgba(255,255,255,0.55);
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            border-left: 3px solid rgba(255, 255, 255, 0.55);
+            border-right: 3px solid rgba(255, 255, 255, 0.55);
         }
 
         /* Full bleed photo layer */
@@ -538,131 +549,233 @@
             display: block;
             z-index: 0;
         }
+
         /* Gradient scrim — subtle top darkening + strong bottom for readability */
         .id-photo-scrim {
             position: absolute;
             inset: 0;
             border-radius: 22px;
             z-index: 1;
-            background: linear-gradient(
-                180deg,
-                rgba(0,0,0,0.45) 0%,
-                rgba(0,0,0,0.0) 35%,
-                rgba(0,0,0,0.0) 55%,
-                rgba(0,0,0,0.75) 100%
-            );
+            background: linear-gradient(180deg,
+                    rgba(0, 0, 0, 0.45) 0%,
+                    rgba(0, 0, 0, 0.0) 35%,
+                    rgba(0, 0, 0, 0.0) 55%,
+                    rgba(0, 0, 0, 0.75) 100%);
         }
+
         .id-shimmer {
-            position: absolute; inset: 0;
+            position: absolute;
+            inset: 0;
             border-radius: 22px;
-            pointer-events: none; z-index: 10;
+            pointer-events: none;
+            z-index: 10;
             transition: background 0.6s ease;
         }
-        .id-card.hovered .id-shimmer { transition: none; }
-        .id-rainbow {
-            position: absolute; inset: 0;
-            border-radius: 22px;
-            pointer-events: none; z-index: 9;
-            opacity: 0; transition: opacity 0.3s ease;
+
+        .id-card.hovered .id-shimmer {
+            transition: none;
         }
-        .id-card.hovered .id-rainbow { opacity: 1; }
+
+        .id-rainbow {
+            position: absolute;
+            inset: 0;
+            border-radius: 22px;
+            pointer-events: none;
+            z-index: 9;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .id-card.hovered .id-rainbow {
+            opacity: 1;
+        }
+
         .id-top-bar {
-            position: absolute; top: 0; left: 0; right: 0; height: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
             background: linear-gradient(90deg, #fff, #aaa, #fff);
             border-radius: 22px 22px 0 0;
             z-index: 3;
         }
-        .id-content { padding: 16px 18px 0; position: relative; z-index: 3; }
+
+        .id-content {
+            padding: 16px 18px 0;
+            position: relative;
+            z-index: 3;
+        }
+
         .id-company-row {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
         }
+
         .id-logo-mark {
-            width: 34px; height: 34px; border-radius: 9px;
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
             background: #fff;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 15px; font-weight: 900; color: #000; flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 900;
+            color: #000;
+            flex-shrink: 0;
             font-family: 'Syne', sans-serif;
         }
+
         .id-company-name {
-            font-size: 11px; font-weight: 700; color: #ffffff;
-            letter-spacing: 3px; text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
             font-family: 'Syne', sans-serif;
         }
+
         .id-company-sub {
-            font-size: 9px; color: rgba(255,255,255,0.45);
-            letter-spacing: 2px; text-transform: uppercase;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
+
         .id-divider {
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
             margin-bottom: 18px;
         }
+
         .id-divider-sm {
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
             margin: 12px 0;
         }
+
         .id-avatar-ring {
-            width: 96px; height: 96px; border-radius: 50%;
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
             background: linear-gradient(135deg, #fff 0%, #888 100%);
             padding: 3px;
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 8px 24px rgba(0,0,0,0.6);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 8px 24px rgba(0, 0, 0, 0.6);
             margin: 0 auto 14px;
         }
+
         .id-avatar-inner {
-            width: 100%; height: 100%; border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
             background: #111;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
+
         .id-avatar-inner img {
-            width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
+
         .id-name {
             text-align: center;
-            font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
-            color: #ffffff; letter-spacing: 0.3px;
-            text-shadow: 0 0 30px rgba(255,255,255,0.2);
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.3px;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
             margin-bottom: 3px;
         }
+
         .id-role {
-            text-align: center; font-size: 10px; font-weight: 600;
-            color: rgba(255,255,255,0.5); letter-spacing: 2.5px; text-transform: uppercase;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
         }
+
         .id-info-row {
-            display: flex; justify-content: space-between; margin-bottom: 7px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
         }
+
         .id-label {
-            font-size: 9px; color: rgba(255,255,255,0.4);
-            letter-spacing: 2px; text-transform: uppercase;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
+
         .id-value {
-            font-size: 10px; color: rgba(255,255,255,0.85); font-weight: 600; letter-spacing: 0.3px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 600;
+            letter-spacing: 0.3px;
         }
+
         .id-bottom-strip {
-            position: absolute; bottom: 0; left: 0; right: 0; height: 58px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 58px;
             border-radius: 0 0 22px 22px;
-            background: rgba(0,0,0,0.55);
+            background: rgba(0, 0, 0, 0.55);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(255,255,255,0.12);
-            display: flex; align-items: center; padding: 0 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
             justify-content: space-between;
             z-index: 3;
         }
-        .id-barcode { display: flex; gap: 2px; align-items: center; }
-        .id-bar { border-radius: 1px; }
-        .id-qr {
-            width: 38px; height: 38px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 4px;
-            display: grid; grid-template-columns: repeat(5,1fr);
-            gap: 1px; padding: 3px;
+
+        .id-barcode {
+            display: flex;
+            gap: 2px;
+            align-items: center;
         }
-        .id-qr-cell { border-radius: 0.5px; }
-        .id-qr-on  { background: rgba(255,255,255,0.8); }
-        .id-qr-off { background: transparent; }
+
+        .id-bar {
+            border-radius: 1px;
+        }
+
+        .id-qr {
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1px;
+            padding: 3px;
+        }
+
+        .id-qr-cell {
+            border-radius: 0.5px;
+        }
+
+        .id-qr-on {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .id-qr-off {
+            background: transparent;
+        }
 
         /* Floating badge */
         .badge-float {
@@ -1117,7 +1230,7 @@
             }
         }
 
-        /* ========== SKILLS SECTION ========== */
+        /* ========== SKILLS SECTION — Clean Icon Grid ========== */
         .skills-full {
             position: relative;
             z-index: 1;
@@ -1140,232 +1253,94 @@
             margin-bottom: 12px;
         }
 
-        .skills-full-header h2 .highlight { color: var(--accent); }
+        .skills-full-header h2 .highlight {
+            color: var(--accent);
+        }
 
         .skills-full-header p {
             font-size: 16px;
             color: var(--muted);
-            max-width: 500px;
+            max-width: 560px;
             margin: 0 auto;
             line-height: 1.6;
         }
 
-        /* ── Category tabs ── */
-        .skill-tabs {
+        /* ── Skills icon grid ── */
+        .skills-icon-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 12px 0;
+            max-width: 900px;
+            margin: 48px auto 0;
+            padding: 0 16px;
+        }
+
+        .skill-icon-item {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
             gap: 10px;
-            margin: 32px 0 40px;
+            padding: 20px 8px;
+            border-radius: 16px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            cursor: default;
         }
 
-        .skill-tab {
-            padding: 8px 20px;
-            border-radius: 999px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.03em;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--muted);
-            cursor: pointer;
-            transition: all 0.25s ease;
-            user-select: none;
+        .skill-icon-item:hover {
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.04);
         }
 
-        .skill-tab:hover {
-            border-color: rgba(200,245,63,0.3);
-            color: var(--text);
+        .skill-icon-item img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s ease;
         }
 
-        .skill-tab.active {
-            background: rgba(200,245,63,0.12);
-            border-color: rgba(200,245,63,0.4);
-            color: var(--accent);
-            box-shadow: 0 0 16px rgba(200,245,63,0.1);
+        .skill-icon-item:hover img {
+            transform: scale(1.12);
         }
 
-        /* ── Bubble cloud container ── */
-        .bubble-cloud {
-            position: relative;
-            width: 100%;
-            min-height: 560px;
-            /* hidden panels use display:none */
-        }
-
-        .bubble-cloud.hidden { display: none; }
-
-        /* ── Individual bubble — Gradient Dark to Light Style ── */
-        .skb {
-            position: absolute;
-            border-radius: 50%;
+        /* For skills without a CDN icon, use a styled text icon */
+        .skill-icon-text {
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            cursor: default;
-            user-select: none;
-            /* Dark to light gradient like the reference image */
-            background: 
-                /* Top highlight for 3D effect */
-                radial-gradient(ellipse 60% 40% at 30% 15%, 
-                    rgba(255,255,255,0.15) 0%, 
-                    transparent 50%),
-                /* Main vertical gradient - dark top to bright bottom */
-                linear-gradient(180deg, 
-                    #dfdcdc 0%,
-                    #939191 15%,
-                    #646262 25%,
-                    #4a4a4a 40%,
-                    #6a6a6a 50%,
-                    #8a8a8a 60%,
-                    #aaaaaa 70%,
-                    #cccccc 80%,
-                    #e8e8e8 90%,
-                    #ffffff 100%);
-            box-shadow:
-                /* Main drop shadow */
-                0 25px 50px rgba(0,0,0,0.6),
-                0 10px 30px rgba(0,0,0,0.4),
-                /* Bottom glow from the bright area */
-                0 15px 40px rgba(255,255,255,0.1),
-                /* Rim light effect */
-                inset 0 -4px 20px rgba(255,255,255,0.3),
-                /* Top inner shadow for depth */
-                inset 0 4px 15px rgba(0,0,0,0.4),
-                /* Edge definition */
-                0 0 0 1px rgba(255,255,255,0.08);
-            transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1),
-                        box-shadow 0.4s ease,
-                        filter 0.4s ease;
-            will-change: transform;
-            /* Slight organic distortion */
-            border-radius: 47% 53% 52% 48% / 48% 52% 48% 52%;
-        }
-
-        /* Reflective shine layer */
-        .skb::before {
-            content: '';
-            position: absolute;
-            inset: 5%;
-            border-radius: inherit;
-            background: 
-                /* Subtle curved highlight */
-                radial-gradient(ellipse 80% 50% at 50% 85%,
-                    rgba(255,255,255,0.25) 0%,
-                    transparent 60%);
-            pointer-events: none;
-            opacity: 0.8;
-        }
-
-        /* Subtle noise/grain texture overlay */
-        .skb::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            /* Top edge subtle highlight */
-            background: 
-                radial-gradient(ellipse 40% 20% at 50% 5%,
-                    rgba(60,60,60,0.5) 0%,
-                    transparent 70%);
-            pointer-events: none;
-        }
-
-        .skb:hover {
-            transform: scale(1.15) translateY(-8px) rotate(2deg) !important;
-            box-shadow:
-                0 35px 70px rgba(0,0,0,0.6),
-                0 20px 40px rgba(0,0,0,0.4),
-                0 20px 50px rgba(255,255,255,0.15),
-                inset 0 -5px 25px rgba(255,255,255,0.35),
-                inset 0 5px 20px rgba(0,0,0,0.3),
-                0 0 60px rgba(255,255,255,0.12);
-            filter: brightness(1.1) contrast(1.05);
-            z-index: 20 !important;
-        }
-
-        /* Morphing animation for organic blob shapes */
-        @keyframes skbMorph0 {
-            0%, 100% { border-radius: 47% 53% 52% 48% / 48% 52% 48% 52%; }
-            25% { border-radius: 52% 48% 48% 52% / 52% 48% 52% 48%; }
-            50% { border-radius: 48% 52% 53% 47% / 47% 53% 48% 52%; }
-            75% { border-radius: 53% 47% 47% 53% / 53% 47% 53% 47%; }
-        }
-        @keyframes skbMorph1 {
-            0%, 100% { border-radius: 52% 48% 47% 53% / 53% 47% 52% 48%; }
-            33% { border-radius: 47% 53% 52% 48% / 48% 52% 47% 53%; }
-            66% { border-radius: 53% 47% 48% 52% / 52% 48% 53% 47%; }
-        }
-        @keyframes skbMorph2 {
-            0%, 100% { border-radius: 45% 55% 50% 50% / 50% 50% 55% 45%; }
-            50% { border-radius: 55% 45% 50% 50% / 50% 50% 45% 55%; }
-        }
-        @keyframes skbMorph3 {
-            0%, 100% { border-radius: 55% 45% 48% 52% / 52% 48% 45% 55%; }
-            50% { border-radius: 45% 55% 52% 48% / 48% 52% 55% 45%; }
-        }
-
-        .skb-label {
-            position: relative;
-            z-index: 2;
-            font-family: 'DM Sans', sans-serif;
+            border-radius: 12px;
+            font-family: 'Syne', sans-serif;
             font-weight: 800;
-            line-height: 1.15;
-            /* Dark text with white outline for visibility on gradient */
-            color: #1a1a1a;
-            text-shadow: 
-                /* White outline effect */
-                -1px -1px 0 rgba(255,255,255,0.8),
-                1px -1px 0 rgba(255,255,255,0.8),
-                -1px 1px 0 rgba(255,255,255,0.8),
-                1px 1px 0 rgba(255,255,255,0.8),
-                0 0 10px rgba(255,255,255,0.5),
-                0 0 20px rgba(255,255,255,0.3);
-            padding: 0 10%;
-            word-break: break-word;
+            font-size: 14px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .skill-icon-item:hover .skill-icon-text {
+            transform: scale(1.12);
+        }
+
+        .skill-icon-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            line-height: 1.3;
             letter-spacing: 0.01em;
         }
 
-        /* Float keyframes — organic liquid motion */
-        @keyframes skbFloat0 { 
-            0%,100%{transform:translate(0,0) scale(1) rotate(0deg)} 
-            25%{transform:translate(2px,-6px) scale(1.02) rotate(1deg)} 
-            50%{transform:translate(4px,-10px) scale(1) rotate(-1deg)} 
-            75%{transform:translate(1px,-5px) scale(0.98) rotate(0.5deg)} 
-        }
-        @keyframes skbFloat1 { 
-            0%,100%{transform:translate(0,0) scale(1)} 
-            33%{transform:translate(-4px,-8px) scale(1.01)} 
-            66%{transform:translate(-2px,-5px) scale(0.99)} 
-        }
-        @keyframes skbFloat2 { 
-            0%,100%{transform:translate(0,0) rotate(0deg)} 
-            50%{transform:translate(5px,-12px) rotate(-2deg)} 
-        }
-        @keyframes skbFloat3 { 
-            0%,100%{transform:translate(0,0) scale(1)} 
-            40%{transform:translate(-3px,-9px) scale(1.02)} 
-            80%{transform:translate(1px,-4px) scale(0.98)} 
-        }
-        @keyframes skbFloat4 { 
-            0%,100%{transform:translate(0,0)} 
-            30%{transform:translate(6px,-4px)} 
-            70%{transform:translate(3px,-8px)} 
-        }
-        @keyframes skbFloat5 { 
-            0%,100%{transform:translate(0,0) rotate(0deg)} 
-            50%{transform:translate(-5px,-11px) rotate(1.5deg)} 
-        }
-        @keyframes skbFloat6 { 
-            0%,100%{transform:translate(0,0) scale(1)} 
-            25%{transform:translate(3px,-7px) scale(0.98)} 
-            75%{transform:translate(-2px,-13px) scale(1.02)} 
-        }
-        @keyframes skbFloat7 { 
-            0%,100%{transform:translate(0,0)} 
-            35%{transform:translate(-6px,-5px)} 
-            65%{transform:translate(-3px,-9px)} 
+        /* Divider line between rows */
+        .skills-divider {
+            grid-column: 1 / -1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+            margin: 4px 0;
         }
 
         /* Also reveal the header */
@@ -1384,373 +1359,472 @@
             filter: blur(0);
         }
 
-        /* keep old .skill-category class in DOM but hidden — observer still uses it */
-        .skill-category { display: none; }
+        .skill-category {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .skills-icon-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
 
         @media (max-width: 768px) {
-            .skills-full { padding: 48px 16px; }
-            .bubble-cloud { min-height: 420px; }
-            .skills-full-header h2 { font-size: 28px; }
-        }
-        @media (max-width: 480px) {
-            .bubble-cloud { min-height: 340px; }
+            .skills-full {
+                padding: 48px 16px;
+            }
+
+            .skills-full-header h2 {
+                font-size: 28px;
+            }
+
+            .skills-icon-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 8px 0;
+            }
+
+            .skill-icon-item img,
+            .skill-icon-text {
+                width: 40px;
+                height: 40px;
+            }
+
+            .skill-icon-label {
+                font-size: 11px;
+            }
         }
 
-        /* ========== BENTO PROJECTS SECTION — Horizontal Scroll ========== */
-        .bento-projects {
+        @media (max-width: 480px) {
+            .skills-icon-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 4px 0;
+            }
+
+            .skill-icon-item {
+                padding: 14px 4px;
+            }
+
+            .skill-icon-item img,
+            .skill-icon-text {
+                width: 36px;
+                height: 36px;
+            }
+
+            .skill-icon-label {
+                font-size: 10px;
+            }
+        }
+
+        /* ========== FEATURED PROJECTS — Stacked Card Carousel ========== */
+        .featured-projects {
             position: relative;
             z-index: 1;
-            padding: 80px 0;
+            padding: 100px 28px 80px;
             border-top: 1px solid var(--border);
             overflow: hidden;
         }
 
-        .bento-header {
+        .featured-header {
             display: flex;
             align-items: baseline;
             justify-content: space-between;
-            margin-bottom: 40px;
-            padding: 0 28px;
+            margin-bottom: 60px;
         }
 
-        .bento-header h2 {
+        .featured-header h2 {
             font-family: 'Syne', sans-serif;
             font-size: clamp(36px, 5vw, 64px);
             font-weight: 800;
             color: #fff;
             letter-spacing: -0.03em;
-            text-transform: uppercase;
         }
 
-        .bento-header h2 .highlight {
+        .featured-header h2 .highlight {
             color: var(--accent);
         }
 
-        .bento-header .bento-sub {
+        .featured-viewall {
             font-size: 14px;
-            color: var(--muted);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+            color: var(--accent);
+            text-decoration: none;
             font-family: 'Syne', sans-serif;
             font-weight: 600;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(200, 245, 63, 0.2);
+            background: rgba(200, 245, 63, 0.05);
+            transition: all 0.3s ease;
         }
 
-        /* Horizontal scroll container */
-        .projects-scroll-wrapper {
+        .featured-viewall:hover {
+            background: rgba(200, 245, 63, 0.12);
+            border-color: rgba(200, 245, 63, 0.4);
+            transform: translateX(4px);
+            box-shadow: 0 0 20px rgba(200, 245, 63, 0.1);
+        }
+
+        /* ========== Side-by-Side Stacked Categories ========== */
+        .projects-showcase {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            /* narrowed to match proportion */
+            margin: 0 auto;
+            padding: 20px 0 60px;
+        }
+
+        .project-stack {
             position: relative;
             width: 100%;
+            height: 600px;
         }
 
-        .projects-scroll {
-            display: flex;
-            gap: 24px;
-            padding: 20px 28px 40px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            cursor: grab;
-        }
-
-        .projects-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .projects-scroll:active {
-            cursor: grabbing;
-        }
-
-        /* Scroll indicators */
-        .scroll-indicator {
+        /* The dummy layers that peek out at the bottom */
+        .ps-bg {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            box-shadow: var(--clay-shadow);
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            border-radius: 20px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        /* DS card background colors */
+        .ps-stack-ds .ps-bg-2 {
+            width: 88%;
+            bottom: -24px;
+            background: #09121e;
+            border: 1px solid #0f243b;
+            z-index: 1;
+        }
+
+        .ps-stack-ds .ps-bg-1 {
+            width: 94%;
+            bottom: -12px;
+            background: #0a1523;
+            border: 1px solid #142e47;
+            z-index: 2;
+        }
+
+        /* FS card background colors */
+        .ps-stack-fs .ps-bg-2 {
+            width: 88%;
+            bottom: -24px;
+            background: #0d0612;
+            border: 1px solid #230f31;
+            z-index: 1;
+        }
+
+        .ps-stack-fs .ps-bg-1 {
+            width: 94%;
+            bottom: -12px;
+            background: #120919;
+            border: 1px solid #2e1441;
+            z-index: 2;
+        }
+
+        /* Main foreground card */
+        .ps-main {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 32px 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ps-stack-ds .ps-main {
+            background: #0B192C;
+            border: 1px solid #1F4A75;
+        }
+
+        .ps-stack-fs .ps-main {
+            background: #170a1f;
+            border: 1px solid #431d5b;
+        }
+
+        /* Hover interactions */
+        .project-stack:hover .ps-main {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .project-stack:hover .ps-bg-1 {
+            bottom: -16px;
+        }
+
+        .project-stack:hover .ps-bg-2 {
+            bottom: -32px;
+        }
+
+        /* Header Row (Icon + Badge) */
+        .ps-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .ps-icon-box {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-            color: var(--muted);
         }
 
-        .scroll-indicator:hover {
-            background: var(--surface2);
-            border-color: rgba(200,245,63,0.3);
-            color: var(--accent);
-            transform: translateY(-50%) scale(1.1);
+        .ps-icon-box svg {
+            width: 28px;
+            height: 28px;
         }
 
-        .scroll-indicator.left {
-            left: 12px;
+        .ps-stack-ds .ps-icon-box {
+            background: #163A5C;
+            border: 1px solid #2A679F;
+            color: #72aee2;
         }
 
-        .scroll-indicator.right {
-            right: 12px;
+        .ps-stack-fs .ps-icon-box {
+            background: #2F1A45;
+            border: 1px solid #562D7B;
+            color: #ba8cde;
         }
 
-        .scroll-indicator svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Gradient fade edges */
-        .projects-scroll-wrapper::before,
-        .projects-scroll-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 60px;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .projects-scroll-wrapper::before {
-            left: 0;
-            background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
-        }
-
-        .projects-scroll-wrapper::after {
-            right: 0;
-            background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%);
-        }
-
-        /* Project cards */
-        .project-card-h {
-            flex-shrink: 0;
-            width: 380px;
-            height: 480px;
-            border-radius: 24px;
-            overflow: hidden;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            box-shadow: var(--clay-shadow);
-            position: relative;
-            cursor: none;
-            /* scroll reveal */
-            opacity: 0;
-            transform: translateX(60px) scale(0.9);
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.3s, border-color 0.3s;
-        }
-
-        .project-card-h.revealed {
-            opacity: 1;
-            transform: translateX(0) scale(1);
-        }
-
-        .project-card-h:hover {
-            box-shadow: var(--clay-shadow-hover);
-            border-color: rgba(200, 245, 63, 0.2);
-        }
-
-        .project-card-h:hover .project-card-img {
-            transform: scale(1.08);
-        }
-
-        .project-card-h:hover .project-card-overlay {
-            opacity: 1;
-        }
-
-        /* Stagger animations */
-        .project-card-h:nth-child(1) { transition-delay: 0s; }
-        .project-card-h:nth-child(2) { transition-delay: 0.08s; }
-        .project-card-h:nth-child(3) { transition-delay: 0.16s; }
-        .project-card-h:nth-child(4) { transition-delay: 0.24s; }
-        .project-card-h:nth-child(5) { transition-delay: 0.32s; }
-        .project-card-h:nth-child(6) { transition-delay: 0.40s; }
-        .project-card-h:nth-child(7) { transition-delay: 0.48s; }
-        .project-card-h:nth-child(8) { transition-delay: 0.56s; }
-        .project-card-h:nth-child(9) { transition-delay: 0.64s; }
-        .project-card-h:nth-child(10) { transition-delay: 0.72s; }
-
-        .project-card-img-wrap {
-            position: relative;
-            width: 100%;
-            height: 260px;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
-        }
-
-        .project-card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .project-card-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            display: flex;
-            align-items: flex-end;
-            padding: 20px;
-        }
-
-        .project-card-body {
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .project-card-category {
+        .ps-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .project-card-category::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--accent);
+        .ps-stack-ds .ps-badge {
+            background: #143859;
+            border: 1px solid #1B507C;
+            color: #5CA0D8;
         }
 
-        .project-card-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 20px;
+        .ps-stack-fs .ps-badge {
+            background: #2A1640;
+            border: 1px solid #4B246A;
+            color: #A46AD6;
+        }
+
+        /* Typography */
+        .ps-category {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .ps-stack-ds .ps-category {
+            color: #5CA0D8;
+        }
+
+        .ps-stack-fs .ps-category {
+            color: #ba8cde;
+        }
+
+        .ps-title {
+            font-family: inherit;
+            font-size: 28px;
             font-weight: 800;
             color: #fff;
-            margin-bottom: 10px;
-            line-height: 1.3;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
         }
 
-        .project-card-desc {
-            font-size: 13px;
-            color: var(--muted);
-            line-height: 1.6;
-            flex: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+        .ps-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+            flex-grow: 1;
+            /* Pushes tags & footer to bottom */
         }
 
-        .project-card-tags {
+        .ps-stack-ds .ps-desc {
+            color: #A0B2C6;
+        }
+
+        .ps-stack-fs .ps-desc {
+            color: #B49CC6;
+        }
+
+        /* Tags */
+        .ps-tags {
             display: flex;
-            gap: 8px;
             flex-wrap: wrap;
-            margin-top: 16px;
-        }
-
-        .project-card-tag {
-            padding: 5px 12px;
-            border-radius: 10px;
-            font-size: 11px;
-            background: var(--surface2);
-            color: var(--muted);
-            border: 1px solid var(--border);
-            letter-spacing: 0.02em;
-        }
-
-        .project-card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 16px;
-            margin-top: auto;
-            border-top: 1px solid var(--border);
-        }
-
-        .project-card-year {
-            font-size: 12px;
-            color: var(--muted);
-            font-weight: 600;
-            letter-spacing: 0.08em;
-        }
-
-        .project-card-link {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--accent);
-            text-decoration: none;
-            transition: transform 0.2s, gap 0.2s;
-        }
-
-        .project-card-link:hover {
-            transform: translateX(3px);
             gap: 10px;
+            margin-bottom: 40px;
         }
 
-        /* Scroll progress bar */
-        .scroll-progress {
-            width: 200px;
-            height: 3px;
-            background: var(--surface2);
-            border-radius: 2px;
-            margin: 0 auto;
-            overflow: hidden;
+        .ps-tag {
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
         }
 
-        .scroll-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent2), var(--accent));
-            border-radius: 2px;
-            width: 20%;
-            transition: transform 0.1s ease;
+        .ps-stack-ds .ps-tag {
+            background: #122C46;
+            border: 1px solid #1A4367;
+            color: #6DAFE2;
         }
 
+        .ps-stack-fs .ps-tag {
+            background: #231236;
+            border: 1px solid #3d1b5a;
+            color: #a476d0;
+        }
+
+        /* Divider */
+        .ps-divider {
+            height: 1px;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .ps-stack-ds .ps-divider {
+            background: rgba(92, 160, 216, 0.2);
+        }
+
+        .ps-stack-fs .ps-divider {
+            background: rgba(186, 140, 222, 0.15);
+        }
+
+        /* Footer */
+        .ps-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ps-pagination {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .ps-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .ps-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .ps-stack-ds .ps-dot {
+            background: #1A4367;
+        }
+
+        .ps-stack-ds .ps-dot.active {
+            background: #5CA0D8;
+        }
+
+        .ps-stack-fs .ps-dot {
+            background: #3d1b5a;
+        }
+
+        .ps-stack-fs .ps-dot.active {
+            background: #ba8cde;
+        }
+
+        .ps-stack-ds .ps-pagination {
+            color: #5CA0D8;
+            opacity: 0.7;
+        }
+
+        .ps-stack-fs .ps-pagination {
+            color: #ba8cde;
+            opacity: 0.7;
+        }
+
+        /* Button */
+        .ps-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .ps-stack-ds .ps-btn {
+            background: #143E63;
+            border: 1px solid #22588A;
+            color: #fff;
+        }
+
+        .ps-stack-ds .ps-btn:hover {
+            background: #1a4f7c;
+        }
+
+        .ps-stack-fs .ps-btn {
+            background: #3B1B5B;
+            border: 1px solid #572589;
+            color: #fff;
+        }
+
+        .ps-stack-fs .ps-btn:hover {
+            background: #4a2176;
+        }
+
+        .ps-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Responsive */
         @media (max-width: 900px) {
-            .project-card-h {
-                width: 320px;
-                height: 440px;
+            .featured-projects {
+                padding: 60px 24px;
             }
 
-            .project-card-img-wrap {
-                height: 200px;
+            .projects-showcase {
+                grid-template-columns: 1fr;
+                gap: 80px;
+                max-width: 500px;
             }
 
-            .bento-header {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .scroll-indicator {
-                display: none;
+            .project-stack {
+                height: 560px;
             }
         }
 
-        @media (max-width: 550px) {
-            .bento-projects {
-                padding: 48px 0;
+        @media (max-width: 500px) {
+            .ps-main {
+                padding: 30px 24px;
             }
 
-            .project-card-h {
-                width: 300px;
-                height: 420px;
+            .ps-title {
+                font-size: 24px;
             }
 
-            .bento-header h2 {
-                font-size: 28px;
-            }
-
-            .projects-scroll {
-                padding: 10px 16px 30px;
-                gap: 16px;
+            .ps-desc {
+                font-size: 14px;
             }
         }
 
@@ -2081,7 +2155,8 @@
                 <div class="stats">
                     <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Years exp.</span></div>
                     <div class="stat"><span class="stat-num">15+</span><span class="stat-label">Projects</span></div>
-                    <div class="stat"><span class="stat-num">B.Tech</span><span class="stat-label">CS Student</span></div>
+                    <div class="stat"><span class="stat-num">B.Tech</span><span class="stat-label">CS Student</span>
+                    </div>
                 </div>
 
                 <div class="tags">
@@ -2108,7 +2183,10 @@
 
                 <div class="socials">
                     <a href="#" class="social-btn" title="GitHub">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12" />
+                        </svg>
                     </a>
                     <a href="#" class="social-btn" title="LinkedIn">in</a>
                     <a href="#" class="social-btn" title="Twitter">𝕏</a>
@@ -2123,80 +2201,83 @@
 
                     <!-- Metal hook sitting on top of card -->
                     <div class="id-hook-wrap">
-                        <svg class="id-hook-svg" width="48" height="30" viewBox="0 0 48 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="id-hook-svg" width="48" height="30" viewBox="0 0 48 30" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="hookGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%"   stop-color="#f0f0f0"/>
-                                    <stop offset="35%"  stop-color="#d8d8d8"/>
-                                    <stop offset="65%"  stop-color="#aaaaaa"/>
-                                    <stop offset="100%" stop-color="#888888"/>
+                                    <stop offset="0%" stop-color="#f0f0f0" />
+                                    <stop offset="35%" stop-color="#d8d8d8" />
+                                    <stop offset="65%" stop-color="#aaaaaa" />
+                                    <stop offset="100%" stop-color="#888888" />
                                 </linearGradient>
                                 <linearGradient id="hookInner" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%"   stop-color="#1a1a1a"/>
-                                    <stop offset="100%" stop-color="#0a0a0a"/>
+                                    <stop offset="0%" stop-color="#1a1a1a" />
+                                    <stop offset="100%" stop-color="#0a0a0a" />
                                 </linearGradient>
                                 <linearGradient id="hookShine" x1="0" y1="0" x2="1" y2="0">
-                                    <stop offset="0%"   stop-color="rgba(255,255,255,0.0)"/>
-                                    <stop offset="40%"  stop-color="rgba(255,255,255,0.25)"/>
-                                    <stop offset="60%"  stop-color="rgba(255,255,255,0.08)"/>
-                                    <stop offset="100%" stop-color="rgba(255,255,255,0.0)"/>
+                                    <stop offset="0%" stop-color="rgba(255,255,255,0.0)" />
+                                    <stop offset="40%" stop-color="rgba(255,255,255,0.25)" />
+                                    <stop offset="60%" stop-color="rgba(255,255,255,0.08)" />
+                                    <stop offset="100%" stop-color="rgba(255,255,255,0.0)" />
                                 </linearGradient>
                             </defs>
                             <!-- Outer U-shape body -->
-                            <path d="M10 2 C10 2 6 2 6 8 L6 24 C6 27 9 29 12 29 L36 29 C39 29 42 27 42 24 L42 8 C42 2 38 2 38 2 Z"
-                                  fill="url(#hookGrad)" stroke="rgba(0,0,0,0.25)" stroke-width="0.5"/>
+                            <path
+                                d="M10 2 C10 2 6 2 6 8 L6 24 C6 27 9 29 12 29 L36 29 C39 29 42 27 42 24 L42 8 C42 2 38 2 38 2 Z"
+                                fill="url(#hookGrad)" stroke="rgba(0,0,0,0.25)" stroke-width="0.5" />
                             <!-- Inner cutout (the hole the card ring fits through) -->
-                            <path d="M16 8 C16 8 13 8 13 13 L13 22 C13 24.5 15 26 17 26 L31 26 C33 26 35 24.5 35 22 L35 13 C35 8 32 8 32 8 Z"
-                                  fill="url(#hookInner)"/>
+                            <path
+                                d="M16 8 C16 8 13 8 13 13 L13 22 C13 24.5 15 26 17 26 L31 26 C33 26 35 24.5 35 22 L35 13 C35 8 32 8 32 8 Z"
+                                fill="url(#hookInner)" />
                             <!-- Shine highlight across top -->
-                            <rect x="6" y="2" width="36" height="7" rx="3" fill="url(#hookShine)"/>
+                            <rect x="6" y="2" width="36" height="7" rx="3" fill="url(#hookShine)" />
                             <!-- Top flat bar (the part that clips to card) -->
-                            <rect x="8" y="0" width="32" height="6" rx="3"
-                                  fill="url(#hookGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
+                            <rect x="8" y="0" width="32" height="6" rx="3" fill="url(#hookGrad)"
+                                stroke="rgba(0,0,0,0.2)" stroke-width="0.5" />
                             <!-- Top bar shine -->
-                            <rect x="10" y="1" width="28" height="2" rx="1" fill="rgba(255,255,255,0.35)"/>
+                            <rect x="10" y="1" width="28" height="2" rx="1" fill="rgba(255,255,255,0.35)" />
                         </svg>
                     </div>
 
-                <div class="id-card-perspective">
-                    <div class="id-card" id="idCard">
-                        <div class="id-card-inner">
+                    <div class="id-card-perspective">
+                        <div class="id-card" id="idCard">
+                            <div class="id-card-inner">
 
-                            <!-- Full bleed photo -->
-                            <img class="id-photo-bg" src="assets/profile.jpg" alt="Akhand" />
-                            <div class="id-photo-scrim"></div>
+                                <!-- Full bleed photo -->
+                                <img class="id-photo-bg" src="assets/profile.jpg" alt="Akhand" />
+                                <div class="id-photo-scrim"></div>
 
-                            <!-- Shimmer layers -->
-                            <div class="id-shimmer" id="idShimmer"></div>
-                            <div class="id-rainbow" id="idRainbow"></div>
+                                <!-- Shimmer layers -->
+                                <div class="id-shimmer" id="idShimmer"></div>
+                                <div class="id-rainbow" id="idRainbow"></div>
 
-                            <!-- Top accent bar -->
-                            <div class="id-top-bar"></div>
+                                <!-- Top accent bar -->
+                                <div class="id-top-bar"></div>
 
-                            <!-- Company badge row — floats over photo at top -->
-                            <div class="id-content">
-                                <div class="id-company-row">
-                                    <div class="id-logo-mark">A</div>
-                                    <div>
-                                        <div class="id-company-name">Akhand</div>
-                                        <div class="id-company-sub">Portfolio 2026</div>
+                                <!-- Company badge row — floats over photo at top -->
+                                <div class="id-content">
+                                    <div class="id-company-row">
+                                        <div class="id-logo-mark">A</div>
+                                        <div>
+                                            <div class="id-company-name">Akhand</div>
+                                            <div class="id-company-sub">Portfolio 2026</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Bottom strip with barcode + QR -->
-                            <div class="id-bottom-strip">
-                                <div class="id-barcode" id="idBarcode"></div>
-                                <div class="id-qr" id="idQr"></div>
-                            </div>
+                                <!-- Bottom strip with barcode + QR -->
+                                <div class="id-bottom-strip">
+                                    <div class="id-barcode" id="idBarcode"></div>
+                                    <div class="id-qr" id="idQr"></div>
+                                </div>
 
-                        </div><!-- /id-card-inner -->
-                    </div><!-- /id-card -->
-                </div><!-- /id-card-perspective -->
+                            </div><!-- /id-card-inner -->
+                        </div><!-- /id-card -->
+                    </div><!-- /id-card-perspective -->
 
-                <!-- Floating badges -->
-                
-                
+                    <!-- Floating badges -->
+
+
                 </div><!-- /id-card-wrap -->
 
             </div>
@@ -2267,33 +2348,143 @@
         <section class="skills-full" id="skills-section">
             <div class="skills-full-header scroll-reveal">
                 <h2>My <span class="highlight">Skills</span> & Expertise</h2>
-                <p>Technologies, frameworks, and tools I work with to build impactful solutions.</p>
+                <p>The skills, tools and technologies I am really good at:</p>
             </div>
 
-            <!-- Category tabs -->
-            <div class="skill-tabs" id="skillTabs">
-                <button class="skill-tab active" data-cloud="cloud-all">All</button>
-                <button class="skill-tab" data-cloud="cloud-lang">Languages</button>
-                <button class="skill-tab" data-cloud="cloud-ds">Data Science & ML</button>
-                <button class="skill-tab" data-cloud="cloud-backend">Backend</button>
-                <button class="skill-tab" data-cloud="cloud-db">Databases</button>
-                <button class="skill-tab" data-cloud="cloud-bigdata">Big Data</button>
-                <button class="skill-tab" data-cloud="cloud-viz">Visualization</button>
-                <button class="skill-tab" data-cloud="cloud-web">Web / Frontend</button>
-                <button class="skill-tab" data-cloud="cloud-ai">AI / CV</button>
-            </div>
+            <div class="skills-icon-grid scroll-reveal">
+                <!-- Row 1 -->
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+                        alt="Python" />
+                    <span class="skill-icon-label">Python</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg"
+                        alt="Django" />
+                    <span class="skill-icon-label">Django</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+                        alt="React" />
+                    <span class="skill-icon-label">React</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+                        alt="JavaScript" />
+                    <span class="skill-icon-label">JavaScript</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"
+                        alt="C++" />
+                    <span class="skill-icon-label">C++</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                        alt="Java" />
+                    <span class="skill-icon-label">Java</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"
+                        alt="PostgreSQL" />
+                    <span class="skill-icon-label">PostgreSQL</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg"
+                        alt="MySQL" />
+                    <span class="skill-icon-label">MySQL</span>
+                </div>
 
-            <!-- ALL cloud (default) -->
-            <div class="bubble-cloud" id="cloud-all"></div>
-            <!-- Per-category clouds (hidden, populated by JS) -->
-            <div class="bubble-cloud hidden" id="cloud-lang"></div>
-            <div class="bubble-cloud hidden" id="cloud-ds"></div>
-            <div class="bubble-cloud hidden" id="cloud-backend"></div>
-            <div class="bubble-cloud hidden" id="cloud-db"></div>
-            <div class="bubble-cloud hidden" id="cloud-bigdata"></div>
-            <div class="bubble-cloud hidden" id="cloud-viz"></div>
-            <div class="bubble-cloud hidden" id="cloud-web"></div>
-            <div class="bubble-cloud hidden" id="cloud-ai"></div>
+                <!-- Divider -->
+                <div class="skills-divider"></div>
+
+                <!-- Row 2 -->
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg"
+                        alt="FastAPI" />
+                    <span class="skill-icon-label">FastAPI</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg"
+                        alt="Redis" />
+                    <span class="skill-icon-label">Redis</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+                        alt="HTML" />
+                    <span class="skill-icon-label">HTML</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
+                        alt="CSS" />
+                    <span class="skill-icon-label">CSS</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"
+                        alt="Tailwind CSS" />
+                    <span class="skill-icon-label">Tailwind CSS</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg"
+                        alt="Bootstrap" />
+                    <span class="skill-icon-label">Bootstrap</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"
+                        alt="Git" />
+                    <span class="skill-icon-label">Git</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
+                        alt="Docker" />
+                    <span class="skill-icon-label">Docker</span>
+                </div>
+
+                <!-- Divider -->
+                <div class="skills-divider"></div>
+
+                <!-- Row 3: Data Science & ML -->
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg"
+                        alt="Scikit-learn" />
+                    <span class="skill-icon-label">Scikit-learn</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg"
+                        alt="Pandas" />
+                    <span class="skill-icon-label">Pandas</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg"
+                        alt="Matplotlib" />
+                    <span class="skill-icon-label">Matplotlib</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg"
+                        alt="Jupyter" />
+                    <span class="skill-icon-label">Jupyter</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachespark/apachespark-original.svg"
+                        alt="Apache Spark" />
+                    <span class="skill-icon-label">Spark</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachekafka/apachekafka-original.svg"
+                        alt="Apache Kafka" style="filter: invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.3));" />
+                    <span class="skill-icon-label">Kafka</span>
+                </div>
+                <div class="skill-icon-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg"
+                        alt="OpenCV" />
+                    <span class="skill-icon-label">OpenCV</span>
+                </div>
+                <div class="skill-icon-item">
+                    <div class="skill-icon-text"
+                        style="background: rgba(255,160,60,0.15); border-color: rgba(255,160,60,0.3); color: #ffaa44; font-size: 11px;">
+                        PBI</div>
+                    <span class="skill-icon-label">Power BI</span>
+                </div>
+            </div>
 
             <!-- keep old markup for observer compatibility -->
             <div style="display:none" aria-hidden="true">
@@ -2301,257 +2492,120 @@
             </div>
         </section>
 
-        <!-- ========== BENTO PROJECTS ========== -->
-        <section class="bento-projects" id="projects-section">
-            <div class="bento-header scroll-reveal">
+        <!-- ========== FEATURED PROJECTS — Stacked Card Carousel ========== -->
+        <section class="featured-projects" id="projects-section">
+            <div class="featured-header scroll-reveal">
                 <h2>Featured <span class="highlight">Projects</span></h2>
-                <span class="bento-sub">2024 — 2026</span>
+                <a href="fullstack.html" class="featured-viewall">View All Projects →</a>
             </div>
 
-            <div class="projects-scroll-wrapper">
-                <!-- Left scroll button -->
-                <button class="scroll-indicator left" onclick="scrollProjects(-1)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 18l-6-6 6-6"/>
-                    </svg>
-                </button>
+            <div class="projects-showcase scroll-reveal">
 
-                <!-- Right scroll button -->
-                <button class="scroll-indicator right" onclick="scrollProjects(1)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18l6-6-6-6"/>
-                    </svg>
-                </button>
+                <!-- Left Stack: Data Science -->
+                <div class="project-stack ps-stack-ds">
+                    <div class="ps-bg ps-bg-2"></div>
+                    <div class="ps-bg ps-bg-1"></div>
+                    <div class="ps-main">
+                        <div class="ps-card-header">
+                            <div class="ps-icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="ps-badge">2 PROJECTS</div>
+                        </div>
 
-                <div class="projects-scroll" id="projectsScroll">
-                    <!-- 1: E-Commerce Website -->
-                    <div class="project-card-h">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-img" src="django_project_image/ecormerce_website.png" alt="E-Commerce Website" />
-                            <div class="project-card-overlay"></div>
-                        </div>
-                        <div class="project-card-body">
-                            <span class="project-card-category">Full Stack</span>
-                            <h3 class="project-card-title">E-Commerce Platform</h3>
-                            <p class="project-card-desc">Complete e-commerce solution with product catalog, cart system, user authentication, and payment integration using Django.</p>
-                            <div class="project-card-tags">
-                                <span class="project-card-tag">Django</span>
-                                <span class="project-card-tag">PostgreSQL</span>
-                                <span class="project-card-tag">REST API</span>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-year">2025</span>
-                                <a href="fullstack.html" class="project-card-link">View Details →</a>
-                            </div>
-                        </div>
-                    </div>
+                        <div class="ps-category">Data Science</div>
+                        <h3 class="ps-title">ML & Analytics</h3>
+                        <p class="ps-desc">
+                            End-to-end machine learning pipelines, predictive models, and interactive dashboards
+                            spanning NLP, computer vision, and time-series forecasting.
+                        </p>
 
-                    <!-- 2: Class Audit AI -->
-                    <div class="project-card-h">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-img" src="django_project_image/class_audit ai.png" alt="Class Audit AI" />
-                            <div class="project-card-overlay"></div>
+                        <div class="ps-tags">
+                            <span class="ps-tag">Python</span>
+                            <span class="ps-tag">Scikit-learn</span>
+                            <span class="ps-tag">Pandas</span>
+                            <span class="ps-tag">Matplotlib</span>
                         </div>
-                        <div class="project-card-body">
-                            <span class="project-card-category">AI / ML</span>
-                            <h3 class="project-card-title">Class Audit AI</h3>
-                            <p class="project-card-desc">AI-powered classroom attendance and engagement tracking system using computer vision and facial recognition.</p>
-                            <div class="project-card-tags">
-                                <span class="project-card-tag">Python</span>
-                                <span class="project-card-tag">OpenCV</span>
-                                <span class="project-card-tag">TensorFlow</span>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-year">2025</span>
-                                <a href="fullstack.html" class="project-card-link">View Details →</a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- 3: Movie Streaming Platform -->
-                    <div class="project-card-h">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-img" src="django_project_image/movie_streaming_plateform.png" alt="Movie Streaming Platform" />
-                            <div class="project-card-overlay"></div>
-                        </div>
-                        <div class="project-card-body">
-                            <span class="project-card-category">Full Stack</span>
-                            <h3 class="project-card-title">Movie Streaming Platform</h3>
-                            <p class="project-card-desc">Netflix-like streaming service with video playback, user subscriptions, recommendations, and admin dashboard.</p>
-                            <div class="project-card-tags">
-                                <span class="project-card-tag">Django</span>
-                                <span class="project-card-tag">JavaScript</span>
-                                <span class="project-card-tag">AWS S3</span>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-year">2025</span>
-                                <a href="fullstack.html" class="project-card-link">View Details →</a>
-                            </div>
-                        </div>
-                    </div>
+                        <div class="ps-divider"></div>
 
-                    <!-- 4: Customer Segmentation -->
-                    <div class="project-card-h">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-img" src="data_science_project/customer_segmentation for target marketing.png" alt="Customer Segmentation" />
-                            <div class="project-card-overlay"></div>
-                        </div>
-                        <div class="project-card-body">
-                            <span class="project-card-category">Data Science</span>
-                            <h3 class="project-card-title">Customer Segmentation</h3>
-                            <p class="project-card-desc">K-Means clustering analysis to segment customers for targeted marketing campaigns based on purchasing behavior.</p>
-                            <div class="project-card-tags">
-                                <span class="project-card-tag">Python</span>
-                                <span class="project-card-tag">Scikit-learn</span>
-                                <span class="project-card-tag">Pandas</span>
+                        <div class="ps-footer">
+                            <div class="ps-pagination">
+                                <div class="ps-dots">
+                                    <span class="ps-dot active"></span>
+                                    <span class="ps-dot"></span>
+                                </div>
+                                <span>1 of 2 featured</span>
                             </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-year">2024</span>
-                                <a href="datascience.html" class="project-card-link">View Details →</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 5: Bank Churn Analysis -->
-                    <div class="project-card-h">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-img" src="data_science_project/power_bi_bank churn analysis.jpeg" alt="Bank Churn Analysis" />
-                            <div class="project-card-overlay"></div>
-                        </div>
-                        <div class="project-card-body">
-                            <span class="project-card-category">Data Science</span>
-                            <h3 class="project-card-title">Bank Churn Analysis</h3>
-                            <p class="project-card-desc">Power BI dashboard analyzing customer churn patterns with predictive insights for retention strategies.</p>
-                            <div class="project-card-tags">
-                                <span class="project-card-tag">Power BI</span>
-                                <span class="project-card-tag">SQL</span>
-                                <span class="project-card-tag">DAX</span>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-year">2024</span>
-                                <a href="datascience.html" class="project-card-link">View Details →</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 6: Credit Card Dashboard -->
-                    <div class="project-card-h">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-img" src="data_science_project/credit_card_dashboard.png" alt="Credit Card Dashboard" />
-                            <div class="project-card-overlay"></div>
-                        </div>
-                        <div class="project-card-body">
-                            <span class="project-card-category">Data Science</span>
-                            <h3 class="project-card-title">Credit Card Dashboard</h3>
-                            <p class="project-card-desc">Interactive analytics dashboard for credit card transaction monitoring and fraud detection visualization.</p>
-                            <div class="project-card-tags">
-                                <span class="project-card-tag">Python</span>
-                                <span class="project-card-tag">Plotly</span>
-                                <span class="project-card-tag">Streamlit</span>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-year">2024</span>
-                                <a href="datascience.html" class="project-card-link">View Details →</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 7: Exam Portal -->
-                    <div class="project-card-h">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-img" src="django_project_image/exam_portal.png" alt="Exam Portal" />
-                            <div class="project-card-overlay"></div>
-                        </div>
-                        <div class="project-card-body">
-                            <span class="project-card-category">Full Stack</span>
-                            <h3 class="project-card-title">Online Exam Portal</h3>
-                            <p class="project-card-desc">Secure online examination system with proctoring, auto-grading, timer, and detailed analytics for educators.</p>
-                            <div class="project-card-tags">
-                                <span class="project-card-tag">Django</span>
-                                <span class="project-card-tag">JavaScript</span>
-                                <span class="project-card-tag">PostgreSQL</span>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-year">2025</span>
-                                <a href="fullstack.html" class="project-card-link">View Details →</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 8: Social Media Platform -->
-                    <div class="project-card-h">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-img" src="django_project_image/social_media.png" alt="Social Media Platform" />
-                            <div class="project-card-overlay"></div>
-                        </div>
-                        <div class="project-card-body">
-                            <span class="project-card-category">Full Stack</span>
-                            <h3 class="project-card-title">Social Media Platform</h3>
-                            <p class="project-card-desc">Full-featured social network with posts, comments, likes, real-time chat, and user profiles.</p>
-                            <div class="project-card-tags">
-                                <span class="project-card-tag">Django</span>
-                                <span class="project-card-tag">WebSockets</span>
-                                <span class="project-card-tag">Redis</span>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-year">2025</span>
-                                <a href="fullstack.html" class="project-card-link">View Details →</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 9: Taxi Fare Estimator -->
-                    <div class="project-card-h">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-img" src="django_project_image/tax_fare_estimator.png" alt="Taxi Fare Estimator" />
-                            <div class="project-card-overlay"></div>
-                        </div>
-                        <div class="project-card-body">
-                            <span class="project-card-category">ML / Full Stack</span>
-                            <h3 class="project-card-title">Taxi Fare Estimator</h3>
-                            <p class="project-card-desc">ML-powered fare prediction system with real-time distance calculation and route optimization.</p>
-                            <div class="project-card-tags">
-                                <span class="project-card-tag">Python</span>
-                                <span class="project-card-tag">XGBoost</span>
-                                <span class="project-card-tag">Maps API</span>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-year">2024</span>
-                                <a href="datascience.html" class="project-card-link">View Details →</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 10: ML Churn Analysis Model -->
-                    <div class="project-card-h">
-                        <div class="project-card-img-wrap">
-                            <img class="project-card-img" src="data_science_project/ml_model for churn analysis.png" alt="ML Churn Model" />
-                            <div class="project-card-overlay"></div>
-                        </div>
-                        <div class="project-card-body">
-                            <span class="project-card-category">Machine Learning</span>
-                            <h3 class="project-card-title">Churn Prediction Model</h3>
-                            <p class="project-card-desc">Advanced ML model predicting customer churn with 92% accuracy using ensemble techniques and feature engineering.</p>
-                            <div class="project-card-tags">
-                                <span class="project-card-tag">Python</span>
-                                <span class="project-card-tag">Random Forest</span>
-                                <span class="project-card-tag">SHAP</span>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-year">2024</span>
-                                <a href="datascience.html" class="project-card-link">View Details →</a>
-                            </div>
+                            <a href="datascience.html" class="ps-btn">
+                                View all
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Scroll progress bar -->
-                <div class="scroll-progress">
-                    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+                <!-- Right Stack: Full Stack -->
+                <div class="project-stack ps-stack-fs">
+                    <div class="ps-bg ps-bg-2"></div>
+                    <div class="ps-bg ps-bg-1"></div>
+                    <div class="ps-main">
+                        <div class="ps-card-header">
+                            <div class="ps-icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                    <polyline points="7 8 10 11 7 14"></polyline>
+                                    <line x1="13" y1="14" x2="17" y2="14"></line>
+                                </svg>
+                            </div>
+                            <div class="ps-badge">1 PROJECT</div>
+                        </div>
+
+                        <div class="ps-category">Full Stack</div>
+                        <h3 class="ps-title">Web & App Dev</h3>
+                        <p class="ps-desc">
+                            Production-grade web applications with REST APIs, robust databases, user authentication, and
+                            polished modern interfaces.
+                        </p>
+
+                        <div class="ps-tags">
+                            <span class="ps-tag">Django</span>
+                            <span class="ps-tag">PostgreSQL</span>
+                            <span class="ps-tag">REST API</span>
+                            <span class="ps-tag">JavaScript</span>
+                        </div>
+
+                        <div class="ps-divider"></div>
+
+                        <div class="ps-footer">
+                            <div class="ps-pagination">
+                                <div class="ps-dots">
+                                    <span class="ps-dot active"></span>
+                                </div>
+                                <span>1 of 1 featured</span>
+                            </div>
+                            <a href="fullstack.html" class="ps-btn">
+                                View all
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </section>
-
         <!-- ========== THANK YOU / CONTACT SECTION ========== -->
         <section class="thankyou-section" id="contact-section">
             <div class="thankyou-top">
@@ -2676,67 +2730,15 @@
         });
 
         // Observe all reveal elements
-        document.querySelectorAll('.skill-category, .scroll-reveal, .bento-item, .milestone-card, .project-card-h').forEach(el => {
+        document.querySelectorAll('.skill-category, .scroll-reveal, .bento-item, .milestone-card, .fp-card').forEach(el => {
             revealObserver.observe(el);
         });
 
-        // ── Horizontal Scroll for Projects ──
-        const projectsScroll = document.getElementById('projectsScroll');
-        const scrollProgressBar = document.getElementById('scrollProgressBar');
-        
-        // Scroll button function
-        function scrollProjects(direction) {
-            const scrollAmount = 420;
-            projectsScroll.scrollBy({
-                left: direction * scrollAmount,
-                behavior: 'smooth'
-            });
-        }
-
-        // Update scroll progress bar
-        if (projectsScroll && scrollProgressBar) {
-            projectsScroll.addEventListener('scroll', () => {
-                const scrollLeft = projectsScroll.scrollLeft;
-                const maxScroll = projectsScroll.scrollWidth - projectsScroll.clientWidth;
-                const progress = (scrollLeft / maxScroll) * 100;
-                scrollProgressBar.style.transform = `translateX(${progress * 4}%)`;
-            });
-
-            // Drag to scroll
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-
-            projectsScroll.addEventListener('mousedown', (e) => {
-                isDown = true;
-                projectsScroll.style.cursor = 'grabbing';
-                startX = e.pageX - projectsScroll.offsetLeft;
-                scrollLeft = projectsScroll.scrollLeft;
-            });
-
-            projectsScroll.addEventListener('mouseleave', () => {
-                isDown = false;
-                projectsScroll.style.cursor = 'grab';
-            });
-
-            projectsScroll.addEventListener('mouseup', () => {
-                isDown = false;
-                projectsScroll.style.cursor = 'grab';
-            });
-
-            projectsScroll.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - projectsScroll.offsetLeft;
-                const walk = (x - startX) * 1.5;
-                projectsScroll.scrollLeft = scrollLeft - walk;
-            });
-        }
 
         // ── Build ID Card Barcode ──
         const barcodeEl = document.getElementById('idBarcode');
         if (barcodeEl) {
-            const barWidths = [3,1,2,1,3,1,2,3,1,2,1,3,2,1,2,1,3,1,2];
+            const barWidths = [3, 1, 2, 1, 3, 1, 2, 3, 1, 2, 1, 3, 2, 1, 2, 1, 3, 1, 2];
             barWidths.forEach((w, i) => {
                 const bar = document.createElement('div');
                 bar.className = 'id-bar';
@@ -2751,7 +2753,7 @@
         // ── Build ID Card QR ──
         const qrEl = document.getElementById('idQr');
         if (qrEl) {
-            const qrOn = [0,1,2,5,7,10,12,14,17,19,22,23,24];
+            const qrOn = [0, 1, 2, 5, 7, 10, 12, 14, 17, 19, 22, 23, 24];
             for (let i = 0; i < 25; i++) {
                 const cell = document.createElement('div');
                 cell.className = 'id-qr-cell ' + (qrOn.includes(i) ? 'id-qr-on' : 'id-qr-off');
@@ -2760,7 +2762,7 @@
         }
 
         // ── 3D Tilt Hover on ID Card ──
-        const idCard    = document.getElementById('idCard');
+        const idCard = document.getElementById('idCard');
         const idShimmer = document.getElementById('idShimmer');
         const idRainbow = document.getElementById('idRainbow');
 
@@ -2769,14 +2771,14 @@
 
             idCard.addEventListener('mousemove', (e) => {
                 const rect = idCard.getBoundingClientRect();
-                const cx = rect.left + rect.width  / 2;
-                const cy = rect.top  + rect.height / 2;
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
                 const dx = e.clientX - cx;
                 const dy = e.clientY - cy;
-                const rotateY =  (dx / (rect.width  / 2)) * 18;
+                const rotateY = (dx / (rect.width / 2)) * 18;
                 const rotateX = -(dy / (rect.height / 2)) * 18;
-                const shineX  = ((e.clientX - rect.left) / rect.width)  * 100;
-                const shineY  = ((e.clientY - rect.top)  / rect.height) * 100;
+                const shineX = ((e.clientX - rect.left) / rect.width) * 100;
+                const shineY = ((e.clientY - rect.top) / rect.height) * 100;
 
                 idCard.style.transform =
                     `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
@@ -2807,261 +2809,7 @@
             });
         }
 
-        // ── Skill Bubble Cloud Engine ──
-        (function() {
-            // All skills with size weight (1=small, 2=medium, 3=large)
-            // bg = base sphere color, fill = crescent fill color
-            const CATEGORIES = {
-                'cloud-lang': [
-                    { name:'Python',      sz:3, bg:'#1b2540', fill:'rgba(200,245,63,0.28)' },
-                    { name:'C++',         sz:3, bg:'#1e1b40', fill:'rgba(200,245,63,0.22)' },
-                    { name:'JavaScript',  sz:2, bg:'#1f1b10', fill:'rgba(251,210,50,0.22)' },
-                    { name:'Java',        sz:2, bg:'#1e1020', fill:'rgba(255,100,100,0.18)' },
-                    { name:'C',           sz:2, bg:'#0f2030', fill:'rgba(100,180,255,0.18)' },
-                    { name:'SQL',         sz:2, bg:'#102020', fill:'rgba(80,220,180,0.18)' },
-                ],
-                'cloud-ds': [
-                    { name:'Machine\nLearning',    sz:3, bg:'#1a1a40', fill:'rgba(124,111,255,0.28)' },
-                    { name:'Data\nAnalysis',       sz:3, bg:'#0f2030', fill:'rgba(100,180,255,0.26)' },
-                    { name:'K-Means',              sz:2, bg:'#1e1b40', fill:'rgba(200,245,63,0.20)' },
-                    { name:'Decision\nTrees',      sz:2, bg:'#1a2510', fill:'rgba(200,245,63,0.20)' },
-                    { name:'XGBoost',              sz:2, bg:'#1b2a20', fill:'rgba(80,220,150,0.20)' },
-                    { name:'AdaBoost',             sz:1, bg:'#1b2a20', fill:'rgba(80,220,150,0.18)' },
-                    { name:'Gradient\nBoosting',   sz:2, bg:'#251830', fill:'rgba(180,100,255,0.20)' },
-                    { name:'KNN',                  sz:1, bg:'#1e1b40', fill:'rgba(124,111,255,0.18)' },
-                    { name:'Model\nTuning',        sz:2, bg:'#152030', fill:'rgba(100,180,255,0.20)' },
-                    { name:'Feature\nEngineering', sz:2, bg:'#102020', fill:'rgba(80,220,180,0.18)' },
-                    { name:'Cross-\nValidation',   sz:1, bg:'#1a2510', fill:'rgba(200,245,63,0.16)' },
-                    { name:'GridSearchCV',         sz:1, bg:'#1e1040', fill:'rgba(124,111,255,0.16)' },
-                    { name:'Scikit-learn',         sz:2, bg:'#0f2030', fill:'rgba(100,180,255,0.18)' },
-                ],
-                'cloud-backend': [
-                    { name:'Django',               sz:3, bg:'#0d2a1a', fill:'rgba(80,220,150,0.28)' },
-                    { name:'FastAPI',              sz:2, bg:'#0d1a2a', fill:'rgba(100,200,255,0.22)' },
-                    { name:'REST APIs',            sz:3, bg:'#1e2a10', fill:'rgba(200,245,63,0.24)' },
-                    { name:'Auth\nSystems',        sz:2, bg:'#2a1020', fill:'rgba(255,100,100,0.18)' },
-                    { name:'Celery',               sz:2, bg:'#0d1a2a', fill:'rgba(80,180,255,0.18)' },
-                    { name:'Redis',                sz:2, bg:'#2a0d10', fill:'rgba(255,80,80,0.18)' },
-                    { name:'System\nDesign',       sz:2, bg:'#1a1a30', fill:'rgba(124,111,255,0.18)' },
-                ],
-                'cloud-db': [
-                    { name:'PostgreSQL',           sz:3, bg:'#0d1a30', fill:'rgba(100,150,255,0.28)' },
-                    { name:'MySQL',                sz:3, bg:'#1a0d20', fill:'rgba(200,100,255,0.24)' },
-                    { name:'SQL\nQueries',         sz:2, bg:'#102030', fill:'rgba(80,180,255,0.20)' },
-                    { name:'PL/SQL',               sz:2, bg:'#201020', fill:'rgba(200,100,255,0.18)' },
-                    { name:'DB Design',            sz:2, bg:'#0d2020', fill:'rgba(80,220,180,0.18)' },
-                    { name:'Joins',                sz:1, bg:'#1a1a30', fill:'rgba(124,111,255,0.16)' },
-                    { name:'Stored\nProcs',        sz:1, bg:'#1a0d20', fill:'rgba(200,100,255,0.16)' },
-                ],
-                'cloud-bigdata': [
-                    { name:'Apache\nSpark',        sz:3, bg:'#2a1010', fill:'rgba(255,100,60,0.28)' },
-                    { name:'Apache\nKafka',        sz:3, bg:'#1a1020', fill:'rgba(200,80,255,0.24)' },
-                    { name:'Apache\nAirflow',      sz:3, bg:'#102020', fill:'rgba(80,220,180,0.24)' },
-                    { name:'Data\nPipelines',      sz:2, bg:'#1a2010', fill:'rgba(180,220,80,0.18)' },
-                ],
-                'cloud-viz': [
-                    { name:'Power BI',             sz:3, bg:'#1a1010', fill:'rgba(255,160,60,0.28)' },
-                    { name:'Matplotlib',           sz:3, bg:'#10101a', fill:'rgba(124,111,255,0.24)' },
-                    { name:'Seaborn',              sz:2, bg:'#0d1a20', fill:'rgba(80,200,255,0.22)' },
-                    { name:'Jupyter',              sz:2, bg:'#1a1a0d', fill:'rgba(240,200,60,0.22)' },
-                    { name:'Dashboards',           sz:2, bg:'#1a1010', fill:'rgba(255,160,60,0.18)' },
-                    { name:'Data\nStorytelling',   sz:2, bg:'#101a20', fill:'rgba(80,200,255,0.18)' },
-                ],
-                'cloud-web': [
-                    { name:'React',                sz:3, bg:'#0d1a2a', fill:'rgba(80,200,255,0.28)' },
-                    { name:'Tailwind\nCSS',        sz:2, bg:'#0d2020', fill:'rgba(80,220,200,0.22)' },
-                    { name:'Bootstrap',            sz:2, bg:'#1a0d2a', fill:'rgba(160,100,255,0.22)' },
-                    { name:'HTML',                 sz:2, bg:'#2a1010', fill:'rgba(255,100,60,0.20)' },
-                    { name:'CSS',                  sz:2, bg:'#0d102a', fill:'rgba(80,120,255,0.20)' },
-                    { name:'Django\nFrontend',     sz:2, bg:'#0d2010', fill:'rgba(80,200,120,0.18)' },
-                ],
-                'cloud-ai': [
-                    { name:'Facial\nRecognition',  sz:3, bg:'#1a1030', fill:'rgba(160,100,255,0.28)' },
-                    { name:'AI Attendance',        sz:3, bg:'#102010', fill:'rgba(80,220,120,0.24)' },
-                    { name:'Classroom\nMonitor',   sz:2, bg:'#201010', fill:'rgba(255,100,80,0.22)' },
-                    { name:'Computer\nVision',     sz:3, bg:'#0d1030', fill:'rgba(100,130,255,0.26)' },
-                    { name:'ML Models',            sz:2, bg:'#1a1030', fill:'rgba(160,100,255,0.18)' },
-                    { name:'Prediction',           sz:2, bg:'#102020', fill:'rgba(80,220,180,0.18)' },
-                ],
-            };
 
-            // "All" = union of key categories for a manageable cloud
-            CATEGORIES['cloud-all'] = [
-                { name:'Python',        sz:3, bg:'#1b2540', fill:'rgba(200,245,63,0.28)' },
-                { name:'Django',        sz:3, bg:'#0d2a1a', fill:'rgba(80,220,150,0.28)' },
-                { name:'Machine\nLearning', sz:3, bg:'#1a1a40', fill:'rgba(124,111,255,0.28)' },
-                { name:'React',         sz:3, bg:'#0d1a2a', fill:'rgba(80,200,255,0.26)' },
-                { name:'Data\nAnalysis',sz:3, bg:'#0f2030', fill:'rgba(100,180,255,0.26)' },
-                { name:'C++',           sz:3, bg:'#1e1b40', fill:'rgba(200,245,63,0.22)' },
-                { name:'REST APIs',     sz:2, bg:'#1e2a10', fill:'rgba(200,245,63,0.22)' },
-                { name:'PostgreSQL',    sz:2, bg:'#0d1a30', fill:'rgba(100,150,255,0.22)' },
-                { name:'Power BI',      sz:2, bg:'#1a1010', fill:'rgba(255,160,60,0.22)' },
-                { name:'Apache\nSpark', sz:2, bg:'#2a1010', fill:'rgba(255,100,60,0.22)' },
-                { name:'Computer\nVision',sz:2, bg:'#0d1030', fill:'rgba(160,100,255,0.22)' },
-                { name:'FastAPI',       sz:2, bg:'#0d1a2a', fill:'rgba(100,200,255,0.20)' },
-                { name:'JavaScript',    sz:2, bg:'#1f1b10', fill:'rgba(251,210,50,0.20)' },
-                { name:'MySQL',         sz:2, bg:'#1a0d20', fill:'rgba(200,100,255,0.20)' },
-                { name:'Seaborn',       sz:2, bg:'#0d1a20', fill:'rgba(80,200,255,0.18)' },
-                { name:'Apache\nKafka', sz:2, bg:'#1a1020', fill:'rgba(200,80,255,0.18)' },
-                { name:'K-Means',       sz:2, bg:'#1e1b40', fill:'rgba(200,245,63,0.18)' },
-                { name:'XGBoost',       sz:1, bg:'#1b2a20', fill:'rgba(80,220,150,0.18)' },
-                { name:'Tailwind',      sz:1, bg:'#0d2020', fill:'rgba(80,220,200,0.16)' },
-                { name:'Redis',         sz:1, bg:'#2a0d10', fill:'rgba(255,80,80,0.16)' },
-                { name:'Java',          sz:1, bg:'#1e1020', fill:'rgba(255,100,100,0.16)' },
-                { name:'SQL',           sz:1, bg:'#102020', fill:'rgba(80,220,180,0.16)' },
-                { name:'Jupyter',       sz:1, bg:'#1a1a0d', fill:'rgba(240,200,60,0.16)' },
-                { name:'Docker',        sz:1, bg:'#0d1a30', fill:'rgba(80,160,255,0.16)' },
-                { name:'Git',           sz:1, bg:'#2a1010', fill:'rgba(255,100,60,0.16)' },
-                { name:'AWS',           sz:1, bg:'#1a1a10', fill:'rgba(255,180,60,0.16)' },
-            ];
-
-            // Size → diameter (px) — base sizes, scaled down on mobile
-            const SIZES = { 1: 88, 2: 116, 3: 148 };
-
-            function isMobile() { return window.innerWidth < 600; }
-            function getD(sz) {
-                const base = SIZES[sz];
-                return isMobile() ? Math.round(base * 0.72) : base;
-            }
-
-            // Physics-based packing: place each bubble without overlap
-            function packBubbles(items, containerW, containerH) {
-                const placed = [];
-                const PAD = 8; // gap between bubbles
-
-                for (const item of items) {
-                    const r = getD(item.sz) / 2;
-                    let best = null, minDist = Infinity;
-
-                    // Try random candidates and pick the one closest to center
-                    const cx = containerW / 2, cy = containerH / 2;
-                    const attempts = 300;
-
-                    for (let t = 0; t < attempts; t++) {
-                        const x = r + Math.random() * (containerW - 2 * r);
-                        const y = r + Math.random() * (containerH - 2 * r);
-
-                        // Check no overlap
-                        let ok = true;
-                        for (const p of placed) {
-                            const pr = getD(p.sz) / 2;
-                            const dx = x - p.x, dy = y - p.y;
-                            if (Math.sqrt(dx*dx + dy*dy) < r + pr + PAD) { ok = false; break; }
-                        }
-                        if (!ok) continue;
-
-                        const dist = Math.sqrt((x-cx)**2 + (y-cy)**2);
-                        if (dist < minDist) { minDist = dist; best = {x, y}; }
-                    }
-
-                    // Fallback: place anywhere that fits
-                    if (!best) {
-                        for (let t = 0; t < 500; t++) {
-                            const x = r + Math.random() * (containerW - 2 * r);
-                            const y = r + Math.random() * (containerH - 2 * r);
-                            let ok = true;
-                            for (const p of placed) {
-                                const pr = getD(p.sz) / 2;
-                                const dx = x - p.x, dy = y - p.y;
-                                if (Math.sqrt(dx*dx + dy*dy) < r + pr + PAD) { ok = false; break; }
-                            }
-                            if (ok) { best = {x,y}; break; }
-                        }
-                    }
-
-                    if (best) placed.push({ ...item, x: best.x, y: best.y });
-                }
-                return placed;
-            }
-
-            function buildCloud(cloudEl, items) {
-                cloudEl.innerHTML = '';
-                const W = cloudEl.offsetWidth || 900;
-                const H = parseInt(getComputedStyle(cloudEl).minHeight) || 560;
-                cloudEl.style.height = H + 'px';
-
-                const placed = packBubbles(items, W, H);
-
-                placed.forEach((item, i) => {
-                    const d = getD(item.sz);
-                    const fontSize = d < 90 ? 10 : d < 110 ? 11 : d < 130 ? 12 : 13;
-                    const animIdx = i % 8;
-                    const dur = 5 + (i % 5) * 1.3;
-                    const delay = -(i * 0.7);
-                    const morphDur = 8 + (i % 4) * 2;
-
-                    // Organic blob shapes - different border-radius for each bubble
-                    const shapes = [
-                        '47% 53% 52% 48% / 48% 52% 48% 52%',
-                        '52% 48% 47% 53% / 53% 47% 52% 48%',
-                        '45% 55% 50% 50% / 50% 50% 55% 45%',
-                        '55% 45% 48% 52% / 52% 48% 45% 55%',
-                        '48% 52% 55% 45% / 45% 55% 52% 48%',
-                        '50% 50% 45% 55% / 55% 45% 50% 50%',
-                        '53% 47% 50% 50% / 47% 53% 50% 50%',
-                        '46% 54% 52% 48% / 54% 46% 48% 52%'
-                    ];
-                    const shapeIdx = i % shapes.length;
-                    const morphIdx = i % 4;
-
-                    const el = document.createElement('div');
-                    el.className = 'skb';
-                    el.style.cssText = `
-                        width:${d}px; height:${d}px;
-                        left:${item.x - d/2}px; top:${item.y - d/2}px;
-                        border-radius: ${shapes[shapeIdx]};
-                        animation: skbFloat${animIdx} ${dur}s ${delay}s ease-in-out infinite,
-                                   skbMorph${morphIdx} ${morphDur}s ${delay * 0.5}s ease-in-out infinite;
-                        z-index:${item.sz};
-                    `;
-
-                    const label = document.createElement('span');
-                    label.className = 'skb-label';
-                    label.style.fontSize = fontSize + 'px';
-                    // render \n as <br>
-                    label.innerHTML = item.name.replace(/\n/g, '<br>');
-                    el.appendChild(label);
-                    cloudEl.appendChild(el);
-                });
-            }
-
-            // Init: build all clouds on load
-            function initAllClouds() {
-                Object.keys(CATEGORIES).forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) buildCloud(el, CATEGORIES[id]);
-                });
-            }
-
-            // Tab switching
-            document.getElementById('skillTabs').addEventListener('click', e => {
-                const tab = e.target.closest('.skill-tab');
-                if (!tab) return;
-                const targetId = tab.dataset.cloud;
-
-                // update active tab
-                document.querySelectorAll('.skill-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-
-                // show target cloud
-                document.querySelectorAll('.bubble-cloud').forEach(c => {
-                    c.classList.toggle('hidden', c.id !== targetId);
-                });
-            });
-
-            // Build once DOM is ready, rebuild on resize (debounced)
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initAllClouds);
-            } else {
-                initAllClouds();
-            }
-
-            let resizeTimer;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(initAllClouds, 220);
-            });
-        })();
     </script>
 </body>
 
