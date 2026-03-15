@@ -176,7 +176,15 @@
             padding: 20px 28px;
             border-bottom: 1px solid var(--border);
             animation: fadeDown 0.6s ease both;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface);
+            overflow: visible;
         }
+
+        /* Small metallic bead on nav bottom-center — visual chain anchor */
+      
 
         .nav-logo {
             font-family: 'Piedra', cursive;
@@ -437,50 +445,92 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 0;
-            padding: 32px 0 10px;
+            padding: 0 0 10px; /* no top padding — chain hangs from nav */
         }
 
         /* Wrapper that positions hook relative to card */
+        /* ═══════════════════════════════════════
+           ID CARD — Bead Chain Pendant Layout
+        ═══════════════════════════════════════ */
+
+        /* Outer wrap — positioned at very top of panel-center, chain climbs up to nav */
         .id-card-wrap {
             position: relative;
             display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding-top: 20px;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+            margin-top: -10px; /* pull chain up to touch nav bottom */
         }
 
-        /* ── Card Hook ── */
-        .id-hook-wrap {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
+        /* This is the swinging unit: chain + card together */
+        .id-pendant {
             display: flex;
             flex-direction: column;
             align-items: center;
-            pointer-events: none;
             transform-origin: top center;
-            animation: hookSway 6s ease-in-out infinite;
+            animation: pendulumSwing 8.5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+            will-change: transform;
         }
 
-        .id-hook-svg {
+        /* Fixed anchor point at very top — the wall mount */
+        .id-chain-anchor {
+            width: 18px;
+            height: 10px;
+            background: linear-gradient(180deg, #e8e8e8 0%, #aaa 50%, #888 100%);
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+            position: relative;
+            z-index: 10;
+        }
+
+        .id-chain-anchor::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ccc 0%, #777 100%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Bead chain SVG wrapper */
+        .id-chain-svg {
             display: block;
-            filter:
-                drop-shadow(0 3px 6px rgba(0, 0, 0, 0.7)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+            filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.6));
         }
 
-        @keyframes hookSway {
+        /* Card clip ring at bottom of chain */
+        .id-card-ring {
+            width: 24px;
+            height: 14px;
+            background: linear-gradient(180deg, #d4d4d4 0%, #888 60%, #666 100%);
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 -1px 3px rgba(0, 0, 0, 0.4);
+            margin-bottom: -2px;
+            position: relative;
+            z-index: 2;
+        }
 
-            0%,
-            100% {
-                transform: translateX(-50%) rotate(-1deg);
+        /* Pendulum physics: ease-out at peaks, linear through center */
+        @keyframes pendulumSwing {
+            0% {
+                transform: rotate(-9deg);
+                animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
             }
 
             50% {
-                transform: translateX(-50%) rotate(1deg);
+                transform: rotate(9deg);
+                animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+            }
+
+            100% {
+                transform: rotate(-9deg);
             }
         }
 
@@ -504,22 +554,6 @@
             cursor: pointer;
         }
 
-        /* Small eyelet hole at top-center so hook looks clipped through */
-        .id-card::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #0a0a0f;
-            border: 2px solid rgba(255, 255, 255, 0.35);
-            box-shadow: 0 0 6px rgba(0, 0, 0, 0.8), inset 0 1px 3px rgba(0, 0, 0, 0.9);
-            z-index: 20;
-            pointer-events: none;
-        }
 
         .id-card.hovered {
             transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
@@ -1776,12 +1810,12 @@
             color: var(--accent);
         }
 
-        /* ========== Fan-Spread Carousel (compact for side-by-side) ========== */
+        /* ========== Fan-Spread Carousel (horizontal cards) ========== */
         .fan-carousel-wrapper {
             position: relative;
             width: 100%;
-            height: 500px;
-            perspective: 1000px;
+            height: 440px;
+            perspective: 1200px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1789,20 +1823,20 @@
 
         .fan-carousel {
             position: relative;
-            width: 260px;
-            height: 420px;
+            width: 520px;
+            height: 270px;
             transform-style: preserve-3d;
         }
 
-        /* Individual fan card */
+        /* Individual fan card — horizontal wide format */
         .fan-card {
             position: absolute;
-            width: 260px;
-            height: 420px;
+            width: 520px;
+            height: 270px;
             border-radius: 20px;
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             cursor: pointer;
-            transform-origin: center bottom;
+            transform-origin: center center;
             backface-visibility: hidden;
         }
 
@@ -1812,41 +1846,42 @@
             border-radius: 20px;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            /* HORIZONTAL: image left, content right */
             position: relative;
             box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3);
             transition: box-shadow 0.6s ease;
         }
 
-        /* Card positions: compact fan spread */
+        /* Card positions: stacked vertically with Y-axis offset */
         .fan-card[data-pos="-2"] {
-            transform: translateX(-180px) rotate(-12deg) scale(0.78);
+            transform: translateY(-110px) rotate(-2deg) scale(0.78);
             z-index: 1;
-            filter: blur(1.5px) brightness(0.65);
+            filter: blur(1.5px) brightness(0.6);
         }
 
         .fan-card[data-pos="-1"] {
-            transform: translateX(-105px) rotate(-6deg) scale(0.88);
+            transform: translateY(-58px) rotate(-1deg) scale(0.88);
             z-index: 2;
-            filter: blur(0.5px) brightness(0.82);
+            filter: blur(0.5px) brightness(0.8);
         }
 
         .fan-card[data-pos="0"] {
-            transform: translateX(0) rotate(0deg) scale(1);
+            transform: translateY(0) rotate(0deg) scale(1);
             z-index: 5;
             filter: none;
         }
 
         .fan-card[data-pos="1"] {
-            transform: translateX(105px) rotate(6deg) scale(0.88);
+            transform: translateY(58px) rotate(1deg) scale(0.88);
             z-index: 2;
-            filter: blur(0.5px) brightness(0.82);
+            filter: blur(0.5px) brightness(0.8);
         }
 
         .fan-card[data-pos="2"] {
-            transform: translateX(180px) rotate(12deg) scale(0.78);
+            transform: translateY(110px) rotate(2deg) scale(0.78);
             z-index: 1;
-            filter: blur(1.5px) brightness(0.65);
+            filter: blur(1.5px) brightness(0.6);
         }
 
         /* Hidden cards beyond the visible range */
@@ -1854,7 +1889,7 @@
         .fan-card[data-pos="3"],
         .fan-card[data-pos="-4"],
         .fan-card[data-pos="4"] {
-            transform: translateX(0) rotate(0deg) scale(0.5);
+            transform: translateY(0) rotate(0deg) scale(0.5);
             z-index: 0;
             opacity: 0;
             pointer-events: none;
@@ -1864,68 +1899,22 @@
             box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 6px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
         }
 
-        /* Card top section / header */
-        .fan-card-top {
-            padding: 16px 18px 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        /* ====== Full-Bleed Image Card with Bottom Overlay ====== */
+
+        /* Image fills entire card */
+        .fan-card-inner {
+            position: relative !important;
+            flex-direction: column !important;
+            /* reset, layout is absolute now */
         }
 
-        .fan-card-year {
-            font-family: 'Piedra', cursive;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            padding: 4px 12px;
-            border-radius: 20px;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .fan-card-category-title {
-            font-family: 'Piedra', cursive;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .fan-card-sparkle {
-            font-size: 14px;
-            opacity: 0.5;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* Card subtitle area */
-        .fan-card-subtitle {
-            padding: 4px 18px 6px;
-            text-align: center;
-        }
-
-        .fan-card-subtitle-small {
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.45);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 3px;
-        }
-
-        .fan-card-title {
-            font-family: 'Piedra', cursive;
-            font-size: 16px;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: -0.01em;
-        }
-
-        /* Card image area */
         .fan-card-image-wrap {
-            position: relative;
-            margin: 4px 14px 0;
-            border-radius: 14px;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
-            flex: 1;
+            border-radius: 20px;
         }
 
         .fan-card-image-wrap img {
@@ -1937,17 +1926,41 @@
         }
 
         .fan-card[data-pos="0"]:hover .fan-card-image-wrap img {
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
-        /* Badge on image */
+        /* Bottom gradient scrim over the image */
+        .fan-card-image-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.08) 0%,
+                    rgba(0, 0, 0, 0.15) 40%,
+                    rgba(0, 0, 0, 0.72) 72%,
+                    rgba(0, 0, 0, 0.88) 100%);
+        }
+
+        /* Content sits absolutely at the bottom, above the scrim */
+        .fan-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 14px 12px;
+            z-index: 2;
+        }
+
+        /* Badge top-right on image */
         .fan-card-badge {
             position: absolute;
             top: 10px;
             right: 10px;
-            padding: 4px 12px;
-            border-radius: 7px;
-            font-size: 10px;
+            z-index: 3;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 9px;
             font-weight: 700;
             letter-spacing: 0.06em;
             color: #fff;
@@ -1955,42 +1968,111 @@
             -webkit-backdrop-filter: blur(8px);
         }
 
-        /* Card bottom / footer */
+        /* Category + year top-left */
+        .fan-card-top {
+            position: absolute;
+            top: 10px;
+            left: 12px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .fan-card-year {
+            font-family: 'Piedra', cursive;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 2px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(6px);
+        }
+
+        .fan-card-category-title {
+            font-family: 'Piedra', cursive;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .fan-card-sparkle {
+            display: none;
+        }
+
+        /* Title area */
+        .fan-card-subtitle {
+            margin-bottom: 8px;
+        }
+
+        .fan-card-subtitle-small {
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .fan-card-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.01em;
+            line-height: 1.15;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tech tags + link row */
         .fan-card-bottom {
-            padding: 10px 18px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 6px;
         }
 
         .fan-card-tech {
             display: flex;
-            gap: 5px;
+            gap: 4px;
             flex-wrap: wrap;
         }
 
         .fan-card-tech span {
+            font-family: 'Inter', sans-serif;
             font-size: 9px;
             font-weight: 600;
             padding: 3px 8px;
             border-radius: 5px;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.02em;
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(4px);
         }
 
         .fan-card-link {
-            font-size: 16px;
+            font-size: 13px;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
             transition: all 0.3s ease;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .fan-card-link:hover {
             transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.25);
         }
 
         /* ====== Card Color Themes ====== */
@@ -2247,22 +2329,22 @@
             opacity: 1;
         }
 
-        /* Responsive */
+        /* Responsive — horizontal card adjustments */
         @media (max-width: 1100px) {
             .fan-card[data-pos="-2"] {
-                transform: translateX(-150px) rotate(-12deg) scale(0.76);
+                transform: translateY(-80px) rotate(-3deg) scale(0.76);
             }
 
             .fan-card[data-pos="-1"] {
-                transform: translateX(-90px) rotate(-6deg) scale(0.87);
+                transform: translateY(-42px) rotate(-1.5deg) scale(0.87);
             }
 
             .fan-card[data-pos="1"] {
-                transform: translateX(90px) rotate(6deg) scale(0.87);
+                transform: translateY(42px) rotate(1.5deg) scale(0.87);
             }
 
             .fan-card[data-pos="2"] {
-                transform: translateX(150px) rotate(12deg) scale(0.76);
+                transform: translateY(80px) rotate(3deg) scale(0.76);
             }
         }
 
@@ -2278,73 +2360,73 @@
             }
 
             .fan-carousel-wrapper {
-                height: 480px;
+                height: 340px;
             }
 
-            .fan-carousel {
-                width: 280px;
-                height: 440px;
-            }
-
+            .fan-carousel,
             .fan-card {
-                width: 280px;
-                height: 440px;
+                width: 400px;
+                height: 200px;
+            }
+
+            .fan-card-image-wrap {
+                width: 160px;
             }
 
             .fan-card[data-pos="-2"] {
-                transform: translateX(-200px) rotate(-12deg) scale(0.78);
+                transform: translateY(-76px) rotate(-3deg) scale(0.78);
             }
 
             .fan-card[data-pos="-1"] {
-                transform: translateX(-120px) rotate(-6deg) scale(0.88);
+                transform: translateY(-40px) rotate(-1.5deg) scale(0.88);
             }
 
             .fan-card[data-pos="1"] {
-                transform: translateX(120px) rotate(6deg) scale(0.88);
+                transform: translateY(40px) rotate(1.5deg) scale(0.88);
             }
 
             .fan-card[data-pos="2"] {
-                transform: translateX(200px) rotate(12deg) scale(0.78);
+                transform: translateY(76px) rotate(3deg) scale(0.78);
             }
         }
 
         @media (max-width: 600px) {
             .fan-carousel-wrapper {
-                height: 440px;
+                height: 300px;
             }
 
-            .fan-carousel {
-                width: 240px;
-                height: 400px;
-            }
-
+            .fan-carousel,
             .fan-card {
-                width: 240px;
-                height: 400px;
+                width: 300px;
+                height: 170px;
+            }
+
+            .fan-card-image-wrap {
+                width: 120px;
             }
 
             .fan-card[data-pos="-2"] {
-                transform: translateX(-140px) rotate(-14deg) scale(0.72);
+                transform: translateY(-65px) rotate(-3deg) scale(0.72);
             }
 
             .fan-card[data-pos="-1"] {
-                transform: translateX(-80px) rotate(-7deg) scale(0.85);
+                transform: translateY(-34px) rotate(-1.5deg) scale(0.85);
             }
 
             .fan-card[data-pos="1"] {
-                transform: translateX(80px) rotate(7deg) scale(0.85);
+                transform: translateY(34px) rotate(1.5deg) scale(0.85);
             }
 
             .fan-card[data-pos="2"] {
-                transform: translateX(140px) rotate(14deg) scale(0.72);
+                transform: translateY(65px) rotate(3deg) scale(0.72);
             }
 
             .fan-card-title {
-                font-size: 14px;
+                font-size: 13px;
             }
 
             .fan-card-category-title {
-                font-size: 11px;
+                font-size: 10px;
             }
 
             .featured-header {
@@ -2385,15 +2467,18 @@
 
         .contact-orbital {
             position: relative;
-            width: 640px;   /* wide enough for nodes + labels */
-            height: 480px;  /* tall enough for ±sin(60°)*210=182px above/below center */
+            width: 640px;
+            /* wide enough for nodes + labels */
+            height: 480px;
+            /* tall enough for ±sin(60°)*210=182px above/below center */
             flex-shrink: 0;
         }
 
         .contact-avatar {
             position: absolute;
             top: 50%;
-            left: 220px;           /* avatar center X */
+            left: 220px;
+            /* avatar center X */
             transform: translate(-50%, -50%);
             width: 300px;
             height: 300px;
@@ -2407,18 +2492,21 @@
         /* Right-half dashed arc  (radius 210px = 420px ring) */
         .contact-orbit-arc {
             position: absolute;
-            top: 50%; left: 220px;
-            width: 420px; height: 420px;
+            top: 50%;
+            left: 220px;
+            width: 420px;
+            height: 420px;
             margin: -210px 0 0 -210px;
             border-radius: 50%;
-            border: 1px dashed rgba(255,255,255,0.1);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
             clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
         }
 
         /* Each contact node positioned on the arc */
         .orbit-node {
             position: absolute;
-            top: 50%; left: 220px;
+            top: 50%;
+            left: 220px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -2428,7 +2516,7 @@
             padding: 8px 14px 8px 8px;
             border-radius: 16px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.07);
+            border: 1px solid rgba(255, 255, 255, 0.07);
         }
 
         .orbit-node:hover {
@@ -2482,9 +2570,10 @@
         /* Connector line from center to each node */
         .orbit-connector {
             position: absolute;
-            top: 50%; left: 170px;
+            top: 50%;
+            left: 170px;
             height: 1px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.15));
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.15));
             transform-origin: left center;
             pointer-events: none;
         }
@@ -2620,7 +2709,7 @@
             top: 8px;
             bottom: 8px;
             width: 1px;
-            background: linear-gradient(to bottom, var(--accent), rgba(200,245,63,0.1));
+            background: linear-gradient(to bottom, var(--accent), rgba(200, 245, 63, 0.1));
         }
 
         .edu-entry {
@@ -2644,7 +2733,7 @@
         }
 
         .edu-entry:hover {
-            border-color: rgba(200,245,63,0.15);
+            border-color: rgba(200, 245, 63, 0.15);
             box-shadow: var(--clay-shadow-hover);
             transform: translateX(4px);
         }
@@ -2659,7 +2748,7 @@
             height: 11px;
             border-radius: 50%;
             background: var(--accent);
-            box-shadow: 0 0 10px rgba(200,245,63,0.5);
+            box-shadow: 0 0 10px rgba(200, 245, 63, 0.5);
             border: 2px solid var(--bg);
         }
 
@@ -2674,8 +2763,8 @@
             font-family: 'DM Sans', sans-serif;
             letter-spacing: 0.04em;
             margin-bottom: 8px;
-            background: rgba(200,245,63,0.07);
-            border: 1px solid rgba(200,245,63,0.12);
+            background: rgba(200, 245, 63, 0.07);
+            border: 1px solid rgba(200, 245, 63, 0.12);
             color: var(--accent);
         }
 
@@ -2695,7 +2784,7 @@
 
         .edu-degree {
             font-size: 12px;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.6;
         }
 
@@ -2828,7 +2917,7 @@
                     <span class="tag">C++</span>
                 </div>
 
-              
+
 
                 <div class="cta-row">
                     <button class="btn-primary">Contact me</button>
@@ -2852,87 +2941,82 @@
             <!-- CENTER — ID Card with Hook -->
             <div class="panel-center">
 
-                <!-- ID Card + hook wrapped together -->
+                <!-- ID Card + Bead Chain Pendant -->
                 <div class="id-card-wrap">
 
-                    <!-- Metal hook sitting on top of card -->
-                    <div class="id-hook-wrap">
-                        <svg class="id-hook-svg" width="48" height="30" viewBox="0 0 48 30" fill="none"
+                    <!-- Fixed wall anchor (stays still) -->
+                    <div class="id-chain-anchor"></div>
+
+                    <!-- Pendulum unit: chain + card swing together -->
+                    <div class="id-pendant">
+
+                        <!-- Metallic bead chain SVG — exactly 7 beads -->
+                        <svg class="id-chain-svg" width="14" height="98" viewBox="0 0 14 98" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <defs>
-                                <linearGradient id="hookGrad" x1="0" y1="0" x2="0" y2="1">
+                                <radialGradient id="beadGrad" cx="35%" cy="30%" r="65%">
                                     <stop offset="0%" stop-color="#f0f0f0" />
-                                    <stop offset="35%" stop-color="#d8d8d8" />
-                                    <stop offset="65%" stop-color="#aaaaaa" />
-                                    <stop offset="100%" stop-color="#888888" />
-                                </linearGradient>
-                                <linearGradient id="hookInner" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stop-color="#1a1a1a" />
-                                    <stop offset="100%" stop-color="#0a0a0a" />
-                                </linearGradient>
-                                <linearGradient id="hookShine" x1="0" y1="0" x2="1" y2="0">
-                                    <stop offset="0%" stop-color="rgba(255,255,255,0.0)" />
-                                    <stop offset="40%" stop-color="rgba(255,255,255,0.25)" />
-                                    <stop offset="60%" stop-color="rgba(255,255,255,0.08)" />
-                                    <stop offset="100%" stop-color="rgba(255,255,255,0.0)" />
+                                    <stop offset="40%" stop-color="#b8b8b8" />
+                                    <stop offset="100%" stop-color="#666" />
+                                </radialGradient>
+                                <linearGradient id="linkGrad" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="#555" />
+                                    <stop offset="50%" stop-color="#ccc" />
+                                    <stop offset="100%" stop-color="#555" />
                                 </linearGradient>
                             </defs>
-                            <!-- Outer U-shape body -->
-                            <path
-                                d="M10 2 C10 2 6 2 6 8 L6 24 C6 27 9 29 12 29 L36 29 C39 29 42 27 42 24 L42 8 C42 2 38 2 38 2 Z"
-                                fill="url(#hookGrad)" stroke="rgba(0,0,0,0.25)" stroke-width="0.5" />
-                            <!-- Inner cutout (the hole the card ring fits through) -->
-                            <path
-                                d="M16 8 C16 8 13 8 13 13 L13 22 C13 24.5 15 26 17 26 L31 26 C33 26 35 24.5 35 22 L35 13 C35 8 32 8 32 8 Z"
-                                fill="url(#hookInner)" />
-                            <!-- Shine highlight across top -->
-                            <rect x="6" y="2" width="36" height="7" rx="3" fill="url(#hookShine)" />
-                            <!-- Top flat bar (the part that clips to card) -->
-                            <rect x="8" y="0" width="32" height="6" rx="3" fill="url(#hookGrad)"
-                                stroke="rgba(0,0,0,0.2)" stroke-width="0.5" />
-                            <!-- Top bar shine -->
-                            <rect x="10" y="1" width="28" height="2" rx="1" fill="rgba(255,255,255,0.35)" />
+                            <!-- Vertical wire -->
+                            <line x1="7" y1="0" x2="7" y2="98" stroke="url(#linkGrad)" stroke-width="1.5" />
+                            <!-- 7 beads @ every 14px -->
+                            <circle cx="7" cy="8"   r="5" fill="url(#beadGrad)" stroke="#444" stroke-width="0.5" />
+                            <circle cx="7" cy="22"  r="5" fill="url(#beadGrad)" stroke="#444" stroke-width="0.5" />
+                            <circle cx="7" cy="36"  r="5" fill="url(#beadGrad)" stroke="#444" stroke-width="0.5" />
+                            <circle cx="7" cy="50"  r="5" fill="url(#beadGrad)" stroke="#444" stroke-width="0.5" />
+                            <circle cx="7" cy="64"  r="5" fill="url(#beadGrad)" stroke="#444" stroke-width="0.5" />
+                            <circle cx="7" cy="78"  r="5" fill="url(#beadGrad)" stroke="#444" stroke-width="0.5" />
+                            <circle cx="7" cy="92"  r="5" fill="url(#beadGrad)" stroke="#444" stroke-width="0.5" />
                         </svg>
-                    </div>
 
-                    <div class="id-card-perspective">
-                        <div class="id-card" id="idCard">
-                            <div class="id-card-inner">
+                        <!-- Clip ring connecting chain to card -->
+                        <div class="id-card-ring"></div>
 
-                                <!-- Full bleed photo -->
-                                <img class="id-photo-bg" src="assets/profile.jpg" alt="Akhand" />
-                                <div class="id-photo-scrim"></div>
+                        <div class="id-card-perspective">
+                            <div class="id-card" id="idCard">
+                                <div class="id-card-inner">
 
-                                <!-- Shimmer layers -->
-                                <div class="id-shimmer" id="idShimmer"></div>
-                                <div class="id-rainbow" id="idRainbow"></div>
+                                    <!-- Full bleed photo -->
+                                    <img class="id-photo-bg" src="assets/profile.jpg" alt="Akhand" />
+                                    <div class="id-photo-scrim"></div>
 
-                                <!-- Top accent bar -->
-                                <div class="id-top-bar"></div>
+                                    <!-- Shimmer layers -->
+                                    <div class="id-shimmer" id="idShimmer"></div>
+                                    <div class="id-rainbow" id="idRainbow"></div>
 
-                                <!-- Company badge row — floats over photo at top -->
-                                <div class="id-content">
-                                    <div class="id-company-row">
-                                        <div class="id-logo-mark">A</div>
-                                        <div>
-                                            <div class="id-company-name">Akhand</div>
-                                            <div class="id-company-sub">Portfolio 2026</div>
+                                    <!-- Top accent bar -->
+                                    <div class="id-top-bar"></div>
+
+                                    <!-- Company badge row — floats over photo at top -->
+                                    <div class="id-content">
+                                        <div class="id-company-row">
+                                            <div class="id-logo-mark">A</div>
+                                            <div>
+                                                <div class="id-company-name">Akhand</div>
+                                                <div class="id-company-sub">Portfolio 2026</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- Bottom strip with barcode + QR -->
-                                <div class="id-bottom-strip">
-                                    <div class="id-barcode" id="idBarcode"></div>
-                                    <div class="id-qr" id="idQr"></div>
-                                </div>
+                                    <!-- Bottom strip with barcode + QR -->
+                                    <div class="id-bottom-strip">
+                                        <div class="id-barcode" id="idBarcode"></div>
+                                        <div class="id-qr" id="idQr"></div>
+                                    </div>
 
-                            </div><!-- /id-card-inner -->
-                        </div><!-- /id-card -->
-                    </div><!-- /id-card-perspective -->
+                                </div><!-- /id-card-inner -->
+                            </div><!-- /id-card -->
+                        </div><!-- /id-card-perspective -->
 
-                    <!-- Floating badges -->
-
+                    </div><!-- /id-pendant -->
 
                 </div><!-- /id-card-wrap -->
 
@@ -3074,108 +3158,108 @@
 
             </div>
         </div>
-<br><br><br><br>
-     <script>
-        // ─── CONFIG ──────────────────────────────────────────────
-const LEETCODE_USER = 'akhand_07';
-const GITHUB_USER   = 'Akhandbhadouria';
+        <br><br><br><br>
+        <script>
+            // ─── CONFIG ──────────────────────────────────────────────
+            const LEETCODE_USER = 'akhand_07';
+            const GITHUB_USER = 'Akhandbhadouria';
 
-// ─── LEETCODE (via public proxy — no API key needed) ─────
-async function loadLeetCode() {
-  try {
-    const res = await fetch(
-      `https://alfa-leetcode-api.onrender.com/${LEETCODE_USER}/solved`
-    );
-    if (!res.ok) throw new Error('LC fetch failed');
-    const d = await res.json();
+            // ─── LEETCODE (via public proxy — no API key needed) ─────
+            async function loadLeetCode() {
+                try {
+                    const res = await fetch(
+                        `https://alfa-leetcode-api.onrender.com/${LEETCODE_USER}/solved`
+                    );
+                    if (!res.ok) throw new Error('LC fetch failed');
+                    const d = await res.json();
 
-    document.getElementById('lcSolved').textContent  = d.solvedProblem  ?? '—';
-    document.getElementById('lcEasy').textContent    = (d.easySolved   ?? '—') + ' / 930';
-    document.getElementById('lcMedium').textContent  = (d.mediumSolved ?? '—') + ' / 2022';
-    document.getElementById('lcHard').textContent    = (d.hardSolved   ?? '—') + ' / 913';
+                    document.getElementById('lcSolved').textContent = d.solvedProblem ?? '—';
+                    document.getElementById('lcEasy').textContent = (d.easySolved ?? '—') + ' / 930';
+                    document.getElementById('lcMedium').textContent = (d.mediumSolved ?? '—') + ' / 2022';
+                    document.getElementById('lcHard').textContent = (d.hardSolved ?? '—') + ' / 913';
 
-    const total = 3865;
-    document.getElementById('lcEasyBar').style.width   = ((d.easySolved   / 930)  * 100).toFixed(1) + '%';
-    document.getElementById('lcMediumBar').style.width = ((d.mediumSolved / 2022) * 100).toFixed(1) + '%';
-    document.getElementById('lcHardBar').style.width   = ((d.hardSolved   / 913)  * 100).toFixed(1) + '%';
+                    const total = 3865;
+                    document.getElementById('lcEasyBar').style.width = ((d.easySolved / 930) * 100).toFixed(1) + '%';
+                    document.getElementById('lcMediumBar').style.width = ((d.mediumSolved / 2022) * 100).toFixed(1) + '%';
+                    document.getElementById('lcHardBar').style.width = ((d.hardSolved / 913) * 100).toFixed(1) + '%';
 
-    const offset = 201 - (201 * (d.solvedProblem / total));
-    document.getElementById('lcRing').style.setProperty('--ring-offset', offset);
-  } catch (e) {
-    console.warn('LeetCode load failed:', e);
-    document.getElementById('lcRank').textContent = 'Unavailable';
-  }
-}
+                    const offset = 201 - (201 * (d.solvedProblem / total));
+                    document.getElementById('lcRing').style.setProperty('--ring-offset', offset);
+                } catch (e) {
+                    console.warn('LeetCode load failed:', e);
+                    document.getElementById('lcRank').textContent = 'Unavailable';
+                }
+            }
 
-// ─── LEETCODE RANK (separate endpoint) ───────────────────
-async function loadLeetCodeRank() {
-  try {
-    const res = await fetch(
-      `https://alfa-leetcode-api.onrender.com/${LEETCODE_USER}`
-    );
-    if (!res.ok) throw new Error();
-    const d = await res.json();
-    document.getElementById('lcRank').textContent =
-      d.ranking ? '#' + Number(d.ranking).toLocaleString() : '—';
-  } catch {
-    document.getElementById('lcRank').textContent = '—';
-  }
-}
+            // ─── LEETCODE RANK (separate endpoint) ───────────────────
+            async function loadLeetCodeRank() {
+                try {
+                    const res = await fetch(
+                        `https://alfa-leetcode-api.onrender.com/${LEETCODE_USER}`
+                    );
+                    if (!res.ok) throw new Error();
+                    const d = await res.json();
+                    document.getElementById('lcRank').textContent =
+                        d.ranking ? '#' + Number(d.ranking).toLocaleString() : '—';
+                } catch {
+                    document.getElementById('lcRank').textContent = '—';
+                }
+            }
 
-// ─── GITHUB ──────────────────────────────────────────────
-async function loadGitHub() {
-  try {
-    const uRes = await fetch(`https://api.github.com/users/${GITHUB_USER}`);
-    if (!uRes.ok) throw new Error();
-    const u = await uRes.json();
-    document.getElementById('ghRepos').textContent     = u.public_repos ?? '—';
-    document.getElementById('ghFollowers').textContent = u.followers     ?? '—';
+            // ─── GITHUB ──────────────────────────────────────────────
+            async function loadGitHub() {
+                try {
+                    const uRes = await fetch(`https://api.github.com/users/${GITHUB_USER}`);
+                    if (!uRes.ok) throw new Error();
+                    const u = await uRes.json();
+                    document.getElementById('ghRepos').textContent = u.public_repos ?? '—';
+                    document.getElementById('ghFollowers').textContent = u.followers ?? '—';
 
-    const rRes = await fetch(
-      `https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`
-    );
-    if (!rRes.ok) throw new Error();
-    const repos = await rRes.json();
-    const stars = repos.reduce((acc, r) => acc + r.stargazers_count, 0);
-    document.getElementById('ghStars').textContent = stars;
-  } catch (e) {
-    console.warn('GitHub load failed:', e);
-    ['ghRepos', 'ghStars', 'ghFollowers'].forEach(
-      id => { document.getElementById(id).textContent = '—'; }
-    );
-  }
-}
+                    const rRes = await fetch(
+                        `https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`
+                    );
+                    if (!rRes.ok) throw new Error();
+                    const repos = await rRes.json();
+                    const stars = repos.reduce((acc, r) => acc + r.stargazers_count, 0);
+                    document.getElementById('ghStars').textContent = stars;
+                } catch (e) {
+                    console.warn('GitHub load failed:', e);
+                    ['ghRepos', 'ghStars', 'ghFollowers'].forEach(
+                        id => { document.getElementById(id).textContent = '—'; }
+                    );
+                }
+            }
 
-// ─── HEATMAP ─────────────────────────────────────────────
-(async function loadHeatmap() {
-  const wrap = document.getElementById('ghHeatmapSvg');
-  if (!wrap) return;
-  try {
-    const res = await fetch(
-      `https://ghchart.rshah.org/4a90d9/${GITHUB_USER}`
-    );
-    const svg = await res.text();
-    wrap.innerHTML = svg;
-    const el = wrap.querySelector('svg');
-    if (el) el.setAttribute('preserveAspectRatio', 'none');
-    wrap.querySelectorAll('rect').forEach(r => {
-      if (parseFloat(r.getAttribute('width')) < 15) {
-        r.setAttribute('rx', '2');
-        r.setAttribute('ry', '2');
-      }
-    });
-  } catch {
-    wrap.innerHTML = `<img
+            // ─── HEATMAP ─────────────────────────────────────────────
+            (async function loadHeatmap() {
+                const wrap = document.getElementById('ghHeatmapSvg');
+                if (!wrap) return;
+                try {
+                    const res = await fetch(
+                        `https://ghchart.rshah.org/4a90d9/${GITHUB_USER}`
+                    );
+                    const svg = await res.text();
+                    wrap.innerHTML = svg;
+                    const el = wrap.querySelector('svg');
+                    if (el) el.setAttribute('preserveAspectRatio', 'none');
+                    wrap.querySelectorAll('rect').forEach(r => {
+                        if (parseFloat(r.getAttribute('width')) < 15) {
+                            r.setAttribute('rx', '2');
+                            r.setAttribute('ry', '2');
+                        }
+                    });
+                } catch {
+                    wrap.innerHTML = `<img
       src="https://ghchart.rshah.org/4a90d9/${GITHUB_USER}"
       alt="GitHub Heatmap" class="gh-heatmap-img" />`;
-  }
-})();
+                }
+            })();
 
-// ─── KICK OFF ALL FETCHES ────────────────────────────────
-loadLeetCode();
-loadLeetCodeRank();
-loadGitHub();
-     </script>
+            // ─── KICK OFF ALL FETCHES ────────────────────────────────
+            loadLeetCode();
+            loadLeetCodeRank();
+            loadGitHub();
+        </script>
 
         <!-- ========== SKILLS SECTION ========== -->
         <section class="skills-full" id="skills-section">
@@ -3324,7 +3408,7 @@ loadGitHub();
                 <div class="skill-category"></div>
             </div>
         </section>
-<br><br><br><br>
+        <br><br><br><br>
         <!-- ========== FEATURED PROJECTS — Side-by-Side Fan Carousels ========== -->
         <section class="featured-projects" id="projects-section">
             <div class="featured-header scroll-reveal">
@@ -3350,27 +3434,29 @@ loadGitHub();
                             <!-- DS Card 1: Customer Churn ML -->
                             <div class="fan-card theme-ds" data-pos="-2" data-link="datascience.html">
                                 <div class="fan-card-inner">
-                                    <div class="fan-card-top">
-                                        <span class="fan-card-year">2025</span>
-                                        <span class="fan-card-category-title">Machine Learning</span>
-                                        <span class="fan-card-sparkle">✦</span>
-                                    </div>
-                                    <div class="fan-card-subtitle">
-                                        <div class="fan-card-subtitle-small">ML Pipeline</div>
-                                        <div class="fan-card-title">Customer Churn Analysis</div>
-                                    </div>
                                     <div class="fan-card-image-wrap">
                                         <img src="data_science_project/ml_model for churn analysis.png"
                                             alt="Customer Churn ML" />
                                         <span class="fan-card-badge">ML Model</span>
                                     </div>
-                                    <div class="fan-card-bottom">
-                                        <div class="fan-card-tech">
-                                            <span>Python</span>
-                                            <span>Scikit-learn</span>
-                                            <span>XGBoost</span>
+                                    <div class="fan-card-top">
+                                        <span class="fan-card-year">2025</span>
+                                        <span class="fan-card-category-title">Machine Learning</span>
+                                        <span class="fan-card-sparkle">✦</span>
+                                    </div>
+                                    <div class="fan-card-content">
+                                        <div class="fan-card-subtitle">
+                                            <div class="fan-card-subtitle-small">ML Pipeline</div>
+                                            <div class="fan-card-title">Customer Churn Analysis</div>
                                         </div>
-                                        <a href="datascience.html" class="fan-card-link" title="View Project">→</a>
+                                        <div class="fan-card-bottom">
+                                            <div class="fan-card-tech">
+                                                <span>Python</span>
+                                                <span>Scikit-learn</span>
+                                                <span>XGBoost</span>
+                                            </div>
+                                            <a href="datascience.html" class="fan-card-link" title="View Project">→</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">Customer Churn Analysis</div>
@@ -3379,27 +3465,29 @@ loadGitHub();
                             <!-- DS Card 2: Credit Card Dashboard -->
                             <div class="fan-card theme-dash" data-pos="-1" data-link="datascience.html">
                                 <div class="fan-card-inner">
-                                    <div class="fan-card-top">
-                                        <span class="fan-card-year">2025</span>
-                                        <span class="fan-card-category-title">Analytics</span>
-                                        <span class="fan-card-sparkle">✦</span>
-                                    </div>
-                                    <div class="fan-card-subtitle">
-                                        <div class="fan-card-subtitle-small">Dashboard</div>
-                                        <div class="fan-card-title">Credit Card Dashboard</div>
-                                    </div>
                                     <div class="fan-card-image-wrap">
                                         <img src="data_science_project/credit_card_dashboard.png"
                                             alt="Credit Card Dashboard" />
                                         <span class="fan-card-badge">Power BI</span>
                                     </div>
-                                    <div class="fan-card-bottom">
-                                        <div class="fan-card-tech">
-                                            <span>Power BI</span>
-                                            <span>SQL</span>
-                                            <span>DAX</span>
+                                    <div class="fan-card-top">
+                                        <span class="fan-card-year">2025</span>
+                                        <span class="fan-card-category-title">Analytics</span>
+                                        <span class="fan-card-sparkle">✦</span>
+                                    </div>
+                                    <div class="fan-card-content">
+                                        <div class="fan-card-subtitle">
+                                            <div class="fan-card-subtitle-small">Dashboard</div>
+                                            <div class="fan-card-title">Credit Card Dashboard</div>
                                         </div>
-                                        <a href="datascience.html" class="fan-card-link" title="View Project">→</a>
+                                        <div class="fan-card-bottom">
+                                            <div class="fan-card-tech">
+                                                <span>Power BI</span>
+                                                <span>SQL</span>
+                                                <span>DAX</span>
+                                            </div>
+                                            <a href="datascience.html" class="fan-card-link" title="View Project">→</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">Credit Card Dashboard</div>
@@ -3408,27 +3496,29 @@ loadGitHub();
                             <!-- DS Card 3: Customer Segmentation -->
                             <div class="fan-card theme-ml" data-pos="0" data-link="datascience.html">
                                 <div class="fan-card-inner">
-                                    <div class="fan-card-top">
-                                        <span class="fan-card-year">2025</span>
-                                        <span class="fan-card-category-title">Clustering</span>
-                                        <span class="fan-card-sparkle">✦</span>
-                                    </div>
-                                    <div class="fan-card-subtitle">
-                                        <div class="fan-card-subtitle-small">Unsupervised ML</div>
-                                        <div class="fan-card-title">Customer Segmentation</div>
-                                    </div>
                                     <div class="fan-card-image-wrap">
                                         <img src="data_science_project/customer_segmentation for target marketing.png"
                                             alt="Customer Segmentation" />
                                         <span class="fan-card-badge">K-Means</span>
                                     </div>
-                                    <div class="fan-card-bottom">
-                                        <div class="fan-card-tech">
-                                            <span>Python</span>
-                                            <span>K-Means</span>
-                                            <span>PCA</span>
+                                    <div class="fan-card-top">
+                                        <span class="fan-card-year">2025</span>
+                                        <span class="fan-card-category-title">Clustering</span>
+                                        <span class="fan-card-sparkle">✦</span>
+                                    </div>
+                                    <div class="fan-card-content">
+                                        <div class="fan-card-subtitle">
+                                            <div class="fan-card-subtitle-small">Unsupervised ML</div>
+                                            <div class="fan-card-title">Customer Segmentation</div>
                                         </div>
-                                        <a href="datascience.html" class="fan-card-link" title="View Project">→</a>
+                                        <div class="fan-card-bottom">
+                                            <div class="fan-card-tech">
+                                                <span>Python</span>
+                                                <span>K-Means</span>
+                                                <span>PCA</span>
+                                            </div>
+                                            <a href="datascience.html" class="fan-card-link" title="View Project">→</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">Customer Segmentation</div>
@@ -3437,26 +3527,28 @@ loadGitHub();
                             <!-- DS Card 4: ClassAudit AI -->
                             <div class="fan-card theme-rose" data-pos="1" data-link="datascience.html">
                                 <div class="fan-card-inner">
+                                    <div class="fan-card-image-wrap">
+                                        <img src="django_project_image/class_audit ai.png" alt="ClassAudit AI" />
+                                        <span class="fan-card-badge">AI + ML</span>
+                                    </div>
                                     <div class="fan-card-top">
                                         <span class="fan-card-year">2025</span>
                                         <span class="fan-card-category-title">AI · Computer Vision</span>
                                         <span class="fan-card-sparkle">✦</span>
                                     </div>
-                                    <div class="fan-card-subtitle">
-                                        <div class="fan-card-subtitle-small">AI Project</div>
-                                        <div class="fan-card-title">ClassAudit AI</div>
-                                    </div>
-                                    <div class="fan-card-image-wrap">
-                                        <img src="django_project_image/class_audit ai.png" alt="ClassAudit AI" />
-                                        <span class="fan-card-badge">AI + ML</span>
-                                    </div>
-                                    <div class="fan-card-bottom">
-                                        <div class="fan-card-tech">
-                                            <span>OpenCV</span>
-                                            <span>Deep Learning</span>
-                                            <span>Python</span>
+                                    <div class="fan-card-content">
+                                        <div class="fan-card-subtitle">
+                                            <div class="fan-card-subtitle-small">AI Project</div>
+                                            <div class="fan-card-title">ClassAudit AI</div>
                                         </div>
-                                        <a href="datascience.html" class="fan-card-link" title="View Project">→</a>
+                                        <div class="fan-card-bottom">
+                                            <div class="fan-card-tech">
+                                                <span>OpenCV</span>
+                                                <span>Deep Learning</span>
+                                                <span>Python</span>
+                                            </div>
+                                            <a href="datascience.html" class="fan-card-link" title="View Project">→</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">ClassAudit AI</div>
@@ -3504,26 +3596,29 @@ loadGitHub();
                             <!-- FS Card 1: ClassAudit AI -->
                             <div class="fan-card theme-ds" data-pos="-2" data-link="fullstack.html">
                                 <div class="fan-card-inner">
+                                    <div class="fan-card-image-wrap">
+                                        <img src="django_project_image/class_audit ai.png" alt="ClassAudit AI" />
+                                        <span class="fan-card-badge">AI + ML</span>
+                                    </div>
                                     <div class="fan-card-top">
                                         <span class="fan-card-year">2025</span>
                                         <span class="fan-card-category-title">AI · Django</span>
                                         <span class="fan-card-sparkle">✦</span>
                                     </div>
-                                    <div class="fan-card-subtitle">
-                                        <div class="fan-card-subtitle-small">Main Project</div>
-                                        <div class="fan-card-title">ClassAudit AI</div>
-                                    </div>
-                                    <div class="fan-card-image-wrap">
-                                        <img src="django_project_image/class_audit ai.png" alt="ClassAudit AI" />
-                                        <span class="fan-card-badge">AI + ML</span>
-                                    </div>
-                                    <div class="fan-card-bottom">
-                                        <div class="fan-card-tech">
-                                            <span>Django</span>
-                                            <span>OpenCV</span>
-                                            <span>ML</span>
+                                    <div class="fan-card-content">
+                                        <div class="fan-card-subtitle">
+                                            <div class="fan-card-subtitle-small">Main Project</div>
+                                            <div class="fan-card-title">ClassAudit AI</div>
                                         </div>
-                                        <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+
+                                        <div class="fan-card-bottom">
+                                            <div class="fan-card-tech">
+                                                <span>Django</span>
+                                                <span>OpenCV</span>
+                                                <span>ML</span>
+                                            </div>
+                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">ClassAudit AI</div>
@@ -3532,27 +3627,30 @@ loadGitHub();
                             <!-- FS Card 2: E-Commerce Platform -->
                             <div class="fan-card theme-fs" data-pos="-1" data-link="fullstack.html">
                                 <div class="fan-card-inner">
-                                    <div class="fan-card-top">
-                                        <span class="fan-card-year">2025</span>
-                                        <span class="fan-card-category-title">Full Stack</span>
-                                        <span class="fan-card-sparkle">✦</span>
-                                    </div>
-                                    <div class="fan-card-subtitle">
-                                        <div class="fan-card-subtitle-small">Web Application</div>
-                                        <div class="fan-card-title">E-Commerce Platform</div>
-                                    </div>
                                     <div class="fan-card-image-wrap">
                                         <img src="django_project_image/ecormerce_website.png"
                                             alt="E-Commerce Platform" />
                                         <span class="fan-card-badge">Full Stack</span>
                                     </div>
-                                    <div class="fan-card-bottom">
-                                        <div class="fan-card-tech">
-                                            <span>Django</span>
-                                            <span>PostgreSQL</span>
-                                            <span>REST API</span>
+                                    <div class="fan-card-top">
+                                        <span class="fan-card-year">2025</span>
+                                        <span class="fan-card-category-title">Full Stack</span>
+                                        <span class="fan-card-sparkle">✦</span>
+                                    </div>
+                                    <div class="fan-card-content">
+                                        <div class="fan-card-subtitle">
+                                            <div class="fan-card-subtitle-small">Web Application</div>
+                                            <div class="fan-card-title">E-Commerce Platform</div>
                                         </div>
-                                        <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+
+                                        <div class="fan-card-bottom">
+                                            <div class="fan-card-tech">
+                                                <span>Django</span>
+                                                <span>PostgreSQL</span>
+                                                <span>REST API</span>
+                                            </div>
+                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">E-Commerce Platform</div>
@@ -3561,26 +3659,28 @@ loadGitHub();
                             <!-- FS Card 3: Social Media (CENTER) -->
                             <div class="fan-card theme-rose" data-pos="0" data-link="fullstack.html">
                                 <div class="fan-card-inner">
+                                    <div class="fan-card-image-wrap">
+                                        <img src="django_project_image/social_media.png" alt="Social Media App" />
+                                        <span class="fan-card-badge">Django</span>
+                                    </div>
                                     <div class="fan-card-top">
                                         <span class="fan-card-year">2025</span>
                                         <span class="fan-card-category-title">Social Platform</span>
                                         <span class="fan-card-sparkle">✦</span>
                                     </div>
-                                    <div class="fan-card-subtitle">
-                                        <div class="fan-card-subtitle-small">Django REST</div>
-                                        <div class="fan-card-title">Social Media App</div>
-                                    </div>
-                                    <div class="fan-card-image-wrap">
-                                        <img src="django_project_image/social_media.png" alt="Social Media App" />
-                                        <span class="fan-card-badge">Django</span>
-                                    </div>
-                                    <div class="fan-card-bottom">
-                                        <div class="fan-card-tech">
-                                            <span>Django REST</span>
-                                            <span>JWT</span>
-                                            <span>AWS S3</span>
+                                    <div class="fan-card-content">
+                                        <div class="fan-card-subtitle">
+                                            <div class="fan-card-subtitle-small">Django REST</div>
+                                            <div class="fan-card-title">Social Media App</div>
                                         </div>
-                                        <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                        <div class="fan-card-bottom">
+                                            <div class="fan-card-tech">
+                                                <span>Django REST</span>
+                                                <span>JWT</span>
+                                                <span>AWS S3</span>
+                                            </div>
+                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">Social Media App</div>
@@ -3589,26 +3689,29 @@ loadGitHub();
                             <!-- FS Card 4: Exam Portal -->
                             <div class="fan-card theme-ml" data-pos="1" data-link="fullstack.html">
                                 <div class="fan-card-inner">
+                                    <div class="fan-card-image-wrap">
+                                        <img src="django_project_image/exam_portal.png" alt="Online Exam Portal" />
+                                        <span class="fan-card-badge">EdTech</span>
+                                    </div>
                                     <div class="fan-card-top">
                                         <span class="fan-card-year">2025</span>
                                         <span class="fan-card-category-title">EdTech</span>
                                         <span class="fan-card-sparkle">✦</span>
                                     </div>
-                                    <div class="fan-card-subtitle">
-                                        <div class="fan-card-subtitle-small">Web Application</div>
-                                        <div class="fan-card-title">Online Exam Portal</div>
-                                    </div>
-                                    <div class="fan-card-image-wrap">
-                                        <img src="django_project_image/exam_portal.png" alt="Online Exam Portal" />
-                                        <span class="fan-card-badge">EdTech</span>
-                                    </div>
-                                    <div class="fan-card-bottom">
-                                        <div class="fan-card-tech">
-                                            <span>Django</span>
-                                            <span>MySQL</span>
-                                            <span>JavaScript</span>
+                                    <div class="fan-card-content">
+                                        <div class="fan-card-subtitle">
+                                            <div class="fan-card-subtitle-small">Web Application</div>
+                                            <div class="fan-card-title">Online Exam Portal</div>
                                         </div>
-                                        <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+
+                                        <div class="fan-card-bottom">
+                                            <div class="fan-card-tech">
+                                                <span>Django</span>
+                                                <span>MySQL</span>
+                                                <span>JavaScript</span>
+                                            </div>
+                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">Online Exam Portal</div>
@@ -3617,27 +3720,29 @@ loadGitHub();
                             <!-- FS Card 5: Movie Streaming -->
                             <div class="fan-card theme-dash" data-pos="2" data-link="fullstack.html">
                                 <div class="fan-card-inner">
-                                    <div class="fan-card-top">
-                                        <span class="fan-card-year">2025</span>
-                                        <span class="fan-card-category-title">Streaming</span>
-                                        <span class="fan-card-sparkle">✦</span>
-                                    </div>
-                                    <div class="fan-card-subtitle">
-                                        <div class="fan-card-subtitle-small">Full Stack</div>
-                                        <div class="fan-card-title">Movie Streaming</div>
-                                    </div>
                                     <div class="fan-card-image-wrap">
                                         <img src="django_project_image/movie_streaming_plateform.png"
                                             alt="Movie Streaming Platform" />
                                         <span class="fan-card-badge">Streaming</span>
                                     </div>
-                                    <div class="fan-card-bottom">
-                                        <div class="fan-card-tech">
-                                            <span>Django</span>
-                                            <span>AWS S3</span>
-                                            <span>React</span>
+                                    <div class="fan-card-top">
+                                        <span class="fan-card-year">2025</span>
+                                        <span class="fan-card-category-title">Streaming</span>
+                                        <span class="fan-card-sparkle">✦</span>
+                                    </div>
+                                    <div class="fan-card-content">
+                                        <div class="fan-card-subtitle">
+                                            <div class="fan-card-subtitle-small">Full Stack</div>
+                                            <div class="fan-card-title">Movie Streaming</div>
                                         </div>
-                                        <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                        <div class="fan-card-bottom">
+                                            <div class="fan-card-tech">
+                                                <span>Django</span>
+                                                <span>AWS S3</span>
+                                                <span>React</span>
+                                            </div>
+                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">Movie Streaming Platform</div>
@@ -3646,27 +3751,29 @@ loadGitHub();
                             <!-- FS Card 6: Tax Fare Estimator -->
                             <div class="fan-card theme-fs" data-pos="3" data-link="fullstack.html">
                                 <div class="fan-card-inner">
-                                    <div class="fan-card-top">
-                                        <span class="fan-card-year">2025</span>
-                                        <span class="fan-card-category-title">Web Tool</span>
-                                        <span class="fan-card-sparkle">✦</span>
-                                    </div>
-                                    <div class="fan-card-subtitle">
-                                        <div class="fan-card-subtitle-small">Django App</div>
-                                        <div class="fan-card-title">Tax Fare Estimator</div>
-                                    </div>
                                     <div class="fan-card-image-wrap">
                                         <img src="django_project_image/tax_fare_estimator.png"
                                             alt="Tax Fare Estimator" />
                                         <span class="fan-card-badge">Web Tool</span>
                                     </div>
-                                    <div class="fan-card-bottom">
-                                        <div class="fan-card-tech">
-                                            <span>Django</span>
-                                            <span>Python</span>
-                                            <span>JavaScript</span>
+                                    <div class="fan-card-top">
+                                        <span class="fan-card-year">2025</span>
+                                        <span class="fan-card-category-title">Web Tool</span>
+                                        <span class="fan-card-sparkle">✦</span>
+                                    </div>
+                                    <div class="fan-card-content">
+                                        <div class="fan-card-subtitle">
+                                            <div class="fan-card-subtitle-small">Django App</div>
+                                            <div class="fan-card-title">Tax Fare Estimator</div>
                                         </div>
-                                        <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                        <div class="fan-card-bottom">
+                                            <div class="fan-card-tech">
+                                                <span>Django</span>
+                                                <span>Python</span>
+                                                <span>JavaScript</span>
+                                            </div>
+                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">Tax Fare Estimator</div>
@@ -3702,7 +3809,7 @@ loadGitHub();
 
             </div><!-- /projects-duo-grid -->
         </section>
-<br><br><br><br>
+        <br><br><br><br>
         <script>
             // Reusable Fan Carousel initializer
             function initFanCarousel(config) {
@@ -4152,7 +4259,8 @@ loadGitHub();
         <!-- ========== EDUCATION SECTION ========== -->
         <section style="padding: 80px 48px; max-width: 1200px; margin: 0 auto;">
             <div class="edu-section">
-                <h2 style="font-family:'Piedra',cursive; font-size:clamp(32px,5vw,52px); font-weight:900; color:#fff; line-height:1.1; margin-bottom:40px;">
+                <h2
+                    style="font-family:'Piedra',cursive; font-size:clamp(32px,5vw,52px); font-weight:900; color:#fff; line-height:1.1; margin-bottom:40px;">
                     My <span class="highlight">Education</span>
                 </h2>
                 <div class="edu-timeline">
@@ -4215,13 +4323,21 @@ loadGitHub();
 
                         <!-- Connector lines: center at left:220px, r=210px -->
                         <!-- -60°: rotate -60° -->
-                        <div class="orbit-connector" style="top:50%; left:220px; width:210px; transform:rotate(-60deg); transform-origin:0 0;"></div>
+                        <div class="orbit-connector"
+                            style="top:50%; left:220px; width:210px; transform:rotate(-60deg); transform-origin:0 0;">
+                        </div>
                         <!-- -20° -->
-                        <div class="orbit-connector" style="top:50%; left:220px; width:210px; transform:rotate(-20deg); transform-origin:0 0;"></div>
+                        <div class="orbit-connector"
+                            style="top:50%; left:220px; width:210px; transform:rotate(-20deg); transform-origin:0 0;">
+                        </div>
                         <!-- +20° -->
-                        <div class="orbit-connector" style="top:50%; left:220px; width:210px; transform:rotate(20deg); transform-origin:0 0;"></div>
+                        <div class="orbit-connector"
+                            style="top:50%; left:220px; width:210px; transform:rotate(20deg); transform-origin:0 0;">
+                        </div>
                         <!-- +60° -->
-                        <div class="orbit-connector" style="top:50%; left:220px; width:210px; transform:rotate(60deg); transform-origin:0 0;"></div>
+                        <div class="orbit-connector"
+                            style="top:50%; left:220px; width:210px; transform:rotate(60deg); transform-origin:0 0;">
+                        </div>
 
                         <!--
                           r=210, center=(220,240)
@@ -4234,9 +4350,12 @@ loadGitHub();
 
                         <!-- Node 1: -60° → (105, -182) · GitHub -->
                         <a href="https://github.com/Akhandbhadouria" target="_blank" class="orbit-node"
-                           style="--ntx:translate(calc(105px - 18px),calc(-182px - 22px)); transform:translate(calc(105px - 18px),calc(-182px - 22px)); background:rgba(88,96,130,0.25);">
+                            style="--ntx:translate(calc(105px - 18px),calc(-182px - 22px)); transform:translate(calc(105px - 18px),calc(-182px - 22px)); background:rgba(88,96,130,0.25);">
                             <div class="orbit-icon-box" style="background:rgba(88,96,130,0.5); color:#c8d3f5;">
-                                <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 24 12C24 5.37 18.63 0 12 0z"/></svg>
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 24 12C24 5.37 18.63 0 12 0z" />
+                                </svg>
                             </div>
                             <div class="orbit-node-text">
                                 <span class="orbit-node-name">GitHub</span>
@@ -4245,10 +4364,14 @@ loadGitHub();
                         </a>
 
                         <!-- Node 2: -20° → (197, -72) · LinkedIn -->
-                        <a href="https://www.linkedin.com/in/akhand-pratapsingh-bhadouria-1b1459259/" target="_blank" class="orbit-node"
-                           style="--ntx:translate(calc(197px - 18px),calc(-72px - 22px)); transform:translate(calc(197px - 18px),calc(-72px - 22px)); background:rgba(10,102,194,0.2);">
+                        <a href="https://www.linkedin.com/in/akhand-pratapsingh-bhadouria-1b1459259/" target="_blank"
+                            class="orbit-node"
+                            style="--ntx:translate(calc(197px - 18px),calc(-72px - 22px)); transform:translate(calc(197px - 18px),calc(-72px - 22px)); background:rgba(10,102,194,0.2);">
                             <div class="orbit-icon-box" style="background:rgba(10,102,194,0.45); color:#7ab8f5;">
-                                <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.554v-5.57c0-1.328-.025-3.036-1.85-3.036-1.852 0-2.135 1.445-2.135 2.939v5.667H9.357V9h3.414v1.56h.049c.476-.9 1.637-1.85 3.369-1.85 3.601 0 4.267 2.37 4.267 5.455v6.285zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M20.45 20.45h-3.554v-5.57c0-1.328-.025-3.036-1.85-3.036-1.852 0-2.135 1.445-2.135 2.939v5.667H9.357V9h3.414v1.56h.049c.476-.9 1.637-1.85 3.369-1.85 3.601 0 4.267 2.37 4.267 5.455v6.285zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                                </svg>
                             </div>
                             <div class="orbit-node-text">
                                 <span class="orbit-node-name">LinkedIn</span>
@@ -4258,9 +4381,12 @@ loadGitHub();
 
                         <!-- Node 3: +20° → (197, +72) · LeetCode -->
                         <a href="https://leetcode.com/u/akhand_07/" target="_blank" class="orbit-node"
-                           style="--ntx:translate(calc(197px - 18px),calc(72px - 22px)); transform:translate(calc(197px - 18px),calc(72px - 22px)); background:rgba(255,161,22,0.15);">
+                            style="--ntx:translate(calc(197px - 18px),calc(72px - 22px)); transform:translate(calc(197px - 18px),calc(72px - 22px)); background:rgba(255,161,22,0.15);">
                             <div class="orbit-icon-box" style="background:rgba(255,161,22,0.35); color:#ffa116;">
-                                <svg viewBox="0 0 24 24"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H19.7a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/></svg>
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H19.7a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z" />
+                                </svg>
                             </div>
                             <div class="orbit-node-text">
                                 <span class="orbit-node-name">LeetCode</span>
@@ -4270,9 +4396,12 @@ loadGitHub();
 
                         <!-- Node 4: +60° → (105, +182) · Email -->
                         <a href="mailto:akhandbhadouria@gmail.com" class="orbit-node"
-                           style="--ntx:translate(calc(105px - 18px),calc(182px - 22px)); transform:translate(calc(105px - 18px),calc(182px - 22px)); background:rgba(20,184,166,0.15);">
+                            style="--ntx:translate(calc(105px - 18px),calc(182px - 22px)); transform:translate(calc(105px - 18px),calc(182px - 22px)); background:rgba(20,184,166,0.15);">
                             <div class="orbit-icon-box" style="background:rgba(20,184,166,0.35); color:#5eead4;">
-                                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+                                </svg>
                             </div>
                             <div class="orbit-node-text">
                                 <span class="orbit-node-name">Email</span>
@@ -4289,9 +4418,9 @@ loadGitHub();
             </div>
 
             <!-- Education Timeline -->
-          
 
-          
+
+
         </section>
 
     </div>
