@@ -292,7 +292,7 @@
         }
 
         .bio {
-            font-size: 20px;
+            font-size: 16px;
             line-height: 1.75;
             color: var(--muted);
             max-width: 100%;
@@ -2462,7 +2462,7 @@
         .thankyou-section {
             position: relative;
             z-index: 1;
-            padding: 80px 28px 60px;
+            padding: 80px 28px ;
             border-top: 1px solid var(--border);
             min-height: 90vh;
             display: flex;
@@ -2675,24 +2675,76 @@
             margin-top: 2px;
         }
 
-        /* Right: Thank You */
-        .thankyou-text {
-            text-align: right;
+        /* Right: Location Map */
+        .location-map-wrapper {
+            width: 100%;
+            height: 450px;
+            border-radius: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: var(--clay-shadow);
+            position: relative;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .thankyou-text h2 {
-            font-family: 'Piedra', cursive;
-            font-size: clamp(60px, 10vw, 140px);
-            font-weight: 800;
-            line-height: 0.95;
-            color: #fff;
-            letter-spacing: -0.04em;
-            text-transform: uppercase;
+        .location-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 4px;
         }
 
-        .thankyou-text .year {
-            display: block;
+        .location-header-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(200, 245, 63, 0.1);
             color: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .location-header-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .location-header-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .location-header-subtitle {
+            font-size: 12px;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+        }
+
+        .location-map-container {
+            flex: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        
+        .location-map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: invert(90%) hue-rotate(180deg) grayscale(80%) contrast(1.1);
+            transition: filter 0.5s ease;
+        }
+        
+        .location-map-wrapper:hover .location-map-container iframe {
+            filter: invert(90%) hue-rotate(180deg) grayscale(10%) contrast(1.1);
         }
 
         /* Education timeline */
@@ -2832,12 +2884,10 @@
                 gap: 40px;
             }
 
-            .thankyou-text {
-                text-align: center;
-            }
-
-            .thankyou-text h2 {
-                font-size: 64px;
+            .location-map-wrapper {
+                max-width: 500px;
+                margin: 0 auto;
+                height: 300px;
             }
 
             .contact-side {
@@ -2856,8 +2906,8 @@
                 padding: 48px 16px 40px;
             }
 
-            .thankyou-text h2 {
-                font-size: 48px;
+            .location-map-wrapper {
+                height: 250px;
             }
 
             .contact-avatar {
@@ -2977,13 +3027,13 @@
                 </div>
 
                 <div class="socials">
-                    <a href="#" class="social-btn" title="GitHub">
+                    <a href="https://github.com/Akhandbhadouria" target="_blank" class="social-btn" title="GitHub">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff">
                             <path
                                 d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12" />
                         </svg>
                     </a>
-                    <a href="#" class="social-btn" title="LinkedIn">
+                    <a href="https://www.linkedin.com/in/akhand320/" target="_blank" class="social-btn" title="LinkedIn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="#0A66C2">
                             <path
                                 d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -2998,8 +3048,8 @@
                 </div>
 
                 <div class="cta-row">
-                    <button class="btn-primary">Contact me</button>
-                    <button class="btn-secondary">CV ↗</button>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thakurakhand.singh21111@gmail.com" target="_blank" class="btn-primary" style="text-decoration:none">Contact me</a>
+                    <a href="jj_cv.pdf" target="_blank" class="btn-secondary" style="text-decoration:none">CV ↗</a>
                 </div>
 
 
@@ -3416,14 +3466,16 @@
                     <span class="skill-icon-label">Jupyter</span>
                 </div>
                 <div class="skill-icon-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachespark/apachespark-original.svg"
-                        alt="Apache Spark" />
-                    <span class="skill-icon-label">Spark</span>
+                    <div class="skill-icon-text"
+                        style="background: rgba(124,111,255,0.15); border-color: rgba(124,111,255,0.3); color: #b8aaff; font-size: 11px;">
+                        NLP</div>
+                    <span class="skill-icon-label">NLP</span>
                 </div>
                 <div class="skill-icon-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachekafka/apachekafka-original.svg"
-                        alt="Apache Kafka" style="filter: invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.3));" />
-                    <span class="skill-icon-label">Kafka</span>
+                    <div class="skill-icon-text"
+                        style="background: rgba(200,245,63,0.15); border-color: rgba(200,245,63,0.3); color: var(--accent); font-size: 11px;">
+                        DL</div>
+                    <span class="skill-icon-label">Deep Learning</span>
                 </div>
                 <div class="skill-icon-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg"
@@ -3498,7 +3550,7 @@
                             </div>
 
                             <!-- DS Card 2: Credit Card Dashboard -->
-                            <div class="fan-card theme-dash" data-pos="-1" data-link="datascience.html">
+                            <div class="fan-card theme-dash" data-pos="-1" data-link="https://www.linkedin.com/feed/update/urn:li:activity:7316120769749475329/?originTrackingId=tpAqeBPB4vWGwVz2aWuQmQ%3D%3D">
                                 <div class="fan-card-inner">
                                     <div class="fan-card-image-wrap">
                                         <img src="data_science_project/credit_card_dashboard.png"
@@ -3521,7 +3573,7 @@
                                                 <span>SQL</span>
                                                 <span>DAX</span>
                                             </div>
-                                            <a href="datascience.html" class="fan-card-link" title="View Project">→</a>
+                                            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7316120769749475329/?originTrackingId=tpAqeBPB4vWGwVz2aWuQmQ%3D%3D" target="_blank" class="fan-card-link" title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3560,7 +3612,7 @@
                             </div>
 
                             <!-- DS Card 4: ClassAudit AI -->
-                            <div class="fan-card theme-rose" data-pos="1" data-link="datascience.html">
+                            <div class="fan-card theme-rose" data-pos="1" data-link="https://github.com/Akhandbhadouria/ClassAudit-AI">
                                 <div class="fan-card-inner">
                                     <div class="fan-card-image-wrap">
                                         <img src="django_project_image/class_audit ai.png" alt="ClassAudit AI" />
@@ -3582,7 +3634,7 @@
                                                 <span>Deep Learning</span>
                                                 <span>Python</span>
                                             </div>
-                                            <a href="datascience.html" class="fan-card-link" title="View Project">→</a>
+                                            <a href="https://github.com/Akhandbhadouria/ClassAudit-AI" target="_blank" class="fan-card-link" title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3629,7 +3681,7 @@
                         <div class="fan-carousel" id="fsCarousel">
 
                             <!-- FS Card 1: ClassAudit AI -->
-                            <div class="fan-card theme-ds" data-pos="-2" data-link="fullstack.html">
+                            <div class="fan-card theme-ds" data-pos="-2" data-link="https://github.com/Akhandbhadouria/ClassAudit-AI">
                                 <div class="fan-card-inner">
                                     <div class="fan-card-image-wrap">
                                         <img src="django_project_image/class_audit ai.png" alt="ClassAudit AI" />
@@ -3652,7 +3704,7 @@
                                                 <span>OpenCV</span>
                                                 <span>ML</span>
                                             </div>
-                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                            <a href="https://github.com/Akhandbhadouria/ClassAudit-AI" target="_blank" class="fan-card-link" title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3660,7 +3712,7 @@
                             </div>
 
                             <!-- FS Card 2: E-Commerce Platform -->
-                            <div class="fan-card theme-fs" data-pos="-1" data-link="fullstack.html">
+                            <div class="fan-card theme-fs" data-pos="-1" data-link="https://github.com/Akhandbhadouria/python_full_stack">
                                 <div class="fan-card-inner">
                                     <div class="fan-card-image-wrap">
                                         <img src="django_project_image/ecormerce_website.png"
@@ -3684,14 +3736,14 @@
                                                 <span>PostgreSQL</span>
                                                 <span>REST API</span>
                                             </div>
-                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                            <a href="https://github.com/Akhandbhadouria/python_full_stack" target="_blank" class="fan-card-link" title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="fan-card-active-label">E-Commerce Platform</div>
                             </div>
                             <!-- FS Card 3: Social Media (CENTER) -->
-                            <div class="fan-card theme-rose" data-pos="0" data-link="fullstack.html">
+                            <div class="fan-card theme-rose" data-pos="0" data-link="https://github.com/Akhandbhadouria/conecto">
                                 <div class="fan-card-inner">
                                     <div class="fan-card-image-wrap">
                                         <img src="django_project_image/social_media.png" alt="Social Media App" />
@@ -3713,7 +3765,7 @@
                                                 <span>JWT</span>
                                                 <span>AWS S3</span>
                                             </div>
-                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                            <a href="https://github.com/Akhandbhadouria/conecto" target="_blank" class="fan-card-link" title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3721,7 +3773,7 @@
                             </div>
 
                             <!-- FS Card 4: Exam Portal -->
-                            <div class="fan-card theme-ml" data-pos="1" data-link="fullstack.html">
+                            <div class="fan-card theme-ml" data-pos="1" data-link="https://github.com/Akhandbhadouria/python_full_stack">
                                 <div class="fan-card-inner">
                                     <div class="fan-card-image-wrap">
                                         <img src="django_project_image/exam_portal.png" alt="Online Exam Portal" />
@@ -3744,7 +3796,7 @@
                                                 <span>MySQL</span>
                                                 <span>JavaScript</span>
                                             </div>
-                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                            <a href="https://github.com/Akhandbhadouria/python_full_stack" target="_blank" class="fan-card-link" title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3752,7 +3804,7 @@
                             </div>
 
                             <!-- FS Card 5: Movie Streaming -->
-                            <div class="fan-card theme-dash" data-pos="2" data-link="fullstack.html">
+                            <div class="fan-card theme-dash" data-pos="2" data-link="https://github.com/Akhandbhadouria/AURA">
                                 <div class="fan-card-inner">
                                     <div class="fan-card-image-wrap">
                                         <img src="django_project_image/movie_streaming_plateform.png"
@@ -3775,7 +3827,7 @@
                                                 <span>AWS S3</span>
                                                 <span>React</span>
                                             </div>
-                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                            <a href="https://github.com/Akhandbhadouria/AURA" target="_blank" class="fan-card-link" title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3783,7 +3835,7 @@
                             </div>
 
                             <!-- FS Card 6: Tax Fare Estimator -->
-                            <div class="fan-card theme-fs" data-pos="3" data-link="fullstack.html">
+                            <div class="fan-card theme-fs" data-pos="3" data-link="https://github.com/Akhandbhadouria/tax_ready">
                                 <div class="fan-card-inner">
                                     <div class="fan-card-image-wrap">
                                         <img src="django_project_image/tax_fare_estimator.png"
@@ -3806,7 +3858,7 @@
                                                 <span>Python</span>
                                                 <span>JavaScript</span>
                                             </div>
-                                            <a href="fullstack.html" class="fan-card-link" title="View Project">→</a>
+                                            <a href="https://github.com/Akhandbhadouria/tax_ready" target="_blank" class="fan-card-link" title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3890,7 +3942,7 @@
                         const pos = parseInt(card.getAttribute('data-pos'));
                         if (pos === 0) {
                             const link = card.getAttribute('data-link');
-                            if (link) window.location.href = link;
+                            if (link) window.open(link, '_blank');
                         } else {
                             goTo(i);
                         }
@@ -3960,6 +4012,7 @@
             .certs-scroll-wrapper {
                 position: relative;
                 margin-top: 10px;
+                overflow: hidden;
             }
 
             .certs-scroll-wrapper::before,
@@ -3985,21 +4038,29 @@
 
             .certs-scroll {
                 display: flex;
-                gap: 20px;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                padding: 20px 40px 28px;
-                scrollbar-width: none;
+                width: max-content;
+                animation: scrollCertsMarquee 45s linear infinite;
+                padding-top: 20px;
+                padding-bottom: 28px;
             }
 
-            .certs-scroll::-webkit-scrollbar {
-                display: none;
+            .certs-scroll:hover {
+                animation-play-state: paused;
+            }
+
+            .certs-group {
+                display: flex;
+                gap: 20px;
+                padding-right: 20px;
+            }
+
+            @keyframes scrollCertsMarquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
             }
 
             .cert-scroll-card {
                 flex: 0 0 280px;
-                scroll-snap-align: start;
                 background: var(--surface);
                 border: 1px solid var(--border);
                 border-radius: 18px;
@@ -4125,8 +4186,13 @@
                 }
 
                 .certs-scroll {
-                    padding: 16px 24px 20px;
+                    padding-top: 16px;
+                    padding-bottom: 20px;
+                }
+
+                .certs-group {
                     gap: 14px;
+                    padding-right: 14px;
                 }
             }
         </style>
@@ -4290,6 +4356,30 @@
                 </div>
             </div>
         </section>
+
+        <!-- Script linking certs loop for smooth marquee -->
+        <script>
+            (function() {
+                const certsScroll = document.querySelector('.certs-scroll');
+                if (certsScroll && !certsScroll.querySelector('.certs-group')) {
+                    const children = Array.from(certsScroll.children);
+                    certsScroll.innerHTML = '';
+                    
+                    const group1 = document.createElement('div');
+                    group1.className = 'certs-group';
+                    children.forEach(child => group1.appendChild(child.cloneNode(true)));
+                    
+                    const group2 = document.createElement('div');
+                    group2.className = 'certs-group';
+                    group2.setAttribute('aria-hidden', 'true');
+                    children.forEach(child => group2.appendChild(child.cloneNode(true)));
+                    
+                    certsScroll.appendChild(group1);
+                    certsScroll.appendChild(group2);
+                }
+            })();
+        </script>
+
         <!-- ========== EDUCATION SECTION ========== -->
         <section style="padding: 80px 48px; max-width: 1200px; margin: 0 auto;">
             <div class="edu-section">
@@ -4398,7 +4488,7 @@
                         </a>
 
                         <!-- Node 2: -20° → (197, -72) · LinkedIn -->
-                        <a href="https://www.linkedin.com/in/akhand-pratapsingh-bhadouria-1b1459259/" target="_blank"
+                        <a href="https://www.linkedin.com/in/akhand320/" target="_blank"
                             class="orbit-node"
                             style="--ntx:translate(calc(197px - 18px),calc(-72px - 22px)); transform:translate(calc(197px - 18px),calc(-72px - 22px)); background:rgba(10,102,194,0.2);">
                             <div class="orbit-icon-box" style="background:rgba(10,102,194,0.45); color:#7ab8f5;">
@@ -4409,7 +4499,7 @@
                             </div>
                             <div class="orbit-node-text">
                                 <span class="orbit-node-name">LinkedIn</span>
-                                <span class="orbit-node-link">akhand-pratapsingh</span>
+                                <span class="orbit-node-link">akhand320</span>
                             </div>
                         </a>
 
@@ -4429,7 +4519,7 @@
                         </a>
 
                         <!-- Node 4: +60° → (105, +182) · Email -->
-                        <a href="mailto:akhandbhadouria@gmail.com" class="orbit-node"
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thakurakhand.singh21111@gmail.com" target="_blank" class="orbit-node"
                             style="--ntx:translate(calc(105px - 18px),calc(182px - 22px)); transform:translate(calc(105px - 18px),calc(182px - 22px)); background:rgba(20,184,166,0.15);">
                             <div class="orbit-icon-box" style="background:rgba(20,184,166,0.35); color:#5eead4;">
                                 <svg viewBox="0 0 24 24">
@@ -4439,15 +4529,29 @@
                             </div>
                             <div class="orbit-node-text">
                                 <span class="orbit-node-name">Email</span>
-                                <span class="orbit-node-link">akhandbhadouria@gmail.com</span>
+                                <span class="orbit-node-link">thakurakhand.singh21111@gmail.com</span>
                             </div>
                         </a>
                     </div>
                 </div>
 
-                <!-- Right: Thank You -->
-                <div class="thankyou-text scroll-reveal">
-                    <h2>Thank<br />You<br /><span class="year">2026</span></h2>
+                <!-- Right: Location Map -->
+                <div class="location-map-wrapper scroll-reveal">
+                    <div class="location-header">
+                        <div class="location-header-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <div class="location-header-text">
+                            <span class="location-header-title">Current Location</span>
+                            <span class="location-header-subtitle">Dhannipur, Lalganj, Raebareli, UP</span>
+                        </div>
+                    </div>
+                    <div class="location-map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14330.155705353034!2d80.97120395!3d26.0323382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399af3da7e43681d%3A0xea8d4beea6072ac!2sDhannipur%2C%20Uttar%20Pradesh%20229206!5e0!3m2!1sen!2sin!4v1710609320000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                 </div>
             </div>
 
