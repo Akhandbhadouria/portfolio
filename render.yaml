@@ -1,0 +1,14 @@
+services:
+  - type: static
+    name: akhand-portfolio
+    env: static
+    buildCommand: "" # No build step needed for pure HTML
+    publishPath: ./
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: "public, max-age=3600"
+    routes:
+      - type: rewrite
+        from: /
+        to: /index.html

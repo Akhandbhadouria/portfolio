@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Max — Product Designer</title>
+    <title>Akhand — Backend & Data Science Enthusiast</title>
+    <meta name="description" content="Akhand's Portfolio - Backend Developer and Data Science enthusiast. Explore my projects in Django, Machine Learning, and Full-Stack development." />
+    <meta name="keywords" content="Portfolio, Backend Developer, Data Science, Django, ML, AI, Akhand Pratapsingh" />
     <link
         href="https://fonts.googleapis.com/css2?family=Piedra&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
         rel="stylesheet" />
@@ -43,21 +45,6 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-            cursor: none;
-        }
-
-        /* Custom Cursor */
-        .cursor {
-            position: fixed;
-            width: 16px;
-            height: 16px;
-            background: radial-gradient(circle at 35% 35%, #ffffff 0%, var(--accent) 40%, rgba(50, 60, 10, 0.9) 100%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.15s ease, width 0.2s, height 0.2s;
-            box-shadow: 2px 4px 6px rgba(0,0,0,0.4), inset -2px -2px 4px rgba(0,0,0,0.3);
         }
 
         /* Stars background */
@@ -2918,10 +2905,6 @@
     </style>
 </head>
 
-<body>
-
-    <div class="cursor" id="cursor"></div>
-
     <!-- Stars -->
     <div class="stars" id="stars"></div>
     <div class="nebula nebula-1"></div>
@@ -4591,19 +4574,7 @@
             starsEl.appendChild(s);
         }
 
-        // Custom cursor
-        const cursor = document.getElementById('cursor');
-        let mx = 0, my = 0;
-        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-        function animCursor() {
-            cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-            requestAnimationFrame(animCursor);
-        }
-        animCursor();
-        document.querySelectorAll('a, button, .project-card, .stat, .tag, .skill-pill, .social-btn').forEach(el => {
-            el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2.5)'; });
-            el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; });
-        });
+
 
         // Scroll Reveal with IntersectionObserver
         const revealObserver = new IntersectionObserver((entries) => {
