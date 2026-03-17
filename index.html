@@ -49,31 +49,15 @@
         /* Custom Cursor */
         .cursor {
             position: fixed;
-            width: 12px;
-            height: 12px;
-            background: var(--accent);
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle at 35% 35%, #ffffff 0%, var(--accent) 40%, rgba(50, 60, 10, 0.9) 100%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s ease, width 0.2s, height 0.2s, background 0.2s;
-            mix-blend-mode: difference;
-        }
-
-        .cursor-ring {
-            position: fixed;
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(200, 245, 63, 0.4);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: transform 0.18s ease, width 0.3s, height 0.3s, opacity 0.3s;
-        }
-
-        body:hover .cursor-ring {
-            opacity: 1;
+            transition: transform 0.15s ease, width 0.2s, height 0.2s;
+            box-shadow: 2px 4px 6px rgba(0,0,0,0.4), inset -2px -2px 4px rgba(0,0,0,0.3);
         }
 
         /* Stars background */
@@ -1851,7 +1835,9 @@
             width: 520px;
             height: 270px;
             border-radius: 20px;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            /* Target specific properties instead of transition: all for extreme performance boost */
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), filter 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform, opacity, filter; /* Hardware acceleration hint */
             cursor: pointer;
             transform-origin: center center;
             backface-visibility: hidden;
@@ -1871,34 +1857,40 @@
         }
 
         /* Card positions: stacked vertically with Y-axis offset */
+        /* Removed expensive blur(...) filter which causes massive scroll lag */
         .fan-card[data-pos="-2"] {
             transform: translateY(-110px) rotate(-2deg) scale(0.78);
             z-index: 1;
-            filter: blur(1.5px) brightness(0.6);
+            filter: brightness(0.5);
+            opacity: 0.6;
         }
 
         .fan-card[data-pos="-1"] {
             transform: translateY(-58px) rotate(-1deg) scale(0.88);
             z-index: 2;
-            filter: blur(0.5px) brightness(0.8);
+            filter: brightness(0.7);
+            opacity: 0.85;
         }
 
         .fan-card[data-pos="0"] {
             transform: translateY(0) rotate(0deg) scale(1);
             z-index: 5;
-            filter: none;
+            filter: brightness(1);
+            opacity: 1;
         }
 
         .fan-card[data-pos="1"] {
             transform: translateY(58px) rotate(1deg) scale(0.88);
             z-index: 2;
-            filter: blur(0.5px) brightness(0.8);
+            filter: brightness(0.7);
+            opacity: 0.85;
         }
 
         .fan-card[data-pos="2"] {
             transform: translateY(110px) rotate(2deg) scale(0.78);
             z-index: 1;
-            filter: blur(1.5px) brightness(0.6);
+            filter: brightness(0.5);
+            opacity: 0.6;
         }
 
         /* Hidden cards beyond the visible range */
@@ -2462,7 +2454,7 @@
         .thankyou-section {
             position: relative;
             z-index: 1;
-            padding: 80px 28px ;
+            padding: 80px 28px;
             border-top: 1px solid var(--border);
             min-height: 90vh;
             display: flex;
@@ -2734,7 +2726,7 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
-        
+
         .location-map-container iframe {
             width: 100%;
             height: 100%;
@@ -2742,7 +2734,7 @@
             filter: invert(90%) hue-rotate(180deg) grayscale(80%) contrast(1.1);
             transition: filter 0.5s ease;
         }
-        
+
         .location-map-wrapper:hover .location-map-container iframe {
             filter: invert(90%) hue-rotate(180deg) grayscale(10%) contrast(1.1);
         }
@@ -2929,7 +2921,6 @@
 <body>
 
     <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
 
     <!-- Stars -->
     <div class="stars" id="stars"></div>
@@ -3034,7 +3025,8 @@
                                 d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12" />
                         </svg>
                     </a>
-                    <a href="https://www.linkedin.com/in/akhand320/" target="_blank" class="social-btn" title="LinkedIn">
+                    <a href="https://www.linkedin.com/in/akhand320/" target="_blank" class="social-btn"
+                        title="LinkedIn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="#0A66C2">
                             <path
                                 d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -3049,7 +3041,8 @@
                 </div>
 
                 <div class="cta-row">
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thakurakhand.singh21111@gmail.com" target="_blank" class="btn-primary" style="text-decoration:none">Contact me</a>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thakurakhand.singh21111@gmail.com"
+                        target="_blank" class="btn-primary" style="text-decoration:none">Contact me</a>
                     <a href="jj_cv.pdf" target="_blank" class="btn-secondary" style="text-decoration:none">CV ↗</a>
                 </div>
 
@@ -3094,10 +3087,14 @@
                                     </div>
                                 </div>
 
-                                <!-- Bottom strip with barcode + QR -->
-                                <div class="id-bottom-strip">
-                                    <div class="id-barcode" id="idBarcode"></div>
-                                    <div class="id-qr" id="idQr"></div>
+                                <!-- Bottom strip with LPU logo and name -->
+                                <div class="id-bottom-strip" style="justify-content: center; gap: 12px;">
+                                    <img src="https://upload.wikimedia.org/wikipedia/en/3/3a/Lovely_Professional_University_logo.png"
+                                        alt="Lovely Professional University"
+                                        style="height: 30px; object-fit: contain;" />
+                                    <span
+                                        style="color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; letter-spacing: 0.5px;">Lovely
+                                        Professional University</span>
                                 </div>
 
                             </div><!-- /id-card-inner -->
@@ -3574,7 +3571,8 @@
                                                 <span>SQL</span>
                                                 <span>DAX</span>
                                             </div>
-                                            <a href="datascience.html" target="_blank" class="fan-card-link" title="View Project">→</a>
+                                            <a href="datascience.html" target="_blank" class="fan-card-link"
+                                                title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3635,7 +3633,8 @@
                                                 <span>OpenCV</span>
                                                 <span>face_recognition</span>
                                             </div>
-                                            <a href="datascience.html" target="_blank" class="fan-card-link" title="View Project">→</a>
+                                            <a href="datascience.html" target="_blank" class="fan-card-link"
+                                                title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3705,7 +3704,8 @@
                                                 <span>Django</span>
                                                 <span>AJAX / Fetch</span>
                                             </div>
-                                            <a href="fullstack.html" target="_blank" class="fan-card-link" title="View Project">→</a>
+                                            <a href="fullstack.html" target="_blank" class="fan-card-link"
+                                                title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3737,7 +3737,8 @@
                                                 <span>PostgreSQL</span>
                                                 <span>REST API</span>
                                             </div>
-                                            <a href="fullstack.html" target="_blank" class="fan-card-link" title="View Project">→</a>
+                                            <a href="fullstack.html" target="_blank" class="fan-card-link"
+                                                title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3766,7 +3767,8 @@
                                                 <span>Google OAuth</span>
                                                 <span>PostgreSQL/SQLite</span>
                                             </div>
-                                            <a href="fullstack.html" target="_blank" class="fan-card-link" title="View Project">→</a>
+                                            <a href="fullstack.html" target="_blank" class="fan-card-link"
+                                                title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3797,7 +3799,8 @@
                                                 <span>MySQL</span>
                                                 <span>JavaScript</span>
                                             </div>
-                                            <a href="fullstack.html" target="_blank" class="fan-card-link" title="View Project">→</a>
+                                            <a href="fullstack.html" target="_blank" class="fan-card-link"
+                                                title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3828,7 +3831,8 @@
                                                 <span>React</span>
                                                 <span>IMDb/YT API</span>
                                             </div>
-                                            <a href="fullstack.html" target="_blank" class="fan-card-link" title="View Project">→</a>
+                                            <a href="fullstack.html" target="_blank" class="fan-card-link"
+                                                title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3859,7 +3863,8 @@
                                                 <span>Python</span>
                                                 <span>JavaScript</span>
                                             </div>
-                                            <a href="fullstack.html" target="_blank" class="fan-card-link" title="View Project">→</a>
+                                            <a href="fullstack.html" target="_blank" class="fan-card-link"
+                                                title="View Project">→</a>
                                         </div>
                                     </div>
                                 </div>
@@ -3963,19 +3968,29 @@
                     }
                 }, { passive: true });
 
-                // Auto-play
-                let autoPlay = setInterval(() => {
-                    if (activeIndex < totalCards - 1) goTo(activeIndex + 1);
-                    else goTo(0);
-                }, 6000);
-
-                carousel.addEventListener('mouseenter', () => clearInterval(autoPlay));
-                carousel.addEventListener('mouseleave', () => {
-                    autoPlay = setInterval(() => {
-                        if (activeIndex < totalCards - 1) goTo(activeIndex + 1);
-                        else goTo(0);
-                    }, 6000);
-                });
+                // Scroll effect instead of auto-play
+                let lastWheelTime = 0;
+                carousel.addEventListener('wheel', (e) => {
+                    const now = Date.now();
+                    
+                    if (e.deltaY > 0) {
+                        if (activeIndex < totalCards - 1) {
+                            e.preventDefault(); // ONLY prevent page scroll if we can go to next project
+                            if (now - lastWheelTime >= 450) {
+                                goTo(activeIndex + 1);
+                                lastWheelTime = now;
+                            }
+                        }
+                    } else if (e.deltaY < 0) {
+                        if (activeIndex > 0) {
+                            e.preventDefault(); // ONLY prevent page scroll if we can go to prev project
+                            if (now - lastWheelTime >= 450) {
+                                goTo(activeIndex - 1);
+                                lastWheelTime = now;
+                            }
+                        }
+                    }
+                }, { passive: false });
             }
 
             // Initialize Data Science carousel
@@ -4056,8 +4071,13 @@
             }
 
             @keyframes scrollCertsMarquee {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-50%); }
+                0% {
+                    transform: translateX(0);
+                }
+
+                100% {
+                    transform: translateX(-50%);
+                }
             }
 
             .cert-scroll-card {
@@ -4337,22 +4357,7 @@
 
 
                     <!-- 13. Screenshot Certificate -->
-                    <a class="cert-scroll-card" href="certificate/Screenshot%202025-11-26%20at%201.32.14%20PM.png"
-                        target="_blank">
-                        <div class="cert-scroll-thumb">
-                            <img src="certificate/Screenshot%202025-11-26%20at%201.32.14%20PM.png" alt="Certificate"
-                                loading="lazy" />
-                        </div>
-                        <div class="cert-scroll-body">
-                            <div class="cert-scroll-title">Complete Interview Preparation</div>
-                            <div class="cert-scroll-issuer"><span class="cert-scroll-issuer-dot"></span>GeeksforGeeks
-                            </div>
-                            <div class="cert-scroll-footer">
-                                <span class="cert-scroll-date">2025</span>
-                                <span class="cert-scroll-cta">View →</span>
-                            </div>
-                        </div>
-                    </a>
+
 
                 </div>
             </div>
@@ -4360,21 +4365,21 @@
 
         <!-- Script linking certs loop for smooth marquee -->
         <script>
-            (function() {
+            (function () {
                 const certsScroll = document.querySelector('.certs-scroll');
                 if (certsScroll && !certsScroll.querySelector('.certs-group')) {
                     const children = Array.from(certsScroll.children);
                     certsScroll.innerHTML = '';
-                    
+
                     const group1 = document.createElement('div');
                     group1.className = 'certs-group';
                     children.forEach(child => group1.appendChild(child.cloneNode(true)));
-                    
+
                     const group2 = document.createElement('div');
                     group2.className = 'certs-group';
                     group2.setAttribute('aria-hidden', 'true');
                     children.forEach(child => group2.appendChild(child.cloneNode(true)));
-                    
+
                     certsScroll.appendChild(group1);
                     certsScroll.appendChild(group2);
                 }
@@ -4489,8 +4494,7 @@
                         </a>
 
                         <!-- Node 2: -20° → (197, -72) · LinkedIn -->
-                        <a href="https://www.linkedin.com/in/akhand320/" target="_blank"
-                            class="orbit-node"
+                        <a href="https://www.linkedin.com/in/akhand320/" target="_blank" class="orbit-node"
                             style="--ntx:translate(calc(197px - 18px),calc(-72px - 22px)); transform:translate(calc(197px - 18px),calc(-72px - 22px)); background:rgba(10,102,194,0.2);">
                             <div class="orbit-icon-box" style="background:rgba(10,102,194,0.45); color:#7ab8f5;">
                                 <svg viewBox="0 0 24 24">
@@ -4520,7 +4524,8 @@
                         </a>
 
                         <!-- Node 4: +60° → (105, +182) · Email -->
-                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thakurakhand.singh21111@gmail.com" target="_blank" class="orbit-node"
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thakurakhand.singh21111@gmail.com"
+                            target="_blank" class="orbit-node"
                             style="--ntx:translate(calc(105px - 18px),calc(182px - 22px)); transform:translate(calc(105px - 18px),calc(182px - 22px)); background:rgba(20,184,166,0.15);">
                             <div class="orbit-icon-box" style="background:rgba(20,184,166,0.35); color:#5eead4;">
                                 <svg viewBox="0 0 24 24">
@@ -4540,7 +4545,8 @@
                 <div class="location-map-wrapper scroll-reveal">
                     <div class="location-header">
                         <div class="location-header-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                 <circle cx="12" cy="10" r="3"></circle>
                             </svg>
@@ -4551,7 +4557,9 @@
                         </div>
                     </div>
                     <div class="location-map-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14330.155705353034!2d80.97120395!3d26.0323382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399af3da7e43681d%3A0xea8d4beea6072ac!2sDhannipur%2C%20Uttar%20Pradesh%20229206!5e0!3m2!1sen!2sin!4v1710609320000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14330.155705353034!2d80.97120395!3d26.0323382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399af3da7e43681d%3A0xea8d4beea6072ac!2sDhannipur%2C%20Uttar%20Pradesh%20229206!5e0!3m2!1sen!2sin!4v1710609320000!5m2!1sen!2sin"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
@@ -4585,19 +4593,16 @@
 
         // Custom cursor
         const cursor = document.getElementById('cursor');
-        const ring = document.getElementById('cursorRing');
-        let mx = 0, my = 0, rx = 0, ry = 0;
+        let mx = 0, my = 0;
         document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
         function animCursor() {
             cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-            rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-            ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
             requestAnimationFrame(animCursor);
         }
         animCursor();
         document.querySelectorAll('a, button, .project-card, .stat, .tag, .skill-pill, .social-btn').forEach(el => {
-            el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2.5)'; ring.style.transform = 'translate(-50%,-50%) scale(1.5)'; });
-            el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.transform = 'translate(-50%,-50%) scale(1)'; });
+            el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2.5)'; });
+            el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; });
         });
 
         // Scroll Reveal with IntersectionObserver
