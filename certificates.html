@@ -31,22 +31,11 @@
 
         body {
             font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
+            background: linear-gradient(135deg, #050508 0%, #151520 100%);
+            background-attachment: fixed;
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-        }
-
-        /* ── Stars ── */
-        .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-        .star {
-            position: absolute; border-radius: 50%;
-            background: rgba(255,255,255,0.8);
-            animation: twinkle var(--d) var(--delay) infinite alternate ease-in-out;
-        }
-        @keyframes twinkle {
-            from { opacity: var(--min-op); transform: scale(0.9); }
-            to   { opacity: var(--max-op); transform: scale(1.1); }
         }
 
         /* ── Nebula blobs ── */
@@ -683,23 +672,7 @@
     </main>
 
     <script>
-        // Stars
-        const starsEl = document.getElementById('stars');
-        for (let i = 0; i < 120; i++) {
-            const s = document.createElement('div');
-            s.className = 'star';
-            const size = Math.random() * 2 + 0.4;
-            s.style.cssText = `
-                width:${size}px; height:${size}px;
-                left:${Math.random() * 100}%;
-                top:${Math.random() * 100}%;
-                --d:${2 + Math.random() * 4}s;
-                --delay:${Math.random() * 4}s;
-                --min-op:${0.05 + Math.random() * 0.15};
-                --max-op:${0.4 + Math.random() * 0.5};
-            `;
-            starsEl.appendChild(s);
-        }
+        // Stars removed
 
 
 
