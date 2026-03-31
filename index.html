@@ -1863,6 +1863,105 @@
     </style>
 </head>
 
+<!-- Greeting Overlay Styles (standalone block so they are never inside a media query) -->
+<style>
+    #greet-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 99999;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        pointer-events: none;
+    }
+
+    #greet-overlay.greet-out {
+        animation: greetWipeUp 0.7s cubic-bezier(.76, 0, .24, 1) forwards;
+    }
+
+    @keyframes greetWipeUp {
+        from {
+            clip-path: inset(0 0 0% 0);
+        }
+
+        to {
+            clip-path: inset(0 0 100% 0);
+        }
+    }
+
+    #greet-word {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(52px, 12vw, 110px);
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -3px;
+        opacity: 0;
+        transform: translateY(18px) scale(0.9);
+        transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #greet-word.greet-in {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    #greet-word.greet-out2 {
+        opacity: 0;
+        transform: translateY(-14px) scale(1.07);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    #greet-lang {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.3);
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        font-weight: 500;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    #greet-lang.greet-in {
+        opacity: 1;
+    }
+
+    #greet-dots {
+        display: flex;
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .gdot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: background 0.3s, transform 0.3s;
+    }
+
+    .gdot.on {
+        background: #F34F29;
+        transform: scale(1.6);
+    }
+</style>
+
+<!-- Greeting Overlay -->
+<div id="greet-overlay">
+    <div id="greet-word"></div>
+    <div id="greet-lang"></div>
+    <div id="greet-dots"></div>
+</div>
+
 <!-- Stars -->
 <div class="stars" id="stars"></div>
 <div class="nebula nebula-1"></div>
@@ -3975,6 +4074,66 @@
         });
     }
 
+
+
+    /* ── Multilingual Greeting Intro ── */
+    (function () {
+        const GREETS = [
+            { word: 'Hello', lang: 'English' },
+            { word: 'नमस्ते', lang: 'Hindi' },
+            { word: 'నమస్కారం', lang: 'Telugu' },
+            { word: 'Hola', lang: 'Spanish' },
+            { word: '你好', lang: 'Chinese' },
+        ];
+
+        const overlay = document.getElementById('greet-overlay');
+        const gWord = document.getElementById('greet-word');
+        const gLang = document.getElementById('greet-lang');
+        const gDots = document.getElementById('greet-dots');
+
+        GREETS.forEach((_, i) => {
+            const d = document.createElement('div');
+            d.className = 'gdot' + (i === 0 ? ' on' : '');
+            gDots.appendChild(d);
+        });
+        const allDots = gDots.querySelectorAll('.gdot');
+
+        let cur = 0;
+
+        function showGreet(idx) {
+            allDots.forEach((d, i) => d.classList.toggle('on', i === idx));
+            gWord.textContent = GREETS[idx].word;
+            gLang.textContent = GREETS[idx].lang;
+            gWord.className = '';
+            gLang.className = '';
+            requestAnimationFrame(() => {
+                gWord.classList.add('greet-in');
+                setTimeout(() => gLang.classList.add('greet-in'), 100);
+            });
+        }
+
+        function nextGreet() {
+            gWord.classList.remove('greet-in');
+            gWord.classList.add('greet-out2');
+            gLang.classList.remove('greet-in');
+            setTimeout(() => {
+                cur++;
+                if (cur < GREETS.length) {
+                    showGreet(cur);
+                    setTimeout(nextGreet, 700);
+                } else {
+                    overlay.classList.add('greet-out');
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        overlay.style.pointerEvents = 'none';
+                    }, 720);
+                }
+            }, 230);
+        }
+
+        showGreet(0);
+        setTimeout(nextGreet, 700);
+    })();
 
 </script>
 </body>
