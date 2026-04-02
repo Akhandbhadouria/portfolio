@@ -345,7 +345,7 @@
             border: 1px solid rgba(200, 245, 63, 0.12);
             box-shadow: 0 0 0 1px rgba(200, 245, 63, 0.06), var(--clay-shadow);
             min-height: 340px;
-            cursor: none;
+            cursor: pointer;
             /* scroll reveal */
             opacity: 0;
             transform: scale(0.93) translateY(20px);
@@ -534,7 +534,7 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: var(--clay-shadow);
-            cursor: none;
+            cursor: pointer;
             /* scroll reveal */
             opacity: 0;
             transform: scale(0.88) translateY(24px);
@@ -635,7 +635,7 @@
             align-items: center;
             justify-content: space-between;
             padding-top: 14px;
-            border-top: 1px solid var(--border);
+            /* border-top: 1px solid var(--border); removed */
         }
 
         .proj-type {
@@ -898,7 +898,7 @@
             align-items: center;
             justify-content: space-between;
             padding-top: 20px;
-            border-top: 1px solid var(--border);
+            /* border-top: 1px solid var(--border); removed */
             flex-wrap: wrap;
             gap: 12px;
         }
@@ -924,7 +924,7 @@
             font-weight: 700;
             text-decoration: none;
             transition: all 0.25s ease;
-            cursor: none;
+            cursor: pointer;
         }
 
         .modal-gh-btn:hover {
@@ -948,7 +948,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.2s ease;
             backdrop-filter: blur(8px);
         }
@@ -959,8 +959,8 @@
             transform: scale(1.1) rotate(90deg);
         }
 
-       
-       
+
+
 
         /* ── Responsive ── */
         @media (max-width: 900px) {
@@ -999,7 +999,7 @@
 
 <body>
 
-    <div class="stars" id="stars"></div>
+    <!-- <div class="stars" id="stars"></div> -->
     <div class="nebula nebula-1"></div>
     <div class="nebula nebula-2"></div>
     <div class="nebula nebula-3"></div>
@@ -1249,7 +1249,7 @@
         </div>
 
         <!-- Footer -->
-      
+
 
     </div><!-- /page -->
 
@@ -1300,22 +1300,7 @@
 
     <script>
         // ── Stars ──
-        const starsEl = document.getElementById('stars');
-        for (let i = 0; i < 120; i++) {
-            const s = document.createElement('div');
-            s.className = 'star';
-            const size = Math.random() * 2 + 0.4;
-            s.style.cssText = `
-                width:${size}px; height:${size}px;
-                left:${Math.random() * 100}%;
-                top:${Math.random() * 100}%;
-                --d:${2 + Math.random() * 4}s;
-                --delay:${Math.random() * 4}s;
-                --min-op:${0.05 + Math.random() * 0.15};
-                --max-op:${0.4 + Math.random() * 0.5};
-            `;
-            starsEl.appendChild(s);
-        }
+        // Removed stars generation
 
 
 
