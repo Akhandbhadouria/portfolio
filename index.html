@@ -37,6 +37,7 @@
 
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
@@ -122,9 +123,192 @@
             animation: fadeDown 0.6s ease both;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             background: var(--surface);
             overflow: visible;
+        }
+
+        /* ── Hamburger button ── */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            gap: 5px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.2s, border-color 0.2s;
+            z-index: 1001;
+        }
+
+        .nav-hamburger:hover {
+            background: rgba(243,79,41,0.12);
+            border-color: rgba(243,79,41,0.35);
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+                        opacity 0.25s ease,
+                        width 0.3s ease;
+        }
+
+        .nav-hamburger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-hamburger.open span:nth-child(2) {
+            opacity: 0;
+            width: 0;
+        }
+
+        .nav-hamburger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* ── Sidebar Drawer ── */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1500;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .sidebar-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .sidebar-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(300px, 82vw);
+            height: 100vh;
+            height: 100dvh;
+            background: rgba(10, 10, 20, 0.97);
+            border-left: 1px solid rgba(255,255,255,0.08);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 28px 24px 40px;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: -20px 0 60px rgba(0,0,0,0.6);
+        }
+
+        .sidebar-drawer.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .sidebar-logo {
+            font-family: 'Piedra', cursive;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .sidebar-logo span { color: var(--accent); }
+
+        .sidebar-close {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(243,79,41,0.15);
+            border-color: rgba(243,79,41,0.4);
+        }
+
+        .sidebar-close svg {
+            color: var(--text);
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .sidebar-nav a {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: none;
+            padding: 14px 16px;
+            border-radius: 14px;
+            letter-spacing: 0.02em;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a:active {
+            background: rgba(243,79,41,0.1);
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .sidebar-nav a .snav-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav a:hover .snav-dot {
+            opacity: 1;
+        }
+
+        .sidebar-footer {
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 12px;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 0.08em;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-hamburger {
+                display: flex;
+            }
         }
 
         .nav-logo {
@@ -218,6 +402,8 @@
             display: flex;
             flex-direction: column;
             gap: 22px;
+            min-width: 0;
+            overflow: hidden;
         }
 
         .name-block h1 {
@@ -483,7 +669,7 @@
         }
 
         .id-card {
-            width: 320px;
+            width: min(320px, 90vw);
             height: 460px;
             border-radius: 22px;
             position: relative;
@@ -2002,8 +2188,7 @@
             }
         }
 
-        @media (max-width: 960px) {
-            @media (max-width: 900px) {
+        @media (max-width: 900px) {
                 .skills-icon-grid {
                     grid-template-columns: repeat(6, 1fr);
                 }
@@ -2059,95 +2244,141 @@
                     margin: 0;
                     margin-top: auto;
                 }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 16px 14px;
+                grid-template-columns: 1fr;
+                gap: 24px;
+                min-height: auto;
             }
 
-            @media (max-width: 768px) {
-                .hero {
-                    padding: 20px 16px;
-                    grid-template-columns: 1fr;
-                    gap: 28px;
-                    min-height: auto;
-                }
-
-                .panel-center {
-                    order: -1;
-                }
-
-                nav {
-                    flex-wrap: wrap;
-                    gap: 12px;
-                    padding: 16px;
-                }
-
-                .nav-links {
-                    display: none;
-                }
-
-                .name-block h1 {
-                    font-size: 36px;
-                }
-
-                .skills-full {
-                    padding: 48px 16px;
-                }
-
-                .skills-full-header h2 {
-                    font-size: 28px;
-                }
-
-                .skills-icon-grid {
-                    grid-template-columns: repeat(5, 1fr);
-                    gap: 8px 0;
-                }
-
-                .skill-icon-item img,
-                .skill-icon-text {
-                    width: 40px;
-                    height: 40px;
-                }
-
-                .skill-icon-label {
-                    font-size: 11px;
-                }
-
-                .thankyou-section {
-                    padding: 48px 16px 40px;
-                }
+            .panel-left {
+                max-width: 100%;
+                width: 100%;
             }
 
-            @media (max-width: 600px) {
+            .panel-center {
+                order: -1;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
 
-                @media (max-width: 550px) {
-                    .location-map-wrapper {
-                        height: 250px;
-                    }
+            .panel-right {
+                width: 100%;
+            }
 
-                    .contact-avatar {
-                        width: 170px;
-                        height: 170px;
-                    }
-                }
+            .tags-wrapper {
+                max-width: 100%;
+                width: 100%;
+            }
 
-                @media (max-width: 480px) {
-                    .skills-icon-grid {
-                        grid-template-columns: repeat(4, 1fr);
-                        gap: 4px 0;
-                    }
+            nav {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 16px;
+            }
 
-                    .skill-icon-item {
-                        padding: 14px 4px;
-                    }
+            .nav-links {
+                display: none;
+            }
 
-                    .skill-icon-item img,
-                    .skill-icon-text {
-                        width: 36px;
-                        height: 36px;
-                    }
+            .name-block h1 {
+                font-size: clamp(28px, 8vw, 40px);
+            }
 
-                    .skill-icon-label {
-                        font-size: 10px;
-                    }
-                }
+            .bio {
+                font-size: 14px;
+                line-height: 1.65;
+            }
+
+            .stat {
+                padding: 10px 14px;
+            }
+
+            .stat-num {
+                font-size: 17px;
+            }
+
+            .stat-label {
+                font-size: 11px;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 11px 20px;
+                font-size: 13px;
+            }
+
+            .skills-full {
+                padding: 48px 16px;
+            }
+
+            .skills-full-header h2 {
+                font-size: 28px;
+            }
+
+            .skills-icon-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 8px 0;
+            }
+
+            .skill-icon-item img,
+            .skill-icon-text {
+                width: 40px;
+                height: 40px;
+            }
+
+            .skill-icon-label {
+                font-size: 11px;
+            }
+
+            .thankyou-section {
+                padding: 48px 16px 40px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .location-map-wrapper {
+                height: 250px;
+            }
+
+            .contact-avatar {
+                width: 170px;
+                height: 170px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skills-icon-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 4px 0;
+            }
+
+            .skill-icon-item {
+                padding: 14px 4px;
+            }
+
+            .skill-icon-item img,
+            .skill-icon-text {
+                width: 36px;
+                height: 36px;
+            }
+
+            .skill-icon-label {
+                font-size: 10px;
+            }
+
+            .name-block h1 {
+                font-size: clamp(26px, 7vw, 36px);
+            }
+
+            .hero {
+                padding: 12px 12px;
+            }
+        }
     </style>
 </head>
 
@@ -2284,7 +2515,37 @@
             <div class="status-dot"></div>
             Available for work
         </div>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar Drawer -->
+    <div class="sidebar-drawer" id="sidebarDrawer" role="dialog" aria-label="Navigation menu">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-logo">Portfolio<span>.</span></a>
+            <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#projects-section" class="sidebar-link"><span class="snav-dot"></span>Projects</a>
+            <a href="datascience.html" class="sidebar-link"><span class="snav-dot"></span>Data Science</a>
+            <a href="fullstack.html" class="sidebar-link"><span class="snav-dot"></span>Full Stack</a>
+            <a href="#training-section" class="sidebar-link"><span class="snav-dot"></span>Training</a>
+            <a href="#skills-section" class="sidebar-link"><span class="snav-dot"></span>Skills</a>
+            <a href="#contact-section" class="sidebar-link"><span class="snav-dot"></span>Contact</a>
+        </nav>
+        <div class="sidebar-footer">Akhand &bull; Portfolio 2026</div>
+    </div>
 
     <!-- Hero -->
     <div class="hero">
@@ -2303,7 +2564,8 @@
             </p>
 
             <div class="stats">
-                <div class="stat"><span class="stat-num">Open</span><span class="stat-label">for Internship.</span></div>
+                <div class="stat"><span class="stat-num">Open</span><span class="stat-label">for Internship.</span>
+                </div>
                 <div class="stat"><span class="stat-num">15+</span><span class="stat-label">Projects</span></div>
                 <div class="stat"><span class="stat-num">B.Tech</span><span class="stat-label">CS Student</span>
                 </div>
@@ -2383,7 +2645,7 @@
             <div class="cta-row">
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thakurakhand.singh21111@gmail.com"
                     target="_blank" class="btn-primary" style="text-decoration:none">Contact me</a>
-                <a href="AKHAND_CV_FINAL.pdf" target="_blank" class="btn-secondary" style="text-decoration:none">CV
+                <a href="https://drive.google.com/file/d/1FzxbEcQ5SUfb1IF80UNMqFryZhQ3V3Dj/view?usp=sharing" target="_blank" class="btn-secondary" style="text-decoration:none">CV
                     ↗</a>
             </div>
 
@@ -2910,6 +3172,12 @@
                         PBI</div>
                     <span class="skill-icon-label">Power BI</span>
                 </div>
+                <div class="skill-icon-item">
+                    <div class="skill-icon-text"
+                        style="background: rgba(30,200,120,0.15); border-color: rgba(30,200,120,0.3); color: #1ec878; font-size: 9px; letter-spacing: 0.5px;">
+                        LC</div>
+                    <span class="skill-icon-label">LangChain</span>
+                </div>
             </div>
         </div>
         <!-- keep old markup for observer compatibility -->
@@ -2925,7 +3193,8 @@
             position: relative;
             padding: 100px 28px 120px;
             /* border-top: 1px solid var(--border); removed */
-            overflow: visible;
+            overflow-x: hidden;
+            overflow-y: visible;
             background: transparent;
         }
 
@@ -4788,6 +5057,46 @@
     })();
 
 
+</script>
+
+<script>
+    /* ── Sidebar Drawer Logic ── */
+    (function () {
+        const hamburger = document.getElementById('navHamburger');
+        const drawer    = document.getElementById('sidebarDrawer');
+        const overlay   = document.getElementById('sidebarOverlay');
+        const closeBtn  = document.getElementById('sidebarClose');
+
+        function openSidebar() {
+            drawer.classList.add('open');
+            overlay.classList.add('visible');
+            hamburger.classList.add('open');
+            hamburger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            drawer.classList.remove('open');
+            overlay.classList.remove('visible');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', openSidebar);
+        closeBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
+        // Close on any sidebar link click (for hash anchors)
+        drawer.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', closeSidebar);
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeSidebar();
+        });
+    })();
 </script>
 </body>
 
