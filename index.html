@@ -3482,16 +3482,94 @@
             box-shadow: 0 8px 24px rgba(243, 79, 41, 0.15);
         }
 
-        @media (max-width: 768px) {
+        /* ── Responsive: mobile/tablet carousel ── */
+        @media (max-width: 900px) {
             .proj-track {
-                height: 360px;
+                width: 100% !important;
+                height: auto !important;
                 overflow-x: auto;
+                overflow-y: visible;
+                display: flex !important;
+                flex-direction: row;
+                align-items: stretch;
+                gap: 16px;
+                padding: 16px 20px 32px;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                justify-content: flex-start;
+            }
+
+            .proj-track::-webkit-scrollbar {
+                display: none;
             }
 
             .proj-card {
-                width: 240px;
-                height: 160px;
+                position: relative !important;
+                transform: none !important;
+                animation: none !important;
+                opacity: 1 !important;
+                width: min(75vw, 260px) !important;
+                height: 170px !important;
+                flex-shrink: 0;
+                scroll-snap-align: center;
+                border-radius: 16px;
+                transition: box-shadow 0.3s ease, transform 0.3s ease !important;
             }
+
+            .proj-card:hover {
+                transform: translateY(-6px) scale(1.03) !important;
+                box-shadow: 0 20px 44px rgba(0,0,0,0.65),
+                    0 0 0 2px rgba(243,79,41,0.45),
+                    0 0 28px rgba(243,79,41,0.12) !important;
+            }
+
+            .proj-card .proj-card-label {
+                opacity: 1 !important;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                transform: none;
+                text-align: center;
+                background: rgba(0,0,0,0.65);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                padding: 6px 8px;
+                border-radius: 0 0 16px 16px;
+                font-size: 11px;
+                font-weight: 600;
+                color: rgba(255,255,255,0.75);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            /* Scroll hint dots */
+            .proj-scroll-hint {
+                display: flex;
+                justify-content: center;
+                gap: 6px;
+                margin-top: 18px;
+            }
+
+            .proj-scroll-hint span {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.18);
+                transition: background 0.3s, width 0.3s;
+            }
+
+            .proj-scroll-hint span.active {
+                background: var(--accent);
+                width: 18px;
+                border-radius: 3px;
+            }
+        }
+
+        /* Desktop: keep waves & fan */
+        @media (min-width: 901px) {
+            .proj-scroll-hint { display: none; }
         }
     </style>
 
@@ -3511,6 +3589,7 @@
                 <span class="proj-tag">Power BI</span>
             </div>
             <div class="proj-track scroll-reveal" id="projTrack"></div>
+            <div class="proj-scroll-hint" id="projScrollHint"></div>
             <div class="proj-viewall-row scroll-reveal">
                 <a href="datascience.html" class="proj-viewall-btn">View Data Science →</a>
                 <a href="fullstack.html" class="proj-viewall-btn">View Full Stack →</a>
@@ -3562,29 +3641,63 @@
             const track = document.getElementById('projTrack');
             if (!track) return;
 
-            projCards.forEach((c, i) => {
-                const div = document.createElement('div');
-                div.className = 'proj-card';
-                const bt = `translateX(${c.x}px) rotate(${c.rot}deg)`;
-                div.style.cssText = `--pbt: ${bt}; transform: ${bt}; z-index: ${c.z};`;
-                div.innerHTML = `<img src="${c.img}" alt="${c.label}" loading="lazy"><span class="proj-card-label">${c.label}</span>`;
-                div.style.animation = `projCardIn 0.65s cubic-bezier(.22,.68,0,1.2) ${0.1 + i * 0.1}s forwards`;
-                // Click → navigate to project page
-                if (c.link) {
-                    div.addEventListener('click', () => {
-                        window.location.href = c.link;
-                    });
-                }
-                div.addEventListener('animationend', (e) => {
-                    if (e.animationName === 'projCardIn') {
-                        div.style.opacity = '1';
-                        div.style.animation = 'none';
-                        void div.offsetWidth;
-                        div.classList.add(`pwave-${i}`);
+            const isMobile = window.matchMedia('(max-width: 900px)').matches;
+
+            if (isMobile) {
+                /* ── Mobile/Tablet: horizontal snap carousel ── */
+                projCards.forEach((c) => {
+                    const div = document.createElement('div');
+                    div.className = 'proj-card';
+                    div.innerHTML = `<img src="${c.img}" alt="${c.label}" loading="lazy"><span class="proj-card-label">${c.label}</span>`;
+                    if (c.link) {
+                        div.addEventListener('click', () => { window.location.href = c.link; });
                     }
+                    track.appendChild(div);
                 });
-                track.appendChild(div);
-            });
+
+                /* Dot indicators */
+                const hintEl = document.getElementById('projScrollHint');
+                if (hintEl) {
+                    projCards.forEach((_, i) => {
+                        const dot = document.createElement('span');
+                        if (i === 0) dot.classList.add('active');
+                        hintEl.appendChild(dot);
+                    });
+
+                    const dots = hintEl.querySelectorAll('span');
+                    let scrollTimer;
+                    track.addEventListener('scroll', () => {
+                        clearTimeout(scrollTimer);
+                        scrollTimer = setTimeout(() => {
+                            const cardW = track.querySelector('.proj-card').offsetWidth + 16;
+                            const idx = Math.round(track.scrollLeft / cardW);
+                            dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+                        }, 60);
+                    }, { passive: true });
+                }
+            } else {
+                /* ── Desktop: fan / wave layout ── */
+                projCards.forEach((c, i) => {
+                    const div = document.createElement('div');
+                    div.className = 'proj-card';
+                    const bt = `translateX(${c.x}px) rotate(${c.rot}deg)`;
+                    div.style.cssText = `--pbt: ${bt}; transform: ${bt}; z-index: ${c.z};`;
+                    div.innerHTML = `<img src="${c.img}" alt="${c.label}" loading="lazy"><span class="proj-card-label">${c.label}</span>`;
+                    div.style.animation = `projCardIn 0.65s cubic-bezier(.22,.68,0,1.2) ${0.1 + i * 0.1}s forwards`;
+                    if (c.link) {
+                        div.addEventListener('click', () => { window.location.href = c.link; });
+                    }
+                    div.addEventListener('animationend', (e) => {
+                        if (e.animationName === 'projCardIn') {
+                            div.style.opacity = '1';
+                            div.style.animation = 'none';
+                            void div.offsetWidth;
+                            div.classList.add(`pwave-${i}`);
+                        }
+                    });
+                    track.appendChild(div);
+                });
+            }
         })();
     </script>
 
