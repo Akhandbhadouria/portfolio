@@ -137,8 +137,8 @@
             width: 40px;
             height: 40px;
             gap: 5px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             cursor: pointer;
             padding: 0;
@@ -147,8 +147,8 @@
         }
 
         .nav-hamburger:hover {
-            background: rgba(243,79,41,0.12);
-            border-color: rgba(243,79,41,0.35);
+            background: rgba(243, 79, 41, 0.12);
+            border-color: rgba(243, 79, 41, 0.35);
         }
 
         .nav-hamburger span {
@@ -158,8 +158,8 @@
             background: var(--text);
             border-radius: 2px;
             transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
-                        opacity 0.25s ease,
-                        width 0.3s ease;
+                opacity 0.25s ease,
+                width 0.3s ease;
         }
 
         .nav-hamburger.open span:nth-child(1) {
@@ -179,7 +179,7 @@
         .sidebar-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
             z-index: 1500;
@@ -201,14 +201,14 @@
             height: 100vh;
             height: 100dvh;
             background: rgba(10, 10, 20, 0.97);
-            border-left: 1px solid rgba(255,255,255,0.08);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 2000;
             display: flex;
             flex-direction: column;
             padding: 28px 24px 40px;
             transform: translateX(100%);
             transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: -20px 0 60px rgba(0,0,0,0.6);
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
         }
 
         .sidebar-drawer.open {
@@ -230,13 +230,15 @@
             text-decoration: none;
         }
 
-        .sidebar-logo span { color: var(--accent); }
+        .sidebar-logo span {
+            color: var(--accent);
+        }
 
         .sidebar-close {
             width: 36px;
             height: 36px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             cursor: pointer;
             display: flex;
@@ -246,8 +248,8 @@
         }
 
         .sidebar-close:hover {
-            background: rgba(243,79,41,0.15);
-            border-color: rgba(243,79,41,0.4);
+            background: rgba(243, 79, 41, 0.15);
+            border-color: rgba(243, 79, 41, 0.4);
         }
 
         .sidebar-close svg {
@@ -277,7 +279,7 @@
 
         .sidebar-nav a:hover,
         .sidebar-nav a:active {
-            background: rgba(243,79,41,0.1);
+            background: rgba(243, 79, 41, 0.1);
             color: var(--accent);
             transform: translateX(4px);
         }
@@ -298,9 +300,9 @@
 
         .sidebar-footer {
             padding-top: 24px;
-            border-top: 1px solid rgba(255,255,255,0.06);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
             font-size: 12px;
-            color: rgba(255,255,255,0.2);
+            color: rgba(255, 255, 255, 0.2);
             letter-spacing: 0.08em;
             text-align: center;
         }
@@ -2189,61 +2191,61 @@
         }
 
         @media (max-width: 900px) {
-                .skills-icon-grid {
-                    grid-template-columns: repeat(6, 1fr);
-                }
+            .skills-icon-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
 
-                .thankyou-top {
-                    grid-template-columns: 1fr;
-                    gap: 40px;
-                }
+            .thankyou-top {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
 
-                .location-map-wrapper {
-                    max-width: 500px;
-                    margin: 0 auto;
-                    height: 300px;
-                }
+            .location-map-wrapper {
+                max-width: 500px;
+                margin: 0 auto;
+                height: 300px;
+            }
 
-                .ne-timeline-container {
-                    flex-direction: column;
-                    gap: 40px;
-                }
+            .ne-timeline-container {
+                flex-direction: column;
+                gap: 40px;
+            }
 
-                .ne-line {
-                    top: 0;
-                    bottom: 0;
-                    left: 40px;
-                    width: 2px;
-                    height: auto;
-                    right: auto;
-                }
+            .ne-line {
+                top: 0;
+                bottom: 0;
+                left: 40px;
+                width: 2px;
+                height: auto;
+                right: auto;
+            }
 
-                .ne-item {
-                    flex-direction: row;
-                    align-items: stretch;
-                    text-align: left;
-                }
+            .ne-item {
+                flex-direction: row;
+                align-items: stretch;
+                text-align: left;
+            }
 
-                .ne-logo {
-                    margin-top: 24px;
-                    flex-shrink: 0;
-                }
+            .ne-logo {
+                margin-top: 24px;
+                flex-shrink: 0;
+            }
 
-                .ne-bg-card {
-                    top: 0;
-                    left: 40px;
-                    right: 0;
-                    bottom: 0;
-                }
+            .ne-bg-card {
+                top: 0;
+                left: 40px;
+                right: 0;
+                bottom: 0;
+            }
 
-                .ne-info {
-                    padding: 24px 24px 24px 60px;
-                }
+            .ne-info {
+                padding: 24px 24px 24px 60px;
+            }
 
-                .ne-date {
-                    margin: 0;
-                    margin-top: auto;
-                }
+            .ne-date {
+                margin: 0;
+                margin-top: auto;
+            }
         }
 
         @media (max-width: 768px) {
@@ -2268,6 +2270,12 @@
 
             .panel-right {
                 width: 100%;
+            }
+
+            /* Hide only the quick-links block, keep LeetCode & GitHub */
+            .panel-right > .section-label:first-child,
+            .panel-right > .projects-list {
+                display: none;
             }
 
             .tags-wrapper {
@@ -2530,9 +2538,10 @@
         <div class="sidebar-header">
             <a href="index.html" class="sidebar-logo">Portfolio<span>.</span></a>
             <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
             </button>
         </div>
@@ -2645,7 +2654,8 @@
             <div class="cta-row">
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thakurakhand.singh21111@gmail.com"
                     target="_blank" class="btn-primary" style="text-decoration:none">Contact me</a>
-                <a href="https://drive.google.com/file/d/1FzxbEcQ5SUfb1IF80UNMqFryZhQ3V3Dj/view?usp=sharing" target="_blank" class="btn-secondary" style="text-decoration:none">CV
+                <a href="https://drive.google.com/file/d/1FzxbEcQ5SUfb1IF80UNMqFryZhQ3V3Dj/view?usp=sharing"
+                    target="_blank" class="btn-secondary" style="text-decoration:none">CV
                     ↗</a>
             </div>
 
@@ -3252,28 +3262,46 @@
         /* Cards track */
         .proj-track {
             position: relative;
-            width: 10000px;
-            height: 260px;
+            width: 100%;
+            overflow: hidden;
+            padding: 16px 0 32px;
+        }
+
+        /* Marquee inner strip (desktop) */
+        .proj-marquee-inner {
             display: flex;
-            align-items: center;
-            justify-content: space-around;
-            overflow: visible;
+            gap: 20px;
+            width: max-content;
+            animation: projMarquee 28s linear infinite;
+        }
+
+        .proj-marquee-inner:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes projMarquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         .proj-card {
             width: 300px;
-            height: 190px;
+            height: 195px;
             border-radius: 16px;
             overflow: hidden;
-            position: absolute;
+            position: relative;
+            flex-shrink: 0;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
-            transform-origin: center center;
             cursor: pointer;
-            opacity: 0;
-            transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
-                box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1),
-                filter 0.45s ease;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+                filter 0.35s ease;
             will-change: transform, box-shadow;
         }
 
@@ -3292,23 +3320,32 @@
         }
 
         .proj-card:active {
-            transform: var(--pbt) translateY(-20px) scale(1.10) !important;
+            transform: translateY(-10px) scale(1.06) !important;
             transition-duration: 0.1s !important;
         }
 
-        /* Label under active card */
+        /* Label always visible at bottom */
         .proj-card-label {
             position: absolute;
-            bottom: -28px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 11px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 12px 10px;
+            font-size: 12px;
             font-weight: 600;
-            letter-spacing: 0.07em;
-            color: var(--muted);
+            letter-spacing: 0.06em;
+            color: rgba(255, 255, 255, 0.85);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
             opacity: 0;
             transition: opacity 0.3s ease;
+        }
+
+        .proj-card:hover .proj-card-label {
+            opacity: 1;
         }
 
         /* Entrance */
@@ -3442,14 +3479,9 @@
                 0 32px 64px rgba(0, 0, 0, 0.75),
                 0 0 0 2px rgba(243, 79, 41, 0.5),
                 0 0 40px rgba(243, 79, 41, 0.15);
-            z-index: 50 !important;
-            animation-play-state: paused !important;
-            transform: var(--pbt) translateY(-30px) scale(1.18) !important;
+            z-index: 50;
+            transform: translateY(-20px) scale(1.12);
             filter: brightness(1.08) saturate(1.1);
-        }
-
-        .proj-card:hover .proj-card-label {
-            opacity: 1;
         }
 
         /* View all row */
@@ -3504,6 +3536,12 @@
                 display: none;
             }
 
+            /* Disable marquee animation on mobile (carousel used instead) */
+            .proj-marquee-inner {
+                animation: none;
+                display: contents;
+            }
+
             .proj-card {
                 position: relative !important;
                 transform: none !important;
@@ -3519,9 +3557,9 @@
 
             .proj-card:hover {
                 transform: translateY(-6px) scale(1.03) !important;
-                box-shadow: 0 20px 44px rgba(0,0,0,0.65),
-                    0 0 0 2px rgba(243,79,41,0.45),
-                    0 0 28px rgba(243,79,41,0.12) !important;
+                box-shadow: 0 20px 44px rgba(0, 0, 0, 0.65),
+                    0 0 0 2px rgba(243, 79, 41, 0.45),
+                    0 0 28px rgba(243, 79, 41, 0.12) !important;
             }
 
             .proj-card .proj-card-label {
@@ -3531,14 +3569,14 @@
                 right: 0;
                 transform: none;
                 text-align: center;
-                background: rgba(0,0,0,0.65);
+                background: rgba(0, 0, 0, 0.65);
                 backdrop-filter: blur(6px);
                 -webkit-backdrop-filter: blur(6px);
                 padding: 6px 8px;
                 border-radius: 0 0 16px 16px;
                 font-size: 11px;
                 font-weight: 600;
-                color: rgba(255,255,255,0.75);
+                color: rgba(255, 255, 255, 0.75);
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -3556,7 +3594,7 @@
                 width: 6px;
                 height: 6px;
                 border-radius: 50%;
-                background: rgba(255,255,255,0.18);
+                background: rgba(255, 255, 255, 0.18);
                 transition: background 0.3s, width 0.3s;
             }
 
@@ -3567,9 +3605,11 @@
             }
         }
 
-        /* Desktop: keep waves & fan */
+        /* Remove desktop hint, let mobile handle it */
         @media (min-width: 901px) {
-            .proj-scroll-hint { display: none; }
+            .proj-scroll-hint {
+                display: none;
+            }
         }
     </style>
 
@@ -3579,15 +3619,7 @@
                 <h2>Featured <span>Projects</span></h2>
                 <p>A selection of my work across Data Science, ML, and Full‑Stack development.</p>
             </div>
-            <div class="proj-tags-row scroll-reveal">
-                <span class="proj-tag">Django</span>
-                <span class="proj-tag">Machine Learning</span>
-                <span class="proj-tag">Python</span>
-                <span class="proj-tag">React</span>
-                <span class="proj-tag">PostgreSQL</span>
-                <span class="proj-tag">REST API</span>
-                <span class="proj-tag">Power BI</span>
-            </div>
+            
             <div class="proj-track scroll-reveal" id="projTrack"></div>
             <div class="proj-scroll-hint" id="projScrollHint"></div>
             <div class="proj-viewall-row scroll-reveal">
@@ -3657,46 +3689,105 @@
 
                 /* Dot indicators */
                 const hintEl = document.getElementById('projScrollHint');
+                let dots = [];
                 if (hintEl) {
                     projCards.forEach((_, i) => {
                         const dot = document.createElement('span');
                         if (i === 0) dot.classList.add('active');
                         hintEl.appendChild(dot);
                     });
-
-                    const dots = hintEl.querySelectorAll('span');
-                    let scrollTimer;
-                    track.addEventListener('scroll', () => {
-                        clearTimeout(scrollTimer);
-                        scrollTimer = setTimeout(() => {
-                            const cardW = track.querySelector('.proj-card').offsetWidth + 16;
-                            const idx = Math.round(track.scrollLeft / cardW);
-                            dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-                        }, 60);
-                    }, { passive: true });
+                    dots = Array.from(hintEl.querySelectorAll('span'));
                 }
+
+                let currentIdx = 0;
+                let autoTimer = null;
+                let resumeTimer = null;
+                let isUserScrolling = false;
+
+                function getCardWidth() {
+                    const card = track.querySelector('.proj-card');
+                    return card ? card.offsetWidth + 16 : 0;
+                }
+
+                function updateDots(idx) {
+                    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+                }
+
+                function scrollToIdx(idx) {
+                    const cardW = getCardWidth();
+                    track.scrollTo({ left: idx * cardW, behavior: 'smooth' });
+                    currentIdx = idx;
+                    updateDots(idx);
+                }
+
+                function startAutoScroll() {
+                    stopAutoScroll();
+                    autoTimer = setInterval(() => {
+                        if (isUserScrolling) return;
+                        const next = (currentIdx + 1) % projCards.length;
+                        scrollToIdx(next);
+                    }, 2800);
+                }
+
+                function stopAutoScroll() {
+                    clearInterval(autoTimer);
+                    autoTimer = null;
+                }
+
+                /* Pause auto-scroll on user touch/drag, resume after 3s idle */
+                track.addEventListener('touchstart', () => {
+                    isUserScrolling = true;
+                    stopAutoScroll();
+                    clearTimeout(resumeTimer);
+                }, { passive: true });
+
+                track.addEventListener('touchend', () => {
+                    clearTimeout(resumeTimer);
+                    resumeTimer = setTimeout(() => {
+                        isUserScrolling = false;
+                        /* Sync currentIdx after user swipe */
+                        const cardW = getCardWidth();
+                        currentIdx = Math.round(track.scrollLeft / cardW);
+                        startAutoScroll();
+                    }, 3000);
+                }, { passive: true });
+
+                /* Keep dots synced on any scroll (manual or auto) */
+                let scrollSyncTimer;
+                track.addEventListener('scroll', () => {
+                    clearTimeout(scrollSyncTimer);
+                    scrollSyncTimer = setTimeout(() => {
+                        const cardW = getCardWidth();
+                        const idx = Math.round(track.scrollLeft / cardW);
+                        updateDots(idx);
+                        if (!isUserScrolling) currentIdx = idx;
+                    }, 60);
+                }, { passive: true });
+
+                /* Start auto-scroll after a short delay so page load settles */
+                setTimeout(startAutoScroll, 1200);
             } else {
-                /* ── Desktop: fan / wave layout ── */
-                projCards.forEach((c, i) => {
-                    const div = document.createElement('div');
-                    div.className = 'proj-card';
-                    const bt = `translateX(${c.x}px) rotate(${c.rot}deg)`;
-                    div.style.cssText = `--pbt: ${bt}; transform: ${bt}; z-index: ${c.z};`;
-                    div.innerHTML = `<img src="${c.img}" alt="${c.label}" loading="lazy"><span class="proj-card-label">${c.label}</span>`;
-                    div.style.animation = `projCardIn 0.65s cubic-bezier(.22,.68,0,1.2) ${0.1 + i * 0.1}s forwards`;
-                    if (c.link) {
-                        div.addEventListener('click', () => { window.location.href = c.link; });
-                    }
-                    div.addEventListener('animationend', (e) => {
-                        if (e.animationName === 'projCardIn') {
-                            div.style.opacity = '1';
-                            div.style.animation = 'none';
-                            void div.offsetWidth;
-                            div.classList.add(`pwave-${i}`);
+                /* ── Desktop: infinite marquee auto-scroll ── */
+                const inner = document.createElement('div');
+                inner.className = 'proj-marquee-inner';
+
+                /* Build cards × 2 for seamless loop */
+                const buildSet = () => {
+                    projCards.forEach((c) => {
+                        const div = document.createElement('div');
+                        div.className = 'proj-card';
+                        div.innerHTML = `<img src="${c.img}" alt="${c.label}" loading="lazy"><span class="proj-card-label">${c.label}</span>`;
+                        if (c.link) {
+                            div.addEventListener('click', () => { window.location.href = c.link; });
                         }
+                        inner.appendChild(div);
                     });
-                    track.appendChild(div);
-                });
+                };
+
+                buildSet(); /* original set */
+                buildSet(); /* duplicate for seamless loop */
+
+                track.appendChild(inner);
             }
         })();
     </script>
@@ -5176,9 +5267,9 @@
     /* ── Sidebar Drawer Logic ── */
     (function () {
         const hamburger = document.getElementById('navHamburger');
-        const drawer    = document.getElementById('sidebarDrawer');
-        const overlay   = document.getElementById('sidebarOverlay');
-        const closeBtn  = document.getElementById('sidebarClose');
+        const drawer = document.getElementById('sidebarDrawer');
+        const overlay = document.getElementById('sidebarOverlay');
+        const closeBtn = document.getElementById('sidebarClose');
 
         function openSidebar() {
             drawer.classList.add('open');
